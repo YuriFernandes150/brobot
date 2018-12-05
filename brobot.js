@@ -4,12 +4,20 @@ const math = require("mathjs");
 const randomimg = require('random-puppy');
 var client = new Discord.Client(); // Criar uma nova Client
 
+//Giphy
 const GphApiClient = require('giphy-js-sdk-core');
 var giphyclient = GphApiClient("1Z69tcE44eF9YM6OKIMpUiy8vCvyvyPv");
 
+//Musicas
 const ytdl = require("ytdl-core");
 var fila = [];
 var filanome = [];
+
+//Git
+var gitCommits = require('git-commits');
+var path = require('path');
+var repoPath = path.resolve(process.env.REPO || (__dirname + '/.git'));
+
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -166,8 +174,23 @@ client.on("message", (message) => {
 
     if (command === prefix + "server") {
 
-            message.channel.send("Estou sendo Hosteado no Zeit.co <:poggers:464204342463823892>");
+            message.channel.send("Estou sendo Hosteado em **Heroku.com** <:poggers:464204342463823892>");
         
+
+    }
+    if(command === prefix + "history"){
+
+        var commits
+        gitCommits(repoPath, {
+            limit: 5
+          }).on('data', function(commit) {
+            commits +=  commit.title+"\n";
+          }).on('error', function(err) {
+            throw err;
+          });
+          message.channel.send("Meu Histórico de Alterações! \n"+commits);
+          
+
 
     }
     if (command === prefix + "play") {
