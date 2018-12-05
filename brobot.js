@@ -180,15 +180,15 @@ client.on("message", (message) => {
     }
     if(command === prefix + "history"){
 
-        var commits
+        message.channel.send("Meu Histórico de Alterações!");
         gitCommits(repoPath, {
             limit: 5
           }).on('data', function(commit) {
-            commits +=  commit.title+"\n";
+            message.channel.send(commit.title);
           }).on('error', function(err) {
             throw err;
           });
-          message.channel.send("Meu Histórico de Alterações! \n"+commits);
+          
           
 
 
