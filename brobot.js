@@ -611,7 +611,7 @@ client.on("message", (message) => {
 
     if (command === prefix + "matematica" || command === prefix + "Matematica" || command === "matemática" || command === prefix + "Matemática") {
 
-        message.channel.send("Eu posso de ajudar com umas contas rápidas! \nSe você quiser fazer as contas, use o comando &qnto \nPara adição use &qnto n1 + n2 \nPara subtração, use &qnto nq - n2 \nPara multiplicação, use &qnto n1 x n2 \nPara divisão, use &qnto n1 / n2 \nVlw!")
+        message.channel.send("Eu posso de ajudar com umas contas rápidas! \nSe você quiser fazer as contas, use o comando **"+prefix+"qnto** \nPara adição use **"+prefix+"qnto** n1+n2 \nPara subtração, use **"+prefix+"qnto** nq-n2 \nPara multiplicação, use **"+prefix+"qnto** n1xn2 \nPara divisão, use **"+prefix+"qnto** n1/n2 \nVlw!")
 
     }
 
@@ -915,7 +915,6 @@ client.on("message", (message) => {
         
 
             message.channel.send("**kkk eae men!**\n" +
-                "Enquanto eu estiver no **Zeit.co**\n" +
                 "Use o comando **" + prefix + "ask** para fazer uma pergunta! \n" +
                 "Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n" +
                 "O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n " +
@@ -928,6 +927,7 @@ client.on("message", (message) => {
                 "Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n" +
                 "Sabia que eu sei Desenhar? use **" + prefix + "desenha** que eu te mostro!\n" +
                 "Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n" +
+                "Tenho algumas rádios disponíveis também! Digite **"+prefix+"radio** para saber mais\n"+
                 "Para saber onde estou hosteado, use **" + prefix + "server**\n"+
                 "Para ver imagens de algum subreddit digite **"+prefix+"reddit** (nome do subreddit tudo minusculo sem espaços)");
 
