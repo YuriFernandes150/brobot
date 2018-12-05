@@ -16,7 +16,7 @@ var filanome = [];
 //Git
 var gitCommits = require('git-commits');
 var path = require('path');
-var repoPath = path.resolve(process.env.REPO || (__dirname + '/.git'));
+var repoPath = path.resolve(process.env.REPO);
 
 // Configuração
 const config = require('./config.json');
