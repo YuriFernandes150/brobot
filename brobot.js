@@ -13,11 +13,6 @@ const ytdl = require("ytdl-core");
 var fila = [];
 var filanome = [];
 
-//Git
-var gitCommits = require('git-commits');
-var path = require('path');
-var repoPath = path.resolve("https://github.com/YuriFernandes150/brobot.git");
-
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -176,21 +171,6 @@ client.on("message", (message) => {
 
             message.channel.send("Estou sendo Hosteado em **Heroku.com** <:poggers:464204342463823892>");
         
-
-    }
-    if(command === prefix + "history"){
-
-        message.channel.send("Meu Histórico de Alterações!");
-        gitCommits(repoPath, {
-            limit: 5
-          }).on('data', function(commit) {
-            message.channel.send(commit.title);
-          }).on('error', function(err) {
-            throw err;
-          });
-          
-          
-
 
     }
     if (command === prefix + "play") {
