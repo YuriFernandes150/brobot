@@ -398,7 +398,7 @@ client.on("message", (message) => {
         }
 
     }
-    if (command === prefix + "JSHDSLJDHLSAHHALJHLSHDLJhdJL") {
+    if (command === prefix + "radio") {
         var url = "";
         if (args[1]) {
             const channel = client.channels.get(music);
