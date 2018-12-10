@@ -410,7 +410,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=hHW1oY26kxQ";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -423,7 +422,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=hHyy_l0Hby8";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -436,7 +434,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=GVC5adzPpiE";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -449,7 +446,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=_aKThQcLbmc";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -462,7 +458,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=2ccaHpy5Ewo";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -475,7 +470,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=qrNSt3BXJg8";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -488,7 +482,6 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=rLMHGjoxJdQ";
                     channel.join().then(connection => {
-                        dispatcher.end();
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
