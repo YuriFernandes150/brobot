@@ -23,6 +23,7 @@ var medo = false;
 var segundaresp = false;
 var tocando = false;
 var dispatcher;
+var radiodispatcher;
 var msgid;
 var votospause = 0;
 var votosresume = 0;
@@ -121,10 +122,10 @@ client.on("message", (message) => {
     }
     function PlayRadio(connection, url) {
 
-        dispatcher = connection.playStream(ytdl(url, {quality: '93'}));
-        dispatcher.on("end", end => {
+        radiodispatcher = connection.playStream(ytdl(url, {quality: '93'}));
+        radiodispatcher.on("end", end => {
 
-            message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
+            
 
         });
 
@@ -410,8 +411,10 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=hHW1oY26kxQ";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -422,6 +425,9 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=hHyy_l0Hby8";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -434,6 +440,9 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=GVC5adzPpiE";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -446,6 +455,9 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=_aKThQcLbmc";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -458,6 +470,9 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=2ccaHpy5Ewo";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -470,6 +485,9 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=qrNSt3BXJg8";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -482,6 +500,9 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=rLMHGjoxJdQ";
                     channel.join().then(connection => {
+                        if(radiodispatcher){
+                            radiodispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -501,7 +522,8 @@ client.on("message", (message) => {
                 "**gaming** - Músicas para jogar \n" +
                 "**fantasy** - Céltica e fantasia\n" + 
                 "**calmjazz** - Jazz calmo \n" + 
-                "**piano** - Piano (derp)");
+                "**piano** - Piano (derp) \n"+
+                "**nightcorerock** - NightCore");
 
         }
 
