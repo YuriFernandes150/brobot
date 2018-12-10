@@ -121,7 +121,7 @@ client.on("message", (message) => {
     }
     function PlayRadio(connection, url) {
 
-        dispatcher = connection.playStream(ytdl(url, { filter: "audioonly" }));
+        dispatcher = connection.playStream(ytdl(url, {quality: '93'}));
         dispatcher.on("end", end => {
 
             message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
