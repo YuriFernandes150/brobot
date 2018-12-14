@@ -514,6 +514,21 @@ client.on("message", (message) => {
                     });
 
                     break;
+                    case "nintendo":
+
+                    url = "https://www.youtube.com/watch?v=cA3D-2c33DM";
+                    channel.join().then(connection => {
+                        if (radiodispatcher) {
+                            radiodispatcher.end();
+                        }
+                        PlayRadio(connection, url);
+                        console.log("Successfully connected.");
+                    }).catch(e => {
+                        // Oh no, it errored! Let's log it to console :)
+                        console.error(e);
+                    });
+
+                    break;
             }
         }
         else {
@@ -526,7 +541,8 @@ client.on("message", (message) => {
                 "**fantasy** - Céltica e fantasia\n" +
                 "**calmjazz** - Jazz calmo \n" +
                 "**piano** - Piano (derp) \n" +
-                "**nightcorerock** - NightCore");
+                "**nightcorerock** - NightCore\n"+
+                "**nintendo** - Músicas dos jogos da Nintendo");
 
         }
 
