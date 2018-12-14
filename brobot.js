@@ -16,9 +16,6 @@ var filanome = [];
 //Piadas
 var Joke = require('give-me-a-joke');
 
-//Tradutor
-const translate = require('translate');
-
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -1000,25 +997,6 @@ client.on("message", (message) => {
         Joke.getRandomDadJoke (function(joke) {
             message.channel.send(joke);
         });
-
-    }
-
-    if(command === prefix + "traslateto"){
-
-        if(args[2]){
-
-            var linguasel = args[1];
-            const foo = await translate(message.content.replace(command, "").replace(args[1], ""), linguasel);
-
-            message.channel.send("Traduzindo para " + linguasel + ", fica mais ou menos assim:\n"+foo);
-
-        } 
-        else{
-            message.channel.send("Opa!\n"+
-                                 "para eu traduzir, vc precisa especificar alguns parâmetros! Vamos lá!\n"+
-                                 "Comece com **"+prefix+"translateto** (**ligua em inglês**) (**texto a ser traduzido**)\n"+
-                                 "**Ex:** "+prefix+"translateto Spanish Hello World!");
-        }
 
     }
 
