@@ -13,6 +13,12 @@ const ytdl = require("ytdl-core");
 var fila = [];
 var filanome = [];
 
+//Piadas
+var Joke = require('give-me-a-joke');
+
+//Tradutor
+const translate = require('translate');
+
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -63,69 +69,69 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 });
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
-;
+    ;
 
     function Play(connection) {
-        
 
 
 
-            var id = ytdl.getURLVideoID(fila[0]);
-            ytdl.getInfo(id, function (err, info) {
-                if (err) throw err;
-                var title = info.title;
-                filanome.push(title);
-                let gif = ["https://cdn.discordapp.com/attachments/494191132318892043/510995558106791944/BRobot_Music_Happy.gif", "https://cdn.discordapp.com/attachments/494191132318892043/511175738892877835/BRobot_Music_Sit.gif"];
-                message.channel.send(gif[Math.floor(Math.random() * gif.length)]).then(msg => {
 
-                    msgid = msg.id;
+        var id = ytdl.getURLVideoID(fila[0]);
+        ytdl.getInfo(id, function (err, info) {
+            if (err) throw err;
+            var title = info.title;
+            filanome.push(title);
+            let gif = ["https://cdn.discordapp.com/attachments/494191132318892043/510995558106791944/BRobot_Music_Happy.gif", "https://cdn.discordapp.com/attachments/494191132318892043/511175738892877835/BRobot_Music_Sit.gif"];
+            message.channel.send(gif[Math.floor(Math.random() * gif.length)]).then(msg => {
 
-                })
-                message.channel.send("Tocando: **" + title + "**");
+                msgid = msg.id;
 
-            });
+            })
+            message.channel.send("Tocando: **" + title + "**");
 
-            dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
+        });
+
+        dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
 
 
 
-            dispatcher.on("end", end => {
-                votounext.clear();
-                votoupause.clear();
-                votouresume.clear();
-                votoustop.clear();
-                votosnext = 0;
-                votospause = 0;
-                votosresume = 0;
-                votosstop = 0;
-                filanome.shift();
-                message.channel.fetchMessage(msgid).then(m => {
-                    if (m.deletable) {
-                        m.delete();
-                    }
-                }).catch(err => console.log(err));
-
-                fila.shift();
-                if (fila[0]) {
-                    Play(connection);
+        dispatcher.on("end", end => {
+            votounext.clear();
+            votoupause.clear();
+            votouresume.clear();
+            votoustop.clear();
+            votosnext = 0;
+            votospause = 0;
+            votosresume = 0;
+            votosstop = 0;
+            filanome.shift();
+            message.channel.fetchMessage(msgid).then(m => {
+                if (m.deletable) {
+                    m.delete();
                 }
-                else {
-                    channel = client.channels.get(music);
-                    channel.leave();
-                    message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
-                    tocando = false;
-                }
+            }).catch(err => console.log(err));
 
-            });
+            fila.shift();
+            if (fila[0]) {
+                Play(connection);
+            }
+            else {
+                channel = client.channels.get(music);
+                channel.leave();
+                message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
+                tocando = false;
+            }
+
+        });
 
 
     }
     function PlayRadio(connection, url) {
 
-        radiodispatcher = connection.playStream(ytdl(url, {quality: '93'}));
+        radiodispatcher = connection.playStream(ytdl(url, { quality: '93' }));
         radiodispatcher.on("end", end => {
 
-            
+
 
         });
 
@@ -150,7 +156,7 @@ client.on("message", (message) => {
         }
         else if (message.content.includes("sim") || message.content.includes("Sim") || message.content.includes("ss") || message.content.includes("Ss") || message.content.includes("si") || message.content.includes("yee") || message.content.includes("yuss") || message.content.includes("yup")) {
 
-            message.channel.send("Ah ok, só confirmando. Se quiser ajuda usa o &help faz favor");
+            message.channel.send("Ah ok, só confirmando. Se quiser ajuda usa o **"+prefix+"help**faz favor");
             segundaresp = false;
 
         }
@@ -170,46 +176,46 @@ client.on("message", (message) => {
 
     if (command === prefix + "server") {
 
-            message.channel.send("Estou sendo Hosteado em **Heroku.com** <:poggers:464204342463823892>");
-        
+        message.channel.send("Estou sendo Hosteado em **Heroku.com** <:poggers:464204342463823892>");
+
 
     }
     if (command === prefix + "play") {
-            var url = message.content.replace(command, "").trim() + "";
-            message.delete();
-            const channel = client.channels.get(music);
-            if (args[1]) {
+        var url = message.content.replace(command, "").trim() + "";
+        message.delete();
+        const channel = client.channels.get(music);
+        if (args[1]) {
 
-                if (!channel) return console.error("Canal Inexistente!");
-                if (tocando) {
+            if (!channel) return console.error("Canal Inexistente!");
+            if (tocando) {
+                fila.push(url);
+                message.channel.send("Anotado! Vou deixar na fila!");
+            } else {
+                message.channel.send("Bora lá! :musical_note:");
+                channel.join().then(connection => {
                     fila.push(url);
-                    message.channel.send("Anotado! Vou deixar na fila!");
-                } else {
-                    message.channel.send("Bora lá! :musical_note:");
-                    channel.join().then(connection => {
-                        fila.push(url);
-                        Play(connection);
-                    }).catch(e => {
-                        // Oh no, it errored! Let's log it to console :)
-                        console.error(e);
-                    });
+                    Play(connection);
+                }).catch(e => {
+                    // Oh no, it errored! Let's log it to console :)
+                    console.error(e);
+                });
 
-                    tocando = true;
-                }
+                tocando = true;
+            }
 
-            }
-            else if (args[0]) {
-                message.channel.send("Opa! \n Para tocar algo, digite **" + prefix + "play (url do youtube)** e vai ser tocado  ou posto na fila!\n" +
-                    "Comandinhos úteis de música: \n" +
-                    "**" + prefix + "pause:** Pausa a música (derp)\n" +
-                    "**" + prefix + "resume:** continua a música de onde parou\n" +
-                    "**" + prefix + "next:** Abre um voto para pular a música\n" +
-                    "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
-                    "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila");
-            }
-        
-            
-        
+        }
+        else if (args[0]) {
+            message.channel.send("Opa! \n Para tocar algo, digite **" + prefix + "play (url do youtube)** e vai ser tocado  ou posto na fila!\n" +
+                "Comandinhos úteis de música: \n" +
+                "**" + prefix + "pause:** Pausa a música (derp)\n" +
+                "**" + prefix + "resume:** continua a música de onde parou\n" +
+                "**" + prefix + "next:** Abre um voto para pular a música\n" +
+                "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
+                "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila");
+        }
+
+
+
     }
     if (command === prefix + "pause" && tocando) {
 
@@ -278,7 +284,7 @@ client.on("message", (message) => {
 
         if (args[1]) {
 
-            if (args[1].includes("cock") || args[1].includes("penis") || args[1].includes("pinto") || args[1].includes("jiromba")|| args[1].includes("caralho")||args[1].includes("COCK") || args[1].includes("PENIS") || args[1].includes("PINTO") || args[1].includes("JIROMBA")|| args[1].includes("CARALHO")) {
+            if (args[1].includes("cock") || args[1].includes("penis") || args[1].includes("pinto") || args[1].includes("jiromba") || args[1].includes("caralho") || args[1].includes("COCK") || args[1].includes("PENIS") || args[1].includes("PINTO") || args[1].includes("JIROMBA") || args[1].includes("CARALHO")) {
 
                 message.channel.send("**VÊ SE VIRA HOMEM, RAPAZ >:(**");
 
@@ -411,7 +417,7 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=hHW1oY26kxQ";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -425,7 +431,7 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=hHyy_l0Hby8";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -440,7 +446,7 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=GVC5adzPpiE";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -455,7 +461,7 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=_aKThQcLbmc";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -470,7 +476,7 @@ client.on("message", (message) => {
 
                     url = "https://www.youtube.com/watch?v=2ccaHpy5Ewo";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -481,11 +487,11 @@ client.on("message", (message) => {
                     });
 
                     break;
-                    case "nightcorerock":
+                case "nightcorerock":
 
                     url = "https://www.youtube.com/watch?v=qrNSt3BXJg8";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -496,11 +502,11 @@ client.on("message", (message) => {
                     });
 
                     break;
-                    case "piano":
+                case "piano":
 
                     url = "https://www.youtube.com/watch?v=rLMHGjoxJdQ";
                     channel.join().then(connection => {
-                        if(radiodispatcher){
+                        if (radiodispatcher) {
                             radiodispatcher.end();
                         }
                         PlayRadio(connection, url);
@@ -520,9 +526,9 @@ client.on("message", (message) => {
                 "**lofi** - Lo-fi Music \n" +
                 "**vintage** - Músicas antigas \n" +
                 "**gaming** - Músicas para jogar \n" +
-                "**fantasy** - Céltica e fantasia\n" + 
-                "**calmjazz** - Jazz calmo \n" + 
-                "**piano** - Piano (derp) \n"+
+                "**fantasy** - Céltica e fantasia\n" +
+                "**calmjazz** - Jazz calmo \n" +
+                "**piano** - Piano (derp) \n" +
                 "**nightcorerock** - NightCore");
 
         }
@@ -576,7 +582,7 @@ client.on("message", (message) => {
         if (args[2]) { // Se o argumento for [1], ou seja um espaço a mais, ele vai fazer esta ação:
             message.channel.send(replies[Math.floor(Math.random() * replies.length)])
         } else // else = Caso ao contrário fazer: ou seja se não for args[1] ele vai mandar isso:
-            message.channel.send("Faça um ship!\n**Exemplo:** \n**&ship** eu waifu");
+            message.channel.send("Faça um ship!\n**Exemplo:** \n**"+prefix+"ship** eu waifu");
     }
     if (command === prefix + "darkness") {
         var darkness = new Discord.RichEmbed()
@@ -674,7 +680,7 @@ client.on("message", (message) => {
 
     if (command === prefix + "matematica" || command === prefix + "Matematica" || command === "matemática" || command === prefix + "Matemática") {
 
-        message.channel.send("Eu posso de ajudar com umas contas rápidas! \nSe você quiser fazer as contas, use o comando **"+prefix+"qnto** \nPara adição use **"+prefix+"qnto** n1+n2 \nPara subtração, use **"+prefix+"qnto** nq-n2 \nPara multiplicação, use **"+prefix+"qnto** n1xn2 \nPara divisão, use **"+prefix+"qnto** n1/n2 \nVlw!")
+        message.channel.send("Eu posso de ajudar com umas contas rápidas! \nSe você quiser fazer as contas, use o comando **" + prefix + "qnto** \nPara adição use **" + prefix + "qnto** n1+n2 \nPara subtração, use **" + prefix + "qnto** nq-n2 \nPara multiplicação, use **" + prefix + "qnto** n1xn2 \nPara divisão, use **" + prefix + "qnto** n1/n2 \nVlw!")
 
     }
 
@@ -958,41 +964,89 @@ client.on("message", (message) => {
 
         }
         else {
-            message.channel.send("Calma ae, meu jovem! Pra gente brincar disso tem que fazer certo! digite **parouimpar** suaescolha seunumero \n **Exemplo:** \n **&parouimpar** par 2");
+            message.channel.send("Calma ae, meu jovem! Pra gente brincar disso tem que fazer certo! digite **parouimpar** suaescolha seunumero \n **Exemplo:** \n **"+prefix+"parouimpar** par 2");
         }
 
     }
     if (command === prefix + "img") {
 
-        var tamanho = messageArray[1];
-        var larguraealtura = tamanho.split("x");
+        if (args[1]) {
 
-        message.channel.send("Aqui está sua imagem aleatória! \n https://picsum.photos/" + larguraealtura[0] + "/" + larguraealtura[1] + "/?random");
+            var tamanho = messageArray[1];
+            var larguraealtura = tamanho.split("x");
+
+            if(larguraealtura[1]){
+
+                message.channel.send("Aqui está sua imagem aleatória! \n https://picsum.photos/" + larguraealtura[0] + "/" + larguraealtura[1] + "/?random");
+
+            }
+            else{
+                message.channel.send("Por favor, lembre se de especificar a largura **E** a altura também! (ex: 200x400)");
+            }
+  
+        }
+        else{
+            message.channel.send("Opa!\n"+
+                                 "Com o comando **"+prefix+"img** eu posso te mostrar imagens aleatórias!\n"+
+                                 "Tenha em mente que são imagens **COMPLETAMENTE** aleatórias e desconexas"+
+                                 "então use por sua conta e risco:\n"+
+                                 "Use **"+prefix+"img** largura**x**altura (tudojunto)  para gerar uma foto!");
+        }
 
 
     }
+    if(command === prefix+"joke"){
+
+        Joke.getRandomDadJoke (function(joke) {
+            message.channel.send(joke);
+        });
+
+    }
+
+    if(command === prefix + "traslateto"){
+
+        if(args[2]){
+
+            var linguasel = args[1];
+            const foo = await translate(message.content.replace(command, "").replace(args[1], ""), linguasel);
+
+            message.channel.send("Traduzindo para " + linguasel + ", fica mais ou menos assim:\n"+foo);
+
+        }
+        else{
+            message.channel.send("Opa!\n"+
+                                 "para eu traduzir, vc precisa especificar alguns parâmetros! Vamos lá!\n"+
+                                 "Comece com **"+prefix+"translateto** (**ligua em inglês**) (**texto a ser traduzido**)\n"+
+                                 "**Ex:** "+prefix+"translateto Spanish Hello World!");
+        }
+
+    }
+
+
 
     //----------------ADMIN COMMANDS------------------------
 
     if (command === prefix + "help") {
-        
 
-            message.channel.send("**kkk eae men!**\n" +
-                "Use o comando **" + prefix + "ask** para fazer uma pergunta! \n" +
-                "Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n" +
-                "O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n " +
-                "Se quiser me mostrar algo use **" + prefix + "olhaso** \n" +
-                "Se quiser minha ajuda pra entender algo? Use **" + prefix + "vcentendeu**\n" +
-                "Posso responder aos comandos: **" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite** de maneira diferente em cada hora do dia!\n" +
-                "Para ver imagens aleatórias digite **" + prefix + "nut** \n" +
-                "Para ver gifs, use **" + prefix + "gif** \n" +
-                "Para ver alguns fun facts você pode usar **" + prefix + "funfacts**\n" +
-                "Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n" +
-                "Sabia que eu sei Desenhar? use **" + prefix + "desenha** que eu te mostro!\n" +
-                "Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n" +
-                "Tenho algumas rádios disponíveis também! Digite **"+prefix+"radio** para saber mais\n"+
-                "Para saber onde estou hosteado, use **" + prefix + "server**\n"+
-                "Para ver imagens de algum subreddit digite **"+prefix+"reddit** (nome do subreddit tudo minusculo sem espaços)");
+
+        message.channel.send("**kkk eae men!**\n" +
+            "Use o comando **" + prefix + "ask** para fazer uma pergunta! \n" +
+            "Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n" +
+            "O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n " +
+            "Se quiser me mostrar algo use **" + prefix + "olhaso** \n" +
+            "Se quiser minha ajuda pra entender algo? Use **" + prefix + "vcentendeu**\n" +
+            "Posso responder aos comandos: **" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite** de maneira diferente em cada hora do dia!\n" +
+            "Para ver imagens aleatórias digite **" + prefix + "nut** \n" +
+            "Para ver gifs, use **" + prefix + "gif** \n" +
+            "Para ver alguns fun facts você pode usar **" + prefix + "funfacts**\n" +
+            "Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n" +
+            "Sabia que eu sei Desenhar? use **" + prefix + "desenha** que eu te mostro!\n" +
+            "Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n" +
+            "Tenho algumas rádios disponíveis também! Digite **" + prefix + "radio** para saber mais\n" +
+            "Para saber onde estou hosteado, use **" + prefix + "server**\n" +
+            "Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n"+
+            "Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **"+prefix+"img**\n"+
+            "Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **"+prefix+"joke**");
 
 
     }
