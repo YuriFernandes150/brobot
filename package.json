@@ -19,6 +19,8 @@
     "mathjs": "^5.1.2",
     "opusscript": "0.0.6",
     "random-puppy": "^1.1.0",
+    "steam-news": "^1.0.0",
+    "steam-provider": "^0.3.2",
     "steamspy": "^1.0.3",
     "translate": "^1.0.3",
     "voca": "^1.4.0",

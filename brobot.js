@@ -16,6 +16,10 @@ var filanome = [];
 //Piadas
 var Joke = require('give-me-a-joke');
 
+//Steam
+const steam = require('steam-provider');
+const steamnews = require('steam-news');
+
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -153,7 +157,7 @@ client.on("message", (message) => {
         }
         else if (message.content.includes("sim") || message.content.includes("Sim") || message.content.includes("ss") || message.content.includes("Ss") || message.content.includes("si") || message.content.includes("yee") || message.content.includes("yuss") || message.content.includes("yup")) {
 
-            message.channel.send("Ah ok, só confirmando. Se quiser ajuda usa o **"+prefix+"help**faz favor");
+            message.channel.send("Ah ok, só confirmando. Se quiser ajuda usa o **" + prefix + "help**faz favor");
             segundaresp = false;
 
         }
@@ -514,7 +518,7 @@ client.on("message", (message) => {
                     });
 
                     break;
-                    case "nintendo":
+                case "nintendo":
 
                     url = "https://www.youtube.com/watch?v=cA3D-2c33DM";
                     channel.join().then(connection => {
@@ -541,7 +545,7 @@ client.on("message", (message) => {
                 "**fantasy** - Céltica e fantasia\n" +
                 "**calmjazz** - Jazz calmo \n" +
                 "**piano** - Piano (derp) \n" +
-                "**nightcorerock** - NightCore\n"+
+                "**nightcorerock** - NightCore\n" +
                 "**nintendo** - Músicas dos jogos da Nintendo");
 
         }
@@ -595,7 +599,7 @@ client.on("message", (message) => {
         if (args[2]) { // Se o argumento for [1], ou seja um espaço a mais, ele vai fazer esta ação:
             message.channel.send(replies[Math.floor(Math.random() * replies.length)])
         } else // else = Caso ao contrário fazer: ou seja se não for args[1] ele vai mandar isso:
-            message.channel.send("Faça um ship!\n**Exemplo:** \n**"+prefix+"ship** eu waifu");
+            message.channel.send("Faça um ship!\n**Exemplo:** \n**" + prefix + "ship** eu waifu");
     }
     if (command === prefix + "darkness") {
         var darkness = new Discord.RichEmbed()
@@ -977,7 +981,7 @@ client.on("message", (message) => {
 
         }
         else {
-            message.channel.send("Calma ae, meu jovem! Pra gente brincar disso tem que fazer certo! digite **parouimpar** suaescolha seunumero \n **Exemplo:** \n **"+prefix+"parouimpar** par 2");
+            message.channel.send("Calma ae, meu jovem! Pra gente brincar disso tem que fazer certo! digite **parouimpar** suaescolha seunumero \n **Exemplo:** \n **" + prefix + "parouimpar** par 2");
         }
 
     }
@@ -988,35 +992,155 @@ client.on("message", (message) => {
             var tamanho = messageArray[1];
             var larguraealtura = tamanho.split("x");
 
-            if(larguraealtura[1]){
+            if (larguraealtura[1]) {
 
                 message.channel.send("Aqui está sua imagem aleatória! \n https://picsum.photos/" + larguraealtura[0] + "/" + larguraealtura[1] + "/?random");
 
             }
-            else{
+            else {
                 message.channel.send("Por favor, lembre se de especificar a largura **E** a altura também! (ex: 200x400)");
             }
-  
+
         }
-        else{
-            message.channel.send("Opa!\n"+
-                                 "Com o comando **"+prefix+"img** eu posso te mostrar imagens aleatórias!\n"+
-                                 "Tenha em mente que são imagens **COMPLETAMENTE** aleatórias e desconexas"+
-                                 "então use por sua conta e risco:\n"+
-                                 "Use **"+prefix+"img** largura**x**altura (tudojunto)  para gerar uma foto!");
+        else {
+            message.channel.send("Opa!\n" +
+                "Com o comando **" + prefix + "img** eu posso te mostrar imagens aleatórias!\n" +
+                "Tenha em mente que são imagens **COMPLETAMENTE** aleatórias e desconexas" +
+                "então use por sua conta e risco:\n" +
+                "Use **" + prefix + "img** largura**x**altura (tudojunto)  para gerar uma foto!");
         }
 
 
     }
-    if(command === prefix+"joke"){
+    if (command === prefix + "joke") {
 
-        Joke.getRandomDadJoke (function(joke) {
+        Joke.getRandomDadJoke(function (joke) {
             message.channel.send(joke);
         });
 
     }
+    if (command === prefix + "steam") {
+
+        if (args[1]) {
+            message.channel.send("Perae! Vou Procurar!");
+            var provider = new steam.SteamProvider();
+
+            provider.search(message.content.replace(command, ""), 1, "portuguese", "brl").then(result => {
+
+                console.log(result);
+                if (result[0]) {
+
+                    result.forEach((SteamSearchEntry) => {
+
+                        provider.detail(SteamSearchEntry.id, "portuguese", "brl").then(detail => {
+                            console.log(detail);
+                            var preco;
+                            if (detail.$priceData.finalPrice === "0.0") {
+                                preco = "Free ou indisponível";
+                            }
+                            else {
+                                preco = "R$ " + detail.$priceData.finalPrice + " com desconto de " + detail.$priceData.discountPercent + "%";
+                            }
+                            var gameEmbed = new Discord.RichEmbed()
+                                .setAuthor(detail.$name + ", desenvolvido por " + detail.$otherData.developer)
+                                .setColor('RANDOM')
+                                .setTitle(detail.$genres)
+                                .setImage(detail.$otherData.$imageUrl)
+                                .setDescription("[ABRIR PÁGINA NA LOJA](" + SteamSearchEntry.url + ")")
+                                .addField("**Díponpivel em:**", detail.$otherData.$platforms)
+                                .addField("**Detalhes: **", detail.$otherData.features)
+                                .addField("**Atualmente custa:** ", preco)
+                                .addField("**Análises:** ", SteamSearchEntry.score)
+                                .addField("**Metacritic:** ", detail.$otherData.metacriticScore)
+                                .setFooter("Appid: " + SteamSearchEntry.id);
+                            message.channel.send(gameEmbed);
+
+                        })
+
+                    })
+
+                }
+                else {
+                    message.channel.send("Não encontrei nada! Tente ser mais específico");
+                }
 
 
+
+            })
+            .catch(err => {
+                console.log(err);
+                message.channel.send("Não encontrei nada! Tente ser mais específico");
+            });
+
+        }
+        else {
+            message.channel.send("Opa! \n" +
+                "Informe o título do jogo Steam que deseja ver!\n" +
+                "Use **" + prefix + "steam** (título do jogo) para exibir um detalhamento do mesmo");
+        }
+
+    }
+    if (command === prefix + "steamnews") {
+
+        if (args[2]) {
+            message.channel.send("Buscando news!");
+            var provider = new steam.SteamProvider();
+            provider.search(message.content.replace(command, "").replace(args[1], "").trim(), 1, "portuguese", "brl").then(result => {
+                console.log(result);
+                if (result[0]) {
+                    result.forEach((SteamSearchEntry) => {
+                        console.log(SteamSearchEntry.id);
+
+                        steamnews.getNews(SteamSearchEntry.id, args[1], '700', (err, callback) => {
+                            if(err)throw err;
+                            console.log(callback);
+                            var i = 0;
+                            let listanews = [];
+                            var newsEmbed = new Discord.RichEmbed()
+                                .setAuthor(SteamSearchEntry.$name)
+                                .setTitle("**Notícias**")
+                                .setColor('RANDOM');
+                            for (var i = 0; i < callback.length; i++) {
+                                var num = i + 1;
+                                var title = callback[i].title;
+                                var content = callback[i].contents;
+                                listanews.push("[Noticia " + num + "](" + callback[i].url + ")");
+                                newsEmbed.addField(title, content);
+                            }
+                            provider.detail(SteamSearchEntry.id, "portuguese", "brl").then(detail => {
+                                console.log(detail);
+                                newsEmbed.setThumbnail(detail.$otherData.$imageUrl);
+                            });
+                            newsEmbed.setDescription("**Links:**\n" + listanews);
+                            newsEmbed.setFooter("Se você não ver nenhuma notícia, provavelmente não tem");
+
+                            message.channel.send(newsEmbed);
+                            listanews = [];
+                        });
+
+                    })
+                }
+                else {
+                    message.channel.send("Não encontrei nada! Tente ser mais específico");
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+                message.channel.send("Não encontrei nada! Tente ser mais específico");
+            });
+
+
+        }
+        else {
+            message.channel.send("Opa!\n" +
+                "Para ver as notícias dos seus jogos favoritos,\n" +
+                "Use **" + prefix + "steamnews** (numero de noticias [no máximo 10]) (Nome do Jogo)");
+
+
+        }
+
+    }
 
     //----------------ADMIN COMMANDS------------------------
 
@@ -1028,9 +1152,7 @@ client.on("message", (message) => {
             "Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n" +
             "O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n " +
             "Se quiser me mostrar algo use **" + prefix + "olhaso** \n" +
-            "Se quiser minha ajuda pra entender algo? Use **" + prefix + "vcentendeu**\n" +
             "Posso responder aos comandos: **" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite** de maneira diferente em cada hora do dia!\n" +
-            "Para ver imagens aleatórias digite **" + prefix + "nut** \n" +
             "Para ver gifs, use **" + prefix + "gif** \n" +
             "Para ver alguns fun facts você pode usar **" + prefix + "funfacts**\n" +
             "Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n" +
@@ -1038,9 +1160,11 @@ client.on("message", (message) => {
             "Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n" +
             "Tenho algumas rádios disponíveis também! Digite **" + prefix + "radio** para saber mais\n" +
             "Para saber onde estou hosteado, use **" + prefix + "server**\n" +
-            "Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n"+
-            "Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **"+prefix+"img**\n"+
-            "Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **"+prefix+"joke**");
+            "Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n" +
+            "Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **" + prefix + "img**\n" +
+            "Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **" + prefix + "joke**" +
+            "Posso te mostrar alguns detalhes de jogos da steam! basta você digitar **" + prefix + "steam** (nome do jogo)zn"+
+            "Posso te mostrar noticias de jogos Steam! Basta digitar **"+prefix+"steamnews** (numero de news) (nome do jogo)");
 
 
     }
@@ -1093,4 +1217,4 @@ client.on("message", (message) => {
 
 
 });
-client.login(process.env.TOKEN);
+client.login("NDkzODUxMjkzNjY4ODY4MTE3.Doq_SQ.2vE2ULGb3HFXHqOxuzLwyzYnI4Y");
