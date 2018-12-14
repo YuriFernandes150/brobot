@@ -1012,7 +1012,7 @@ client.on("message", (message) => {
 
             message.channel.send("Traduzindo para " + linguasel + ", fica mais ou menos assim:\n"+foo);
 
-        }
+        } 
         else{
             message.channel.send("Opa!\n"+
                                  "para eu traduzir, vc precisa especificar alguns parâmetros! Vamos lá!\n"+
