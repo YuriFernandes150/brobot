@@ -1162,8 +1162,8 @@ client.on("message", (message) => {
             "Para saber onde estou hosteado, use **" + prefix + "server**\n" +
             "Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n" +
             "Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **" + prefix + "img**\n" +
-            "Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **" + prefix + "joke**" +
-            "Posso te mostrar alguns detalhes de jogos da steam! basta você digitar **" + prefix + "steam** (nome do jogo)zn"+
+            "Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **" + prefix + "joke**\n" +
+            "Posso te mostrar alguns detalhes de jogos da steam! basta você digitar **" + prefix + "steam** (nome do jogo)\n"+
             "Posso te mostrar noticias de jogos Steam! Basta digitar **"+prefix+"steamnews** (numero de news) (nome do jogo)");
 
 
