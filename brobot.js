@@ -1147,24 +1147,24 @@ client.on("message", (message) => {
     if (command === prefix + "help") {
 
 
-        message.channel.send("**kkk eae men!**\n" +
-            "Use o comando **" + prefix + "ask** para fazer uma pergunta! \n" +
-            "Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n" +
-            "O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n " +
-            "Se quiser me mostrar algo use **" + prefix + "olhaso** \n" +
-            "Posso responder aos comandos: **" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite** de maneira diferente em cada hora do dia!\n" +
-            "Para ver gifs, use **" + prefix + "gif** \n" +
-            "Para ver alguns fun facts você pode usar **" + prefix + "funfacts**\n" +
-            "Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n" +
-            "Sabia que eu sei Desenhar? use **" + prefix + "desenha** que eu te mostro!\n" +
-            "Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n" +
-            "Tenho algumas rádios disponíveis também! Digite **" + prefix + "radio** para saber mais\n" +
-            "Para saber onde estou hosteado, use **" + prefix + "server**\n" +
-            "Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n" +
-            "Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **" + prefix + "img**\n" +
-            "Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **" + prefix + "joke**\n" +
-            "Posso te mostrar alguns detalhes de jogos da steam! basta você digitar **" + prefix + "steam** (nome do jogo)\n"+
-            "Posso te mostrar noticias de jogos Steam! Basta digitar **"+prefix+"steamnews** (numero de news) (nome do jogo)");
+        message.channel.send("**kkk eae men!**\n\n" +
+            "-Use o comando **" + prefix + "ask** para fazer uma pergunta! \n\n" +
+            "-Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n\n" +
+            "-O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n\n " +
+            "-Se quiser me mostrar algo use **" + prefix + "olhaso** \n\n" +
+            "-Posso responder aos comandos: **" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite** de maneira diferente em cada hora do dia!\n\n" +
+            "-Para ver gifs, use **" + prefix + "gif** \n\n" +
+            "Para ver alguns fun facts você pode usar **" + prefix + "funfacts**\n\n" +
+            "-Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n\n" +
+            "-Sabia que eu sei Desenhar? use **" + prefix + "desenha** que eu te mostro!\n\n" +
+            "-Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n\n" +
+            "-Tenho algumas rádios disponíveis também! Digite **" + prefix + "radio** para saber mais\n\n" +
+            "-Para saber onde estou hosteado, use **" + prefix + "server**\n\n" +
+            "-Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n\n" +
+            "-Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **" + prefix + "img**\n\n" +
+            "-Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **" + prefix + "joke**\n\n" +
+            "-Posso te mostrar alguns detalhes de jogos da steam! basta você digitar **" + prefix + "steam** (nome do jogo)\n\n"+
+            "-Posso te mostrar noticias de jogos Steam! Basta digitar **"+prefix+"steamnews** (numero de news) (nome do jogo)");
 
 
     }
