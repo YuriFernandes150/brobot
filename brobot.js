@@ -1146,25 +1146,29 @@ client.on("message", (message) => {
 
     if (command === prefix + "help") {
 
+        var helpembed = new Discord.RichEmbed()
+        .setAuthor("**AJUDA**")
+        .setTitle("**COMANDOS**")
+        .setColor('RANDOM')
+        .setThumbnail("https://cdn.discordapp.com/attachments/494191132318892043/523536199995097099/BRobot_Help.png")
+        .addField("**" + prefix + "ask**:", "Para fazer uma pergunta!")
+        .addField("**" + prefix + "ship**:", "Com esse comando eu posso te dizer se um ship é bom ou não.")
+        .addField("**" + prefix + "matematica**:", "Esse comando pode te dar algumas instruções de como eu posso te ajudar com matemática!")
+        .addField("**" + prefix + "olhaso**", "Use esse comando se quiser me mostrar algo.")
+        .addField("**" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite**", "Eu respondo a cada um desses comandos de forma diferente de acordo com a hora do dia!")
+        .addField("**" + prefix + "gif**:", "Busca gifs no site Giphy, você pode usar esse comando sozinho para gerar uma gif aleatória, ou escrever uma tag depois do comando para ver algo mais específico")
+        .addField("**" + prefix + "parouimpar**:","Esse comando serve para brincarmos de par ou ímpar! Para mais instruções, basta digitar o comando para descobrir mais sobre ele")
+        .addField("**" + prefix + "desenha**:", "Eu desenho algo aleatório para você!")
+        .addField("**" + prefix + "play**:", "Toca músicas no canal de voz #música, utilize o comando para saber mais sobre ele")
+        .addField("**" + prefix + "radio**:", "Toca rádios ao vivo no canal #música")
+        .addField("**" + prefix + "reddit**:", "Busca imagens, gifs e vídeos direto do Reddit")
+        .addField("**" + prefix + "joke**", "Com esse comando eu conto piadas de tiozão do pavê (Spirik)")
+        .addField("*" + prefix + "steam** (nome do jogo):","Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
+        .addField("**"+prefix+"steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
+        .setFooter("Novos comandos serão adicionados em breve");
 
-        message.channel.send("**kkk eae men!**\n\n" +
-            "-Use o comando **" + prefix + "ask** para fazer uma pergunta! \n\n" +
-            "-Com o comando **" + prefix + "ship** eu posso te dizer se um ship é bom ou não \n\n" +
-            "-O comando **" + prefix + "matematica** pode te dar algumas instruções de como eu posso te ajudar com matemática!\n\n " +
-            "-Se quiser me mostrar algo use **" + prefix + "olhaso** \n\n" +
-            "-Posso responder aos comandos: **" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite** de maneira diferente em cada hora do dia!\n\n" +
-            "-Para ver gifs, use **" + prefix + "gif** \n\n" +
-            "Para ver alguns fun facts você pode usar **" + prefix + "funfacts**\n\n" +
-            "-Nós podemos jogar par ou ímpar! use o comando **" + prefix + "parouimpar** para brincar!\n\n" +
-            "-Sabia que eu sei Desenhar? use **" + prefix + "desenha** que eu te mostro!\n\n" +
-            "-Posso tocar músicas! Digite **" + prefix + "play** para saber mais\n\n" +
-            "-Tenho algumas rádios disponíveis também! Digite **" + prefix + "radio** para saber mais\n\n" +
-            "-Para saber onde estou hosteado, use **" + prefix + "server**\n\n" +
-            "-Para ver imagens de algum subreddit digite **" + prefix + "reddit** (nome do subreddit tudo minusculo sem espaços)\n\n" +
-            "-Também posso mostrar várias imgs aleatórias com tamanhos customizados usando o comando **" + prefix + "img**\n\n" +
-            "-Sei Contar piadas ruins >:D (Pirik q me ensinou). Se você quiser se atrever, basta usar o comando **" + prefix + "joke**\n\n" +
-            "-Posso te mostrar alguns detalhes de jogos da steam! basta você digitar **" + prefix + "steam** (nome do jogo)\n\n"+
-            "-Posso te mostrar noticias de jogos Steam! Basta digitar **"+prefix+"steamnews** (numero de news) (nome do jogo)");
+
+        message.channel.send(helpembed);
 
 
     }
