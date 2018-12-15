@@ -1025,14 +1025,14 @@ client.on("message", (message) => {
             message.channel.send("Perae! Vou Procurar!");
             var provider = new steam.SteamProvider();
 
-            provider.search(message.content.replace(command, ""), 1, "portuguese", "brl").then(result => {
+            provider.search(message.content.replace(command, ""), 1, "portuguese", "br").then(result => {
 
                 console.log(result);
                 if (result[0]) {
 
                     result.forEach((SteamSearchEntry) => {
 
-                        provider.detail(SteamSearchEntry.id, "portuguese", "brl").then(detail => {
+                        provider.detail(SteamSearchEntry.id, "portuguese", "br").then(detail => {
                             console.log(detail);
                             var preco;
                             if (detail.$priceData.finalPrice === "0.0") {
@@ -1085,7 +1085,7 @@ client.on("message", (message) => {
         if (args[2]) {
             message.channel.send("Buscando news!");
             var provider = new steam.SteamProvider();
-            provider.search(message.content.replace(command, "").replace(args[1], "").trim(), 1, "portuguese", "brl").then(result => {
+            provider.search(message.content.replace(command, "").replace(args[1], "").trim(), 1, "portuguese", "br").then(result => {
                 console.log(result);
                 if (result[0]) {
                     result.forEach((SteamSearchEntry) => {
@@ -1107,7 +1107,7 @@ client.on("message", (message) => {
                                 listanews.push("[Noticia " + num + "](" + callback[i].url + ")");
                                 newsEmbed.addField(title, content);
                             }
-                            provider.detail(SteamSearchEntry.id, "portuguese", "brl").then(detail => {
+                            provider.detail(SteamSearchEntry.id, "portuguese", "br").then(detail => {
                                 console.log(detail);
                                 newsEmbed.setThumbnail(detail.$otherData.$imageUrl);
                             });
