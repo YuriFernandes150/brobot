@@ -1163,7 +1163,7 @@ client.on("message", (message) => {
         .addField("**" + prefix + "radio**:", "Toca rádios ao vivo no canal #música")
         .addField("**" + prefix + "reddit**:", "Busca imagens, gifs e vídeos direto do Reddit")
         .addField("**" + prefix + "joke**", "Com esse comando eu conto piadas de tiozão do pavê (Spirik)")
-        .addField("*" + prefix + "steam** (nome do jogo):","Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
+        .addField("**" + prefix + "steam** (nome do jogo):","Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
         .addField("**"+prefix+"steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
         .addBlankField()
         .addBlankField()
