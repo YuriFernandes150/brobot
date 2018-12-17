@@ -10,6 +10,8 @@ var giphyclient = GphApiClient("1Z69tcE44eF9YM6OKIMpUiy8vCvyvyPv");
 
 //Musicas
 const ytdl = require("ytdl-core");
+const ytlist = require('youtube-playlist');
+var ytSearch = require('youtube-search');
 var fila = [];
 var filanome = [];
 
@@ -31,7 +33,6 @@ var segundaresp = false;
 var tocando = false;
 var dispatcher;
 var radiodispatcher;
-var msgid;
 var votospause = 0;
 var votosresume = 0;
 var votosnext = 0;
@@ -73,28 +74,8 @@ client.on("message", (message) => {
     ;
 
     function Play(connection) {
-
-
-
-
-        var id = ytdl.getURLVideoID(fila[0]);
-        ytdl.getInfo(id, function (err, info) {
-            if (err) throw err;
-            var title = info.title;
-            filanome.push(title);
-            let gif = ["https://cdn.discordapp.com/attachments/494191132318892043/510995558106791944/BRobot_Music_Happy.gif", "https://cdn.discordapp.com/attachments/494191132318892043/511175738892877835/BRobot_Music_Sit.gif"];
-            message.channel.send(gif[Math.floor(Math.random() * gif.length)]).then(msg => {
-
-                msgid = msg.id;
-
-            })
-            message.channel.send("Tocando: **" + title + "**");
-
-        });
-
         dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
-
-
+        message.channel.send("Tocando: **" + filanome[0] + "**");
 
         dispatcher.on("end", end => {
             votounext.clear();
@@ -106,12 +87,6 @@ client.on("message", (message) => {
             votosresume = 0;
             votosstop = 0;
             filanome.shift();
-            message.channel.fetchMessage(msgid).then(m => {
-                if (m.deletable) {
-                    m.delete();
-                }
-            }).catch(err => console.log(err));
-
             fila.shift();
             if (fila[0]) {
                 Play(connection);
@@ -185,28 +160,78 @@ client.on("message", (message) => {
         var url = message.content.replace(command, "").trim() + "";
         message.delete();
         const channel = client.channels.get(music);
-        if (args[1]) {
+        if (args[2]) {
 
-            if (!channel) return console.error("Canal Inexistente!");
-            if (tocando) {
-                fila.push(url);
-                message.channel.send("Anotado! Vou deixar na fila!");
-            } else {
-                message.channel.send("Bora lá! :musical_note:");
-                channel.join().then(connection => {
+            if (args[1] === "url") {
+                if (!channel) return console.error("Canal Inexistente!");
+                if (tocando) {
                     fila.push(url);
-                    Play(connection);
-                }).catch(e => {
-                    // Oh no, it errored! Let's log it to console :)
-                    console.error(e);
-                });
+                    message.channel.send("Anotado! Vou deixar na fila!");
+                    var id = ytdl.getURLVideoID(url);
+                    ytdl.getInfo(id, function (err, info) {
+                        if (err) throw err;
+                        var title = info.title;
+                        filanome.push(title);
+                    });
+                } else {
+                    message.channel.send("Bora lá! :musical_note:");
+                    channel.join().then(connection => {
+                        fila.push(url);
+                        var id = ytdl.getURLVideoID(url);
+                        ytdl.getInfo(id, function (err, info) {
+                            if (err) throw err;
+                            var title = info.title;
+                            filanome.push(title);
+                        });
+                        Play(connection);
+                    }).catch(e => {
+                        // Oh no, it errored! Let's log it to console :)
+                        console.error(e);
+                    });
 
-                tocando = true;
+                    tocando = true;
+                }
+
+            }
+            else if (args[1] === "name") {
+
+                var opts = {
+                    maxResults: 1,
+                    key: process.env.YOUTUBE
+                };
+
+                ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
+                    if (err) console.log(err);
+                    console.log(results);
+
+                    const channel = client.channels.get(music);
+                    if (!channel) return console.error("Canal Inexistente!");
+                    if (tocando) {
+                        fila.push(results[0].link);
+                        filanome.push(results[0].title);
+                        message.channel.send("Anotado! Vou deixar na fila!");
+                    } else {
+                        message.channel.send("Bora lá! :musical_note:");
+                        channel.join().then(connection => {
+                            fila.push(results[0].link);
+                            filanome.push(results[0].title);
+                            Play(connection);
+                        }).catch(e => {
+                            // Oh no, it errored! Let's log it to console :)
+                            console.error(e);
+                        });
+
+                        tocando = true;
+                    }
+
+                })
+
             }
 
+
         }
-        else if (args[0]) {
-            message.channel.send("Opa! \n Para tocar algo, digite **" + prefix + "play (url do youtube)** e vai ser tocado  ou posto na fila!\n" +
+        else {
+            message.channel.send("Opa! \n Para tocar algo, digite **" + prefix + "play (name para procurar por titulo e url para inserir um link) (nome ou url)** e vai ser tocado  ou posto na fila!\n" +
                 "Comandinhos úteis de música: \n" +
                 "**" + prefix + "pause:** Pausa a música (derp)\n" +
                 "**" + prefix + "resume:** continua a música de onde parou\n" +
@@ -1067,10 +1092,10 @@ client.on("message", (message) => {
 
 
             })
-            .catch(err => {
-                console.log(err);
-                message.channel.send("Não encontrei nada! Tente ser mais específico");
-            });
+                .catch(err => {
+                    console.log(err);
+                    message.channel.send("Não encontrei nada! Tente ser mais específico");
+                });
 
         }
         else {
@@ -1092,7 +1117,7 @@ client.on("message", (message) => {
                         console.log(SteamSearchEntry.id);
 
                         steamnews.getNews(SteamSearchEntry.id, args[1], '700', (err, callback) => {
-                            if(err)throw err;
+                            if (err) throw err;
                             console.log(callback);
                             var i = 0;
                             let listanews = [];
@@ -1125,10 +1150,10 @@ client.on("message", (message) => {
                 }
 
             })
-            .catch(err => {
-                console.log(err);
-                message.channel.send("Não encontrei nada! Tente ser mais específico");
-            });
+                .catch(err => {
+                    console.log(err);
+                    message.channel.send("Não encontrei nada! Tente ser mais específico");
+                });
 
 
         }
@@ -1142,32 +1167,32 @@ client.on("message", (message) => {
 
     }
 
+
     //----------------ADMIN COMMANDS------------------------
 
     if (command === prefix + "help") {
 
         var helpembed = new Discord.RichEmbed()
-        .setAuthor("AJUDA")
-        .setTitle("**COMANDOS:**")
-        .setColor('RANDOM')
-        .setThumbnail("https://cdn.discordapp.com/attachments/494191132318892043/523536199995097099/BRobot_Help.png")
-        .addField("**" + prefix + "ask**:", "Para fazer uma pergunta!")
-        .addField("**" + prefix + "ship**:", "Com esse comando eu posso te dizer se um ship é bom ou não.")
-        .addField("**" + prefix + "matematica**:", "Esse comando pode te dar algumas instruções de como eu posso te ajudar com matemática!")
-        .addField("**" + prefix + "olhaso**", "Use esse comando se quiser me mostrar algo.")
-        .addField("**" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite**", "Eu respondo a cada um desses comandos de forma diferente de acordo com a hora do dia!")
-        .addField("**" + prefix + "gif**:", "Busca gifs no site Giphy, você pode usar esse comando sozinho para gerar uma gif aleatória, ou escrever uma tag depois do comando para ver algo mais específico")
-        .addField("**" + prefix + "parouimpar**:","Esse comando serve para brincarmos de par ou ímpar! Para mais instruções, basta digitar o comando para descobrir mais sobre ele")
-        .addField("**" + prefix + "desenha**:", "Eu desenho algo aleatório para você!")
-        .addField("**" + prefix + "play**:", "Toca músicas no canal de voz #música, utilize o comando para saber mais sobre ele")
-        .addField("**" + prefix + "radio**:", "Toca rádios ao vivo no canal #música")
-        .addField("**" + prefix + "reddit**:", "Busca imagens, gifs e vídeos direto do Reddit")
-        .addField("**" + prefix + "joke**", "Com esse comando eu conto piadas de tiozão do pavê (Spirik)")
-        .addField("**" + prefix + "steam** (nome do jogo):","Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
-        .addField("**"+prefix+"steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
-        .addBlankField()
-        .addBlankField()
-        .setFooter("Novos comandos serão adicionados em breve");
+            .setAuthor("AJUDA")
+            .setTitle("**COMANDOS:**")
+            .setColor('RANDOM')
+            .setThumbnail("https://cdn.discordapp.com/attachments/494191132318892043/523536199995097099/BRobot_Help.png")
+            .addField("**" + prefix + "ask**:", "Para fazer uma pergunta!")
+            .addField("**" + prefix + "ship**:", "Com esse comando eu posso te dizer se um ship é bom ou não.")
+            .addField("**" + prefix + "matematica**:", "Esse comando pode te dar algumas instruções de como eu posso te ajudar com matemática!")
+            .addField("**" + prefix + "olhaso**", "Use esse comando se quiser me mostrar algo.")
+            .addField("**" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite**", "Eu respondo a cada um desses comandos de forma diferente de acordo com a hora do dia!")
+            .addField("**" + prefix + "gif**:", "Busca gifs no site Giphy, você pode usar esse comando sozinho para gerar uma gif aleatória, ou escrever uma tag depois do comando para ver algo mais específico")
+            .addField("**" + prefix + "parouimpar**:", "Esse comando serve para brincarmos de par ou ímpar! Para mais instruções, basta digitar o comando para descobrir mais sobre ele")
+            .addField("**" + prefix + "desenha**:", "Eu desenho algo aleatório para você!")
+            .addField("**" + prefix + "play**:", "Toca músicas no canal de voz #música, utilize o comando para saber mais sobre ele")
+            .addField("**" + prefix + "radio**:", "Toca rádios ao vivo no canal #música")
+            .addField("**" + prefix + "reddit**:", "Busca imagens, gifs e vídeos direto do Reddit")
+            .addField("**" + prefix + "joke**", "Com esse comando eu conto piadas de tiozão do pavê (Spirik)")
+            .addField("**" + prefix + "steam** (nome do jogo):", "Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
+            .addField("**" + prefix + "steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
+            .addBlankField()
+            .setFooter("Novos comandos serão adicionados em breve");
 
 
         message.channel.send(helpembed);
