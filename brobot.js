@@ -1186,8 +1186,8 @@ client.on("message", (message) => {
 
             google_customsearch.cse.list({
                 "q": message.content.replace(command, ""),
-                "key": "AIzaSyBiQVWj72iMZO4C0c1arfWTKScW1_it4x0",
-                "cx": "002936870035192773339:fld_iaolxee",
+                "key": process.env.GOOGLE,
+                "cx": process.env.CX,
                 "num": 3
             }).then(data => {
                 let listaresultados = [];
