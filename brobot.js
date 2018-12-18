@@ -1294,4 +1294,4 @@ client.on("message", (message) => {
 
 
 });
-client.login("NDkzODUxMjkzNjY4ODY4MTE3.DvWIvQ.qnBIXIzG6gO9aBdFIHcBkUnWDVc");
+client.login(process.env.TOKEN);
