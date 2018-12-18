@@ -22,6 +22,9 @@ var Joke = require('give-me-a-joke');
 const steam = require('steam-provider');
 const steamnews = require('steam-news');
 
+//Google
+let google_customsearch = require('@datafire/google_customsearch').create();
+
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -173,7 +176,7 @@ client.on("message", (message) => {
                         var title = info.title;
                         filanome.push(title);
                     });
-                } else {
+                } else if (args[1 === "name"]) {
                     message.channel.send("Bora lá! :musical_note:");
                     channel.join().then(connection => {
                         fila.push(url);
@@ -191,6 +194,7 @@ client.on("message", (message) => {
 
                     tocando = true;
                 }
+
 
             }
             else if (args[1] === "name") {
@@ -227,11 +231,21 @@ client.on("message", (message) => {
                 })
 
             }
+            else {
+
+                message.channel.send("Opa! Não se esqueça de usar os prefixos certos!\n" +
+                    prefix + "play name (nome da música)\n" +
+                    prefix + "play url (link do youtube)\n" +
+                    "Somente play não vai masi funcionar!");
+
+            }
 
 
         }
         else {
-            message.channel.send("Opa! \n Para tocar algo, digite **" + prefix + "play (name para procurar por titulo e url para inserir um link) (nome ou url)** e vai ser tocado  ou posto na fila!\n" +
+            message.channel.send("Opa! \n Para tocar algo, digite **" +
+                prefix + "play name (nome da música)**\nOu **" +
+                prefix + "play url (link do youtube)** e vai ser tocado  ou posto na fila!\n" +
                 "Comandinhos úteis de música: \n" +
                 "**" + prefix + "pause:** Pausa a música (derp)\n" +
                 "**" + prefix + "resume:** continua a música de onde parou\n" +
@@ -1166,6 +1180,37 @@ client.on("message", (message) => {
         }
 
     }
+    if (command === prefix + "google") {
+
+        if (args[1]) {
+
+            google_customsearch.cse.list({
+                "q": message.content.replace(command, ""),
+                "key": "AIzaSyBiQVWj72iMZO4C0c1arfWTKScW1_it4x0",
+                "cx": "002936870035192773339:fld_iaolxee",
+                "num": 3
+            }).then(data => {
+                let listaresultados = [];
+                var num = 0;
+                console.log(data);
+                resultEmbed = new Discord.RichEmbed()
+                    .setTitle(data.searchInformation.formattedTotalResults + " resultados em " + data.searchInformation.formattedSearchTime + " segundos")
+                    .setColor('RANDOM');
+                for (var i = 0; i < data.items.length; i++) {
+                    num = num+1;
+                    listaresultados.push("[Resultado "+num+"](" + data.items[i].link + ")")
+                    resultEmbed.addField(data.items[i].title, data.items[i].snippet);
+                }
+                resultEmbed.setDescription("**Fontes:** "+listaresultados);
+                resultEmbed.setFooter("Resultados podem variar de acordo com a forma de você escrever sua pesquisa ;)");
+                message.channel.send(resultEmbed);
+                listaresultados = [];
+
+            });
+
+        }
+
+    }
 
 
     //----------------ADMIN COMMANDS------------------------
@@ -1191,6 +1236,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "joke**", "Com esse comando eu conto piadas de tiozão do pavê (Spirik)")
             .addField("**" + prefix + "steam** (nome do jogo):", "Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
             .addField("**" + prefix + "steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
+            .addField("**" + prefix + "google** (sua pesquisa)", "Eu consigo pesquisar no google! \nPosso fazer até 100 pesquisas por dia (Pirik n quer pagar o plano de 1000 pesquisas <:doidinha:404444360537538571>)\nCada pesquisa retorna até 3 resultados, com link incluso!)")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
@@ -1248,4 +1294,4 @@ client.on("message", (message) => {
 
 
 });
-client.login(process.env.TOKEN);
+client.login("NDkzODUxMjkzNjY4ODY4MTE3.DvWIvQ.qnBIXIzG6gO9aBdFIHcBkUnWDVc");
