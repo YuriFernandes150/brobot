@@ -47,7 +47,8 @@ const votoustop = new Set();
 
 client.on('error', function () {
 
-    var date = new Date();
+    var offset = -3;
+        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
     console.log("Ocorreu um erro de conexão Às " + date.getHours() + ":" + date.getMinutes());
 
 });
@@ -55,7 +56,8 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 
 
     client.on('message', message => {
-        var date = new Date();
+        var offset = -3;
+        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
         if (message.isMentioned(client.user)) {
             message.reply("pra q vc ta me enchendo o saco em plenas " + date.getHours() + " horas? Fala o q q vc quer");
         }
@@ -160,7 +162,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "play") {
-        var url = message.content.replace(command, "").trim() + "";
+        var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
         message.delete();
         const channel = client.channels.get(music);
         if (args[2]) {
@@ -376,12 +378,14 @@ client.on("message", (message) => {
                     message.channel.send("Temos votos o suficiente! Parando e limpando fila...");
                     chan.leave();
                     fila = [];
+                    filanome = [];
                     tocando = false;
                     votosstop = 0;
                     votoustop.clear();
+                    dispatcher.end();
                 }
                 else {
-                    message.channel.send(message.author + " votou para parar e resetar, temos " + votos + "/" + pessoas + " a favor de parar");
+                    message.channel.send(message.author + " votou para parar e resetar, temos " + votosstop + "/" + pessoas + " a favor de parar");
                 }
 
             }
@@ -442,6 +446,7 @@ client.on("message", (message) => {
             if (filanome[1]) {
                 message.channel.send("Próxima faixa: **" + filanome[1] + "**");
             }
+
         }
         else {
             message.channel.send("Não Há mais músicas na fila!");
@@ -460,6 +465,9 @@ client.on("message", (message) => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
                         }
+                        if (dispatcher) {
+                            dispatcher.end();
+                        }
                         PlayRadio(connection, url);
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
@@ -473,6 +481,9 @@ client.on("message", (message) => {
                     channel.join().then(connection => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
+                        }
+                        if (dispatcher) {
+                            dispatcher.end();
                         }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
@@ -489,6 +500,9 @@ client.on("message", (message) => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
                         }
+                        if (dispatcher) {
+                            dispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -503,6 +517,9 @@ client.on("message", (message) => {
                     channel.join().then(connection => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
+                        }
+                        if (dispatcher) {
+                            dispatcher.end();
                         }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
@@ -519,6 +536,9 @@ client.on("message", (message) => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
                         }
+                        if (dispatcher) {
+                            dispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -533,6 +553,9 @@ client.on("message", (message) => {
                     channel.join().then(connection => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
+                        }
+                        if (dispatcher) {
+                            dispatcher.end();
                         }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
@@ -549,6 +572,9 @@ client.on("message", (message) => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
                         }
+                        if (dispatcher) {
+                            dispatcher.end();
+                        }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
                     }).catch(e => {
@@ -563,6 +589,9 @@ client.on("message", (message) => {
                     channel.join().then(connection => {
                         if (radiodispatcher) {
                             radiodispatcher.end();
+                        }
+                        if (dispatcher) {
+                            dispatcher.end();
                         }
                         PlayRadio(connection, url);
                         console.log("Successfully connected.");
@@ -608,7 +637,7 @@ client.on("message", (message) => {
         })
             .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
 
-        let replies = ["Sim!", "É Claro ue :3", "Claro q sim!", "MAN É TÃO OBVIO Q SS", "Yee", "YUSS", "Yup", "Sim XD", "Obviamente", "N faço idéia", "talvez sim, talvez não", "Não sei, será?!", "Nope men", "MDS NÃO!", "Claro!...que não .-.", "Sla po :7", "Nem", "Nah", "Creio q não, jovem", "Hmmmmmmmmm... n sei te dizer...", ":regional_indicator_n: :regional_indicator_o:", ":regional_indicator_y: :regional_indicator_e: :regional_indicator_s:"]; // Respostas do Dark Code.
+        let replies = ["Sim!", "É Claro ue :3", "Claro q sim!", "MAN É TÃO OBVIO Q SS", "Yee", "YUSS", "Yup", "Sim XD", "Obviamente", "N faço idéia", "talvez sim, talvez não", "Não sei, será?!", "Nope men", "MDS NÃO!", "Claro!...que não .-.", "Sla po :7", "Nem", "Nah", "Creio q não, jovem", "Hmmmmmmmmm... n sei te dizer...", ":regional_indicator_n: :regional_indicator_o:", ":regional_indicator_y: :regional_indicator_e: :regional_indicator_s:"];
         setTimeout(function () {
 
             if (args[1]) { // Se o argumento for [1], ou seja um espaço a mais, ele vai fazer esta ação:
@@ -836,7 +865,8 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "bomdia") {
-        var date = new Date();
+        var offset = -3;
+        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
         let replies = ["Bom dia! :)", "Bom diaaaaaa :3", "Bom dia frô du dia", "SENP.... bom dia :D"];
         if (date.getHours() >= 13 && date.getHours() < 18) {
             message.channel.send("Meio atrasado não? Já são " + date.getHours() + " horas! O correto seria boa tarde! XD");
@@ -860,7 +890,8 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "boatarde") {
-        var date = new Date();
+        var offset = -3;
+        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
         let replies = ["Boa tarde! :)", "Tarde :D", "Uma Excelente tarde para Vossa Senhoria :tophat:", "UOOOOOOUUU, O SENPAI ME NOT.....ahem, boa tarde :D"];
 
         if (date.getHours() >= 6 && date.getHours() < 12) {
@@ -885,7 +916,8 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "boanoite") {
-        var date = new Date();
+        var offset = -3;
+        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
         let replies = ["Boa noite! :)", "Noite :D", "Noite boa pra jogar! :video_game: ", "Boa noite! Nessas horas da noite eu penso no Sen... SENHOR JOGO DE AÇÃO Q EU VOU JOGAR!"];
 
         if (date.getHours() >= 6 && date.getHours() < 12) {
@@ -1197,11 +1229,11 @@ client.on("message", (message) => {
                     .setTitle(data.searchInformation.formattedTotalResults + " resultados em " + data.searchInformation.formattedSearchTime + " segundos")
                     .setColor('RANDOM');
                 for (var i = 0; i < data.items.length; i++) {
-                    num = num+1;
-                    listaresultados.push("[Resultado "+num+"](" + data.items[i].link + ")")
+                    num = num + 1;
+                    listaresultados.push("[Resultado " + num + "](" + data.items[i].link + ")")
                     resultEmbed.addField(data.items[i].title, data.items[i].snippet);
                 }
-                resultEmbed.setDescription("**Fontes:** "+listaresultados);
+                resultEmbed.setDescription("**Fontes:** " + listaresultados);
                 resultEmbed.setFooter("Resultados podem variar de acordo com a forma de você escrever sua pesquisa ;)");
                 message.channel.send(resultEmbed);
                 listaresultados = [];
