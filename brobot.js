@@ -47,8 +47,7 @@ const votoustop = new Set();
 
 client.on('error', function () {
 
-    var offset = -3;
-        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
+    var date = new Date();
     console.log("Ocorreu um erro de conexão Às " + date.getHours() + ":" + date.getMinutes());
 
 });
@@ -56,8 +55,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 
 
     client.on('message', message => {
-        var offset = -3;
-        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
+        var date = new Date();
         if (message.isMentioned(client.user)) {
             message.reply("pra q vc ta me enchendo o saco em plenas " + date.getHours() + " horas? Fala o q q vc quer");
         }
@@ -865,8 +863,8 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "bomdia") {
-        var offset = -3;
-        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
+        
+        var date = new Date();
         let replies = ["Bom dia! :)", "Bom diaaaaaa :3", "Bom dia frô du dia", "SENP.... bom dia :D"];
         if (date.getHours() >= 13 && date.getHours() < 18) {
             message.channel.send("Meio atrasado não? Já são " + date.getHours() + " horas! O correto seria boa tarde! XD");
@@ -890,8 +888,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "boatarde") {
-        var offset = -3;
-        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
+        var date = new Date();
         let replies = ["Boa tarde! :)", "Tarde :D", "Uma Excelente tarde para Vossa Senhoria :tophat:", "UOOOOOOUUU, O SENPAI ME NOT.....ahem, boa tarde :D"];
 
         if (date.getHours() >= 6 && date.getHours() < 12) {
@@ -916,8 +913,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "boanoite") {
-        var offset = -3;
-        var date = new Date(new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
+        var date = new Date();
         let replies = ["Boa noite! :)", "Noite :D", "Noite boa pra jogar! :video_game: ", "Boa noite! Nessas horas da noite eu penso no Sen... SENHOR JOGO DE AÇÃO Q EU VOU JOGAR!"];
 
         if (date.getHours() >= 6 && date.getHours() < 12) {
