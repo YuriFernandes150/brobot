@@ -1262,7 +1262,7 @@ client.on("message", (message) => {
             if (args[1] === "name") {
 
                 var name = args.slice(2).join(" ");
-                message.delete();
+                
                 var opts = {
                     maxResults: 1,
                     key: process.env.YOUTUBE,
@@ -1271,7 +1271,7 @@ client.on("message", (message) => {
 
                 ytSearch(name, opts, function (err, results) {
                     if (err) console.log(err);
-                    console.log("play name, pedido por " + message.author);
+                    console.log("playlist name, pedido por " + message.author);
 
                     var url = results[0].link;
 
@@ -1315,13 +1315,12 @@ client.on("message", (message) => {
                     }
 
                 })
-
+                message.delete();
 
             }
             else if (args[1] === "url") {
 
                 var url = args.slice(2).join(" ");
-                message.delete();
                 if (tocando) {
 
                     message.channel.send("Ok! vou adicionar as musicas dessa playlist na fila!");
@@ -1360,7 +1359,7 @@ client.on("message", (message) => {
                     });
 
                 }
-
+                message.delete();
             }
 
         }
