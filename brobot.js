@@ -161,6 +161,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "play") {
+        console.log("Comando play requisitado por: " + message.author);
         var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
         message.delete();
         const channel = client.channels.get(music);
@@ -208,7 +209,6 @@ client.on("message", (message) => {
 
                 ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
                     if (err) console.log(err);
-                    console.log("play name, pedido por " + message.author);
 
                     const channel = client.channels.get(music);
                     if (!channel) return console.error("Canal Inexistente!");
@@ -238,7 +238,7 @@ client.on("message", (message) => {
                 message.channel.send("Opa! Não se esqueça de usar os prefixos certos!\n" +
                     prefix + "play name (nome da música)\n" +
                     prefix + "play url (link do youtube)\n" +
-                    "Somente play não vai masi funcionar!");
+                    "Somente play não vai mais funcionar!");
 
             }
 
@@ -260,6 +260,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "pause" && tocando) {
+        console.log("Comando pause requisitado por: " + message.author);
 
         if (votoupause.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -291,6 +292,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "resume" && !tocando) {
+        console.log("Comando resume requisitado por: " + message.author);
 
         if (votouresume.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -323,6 +325,7 @@ client.on("message", (message) => {
     }
 
     if (command == prefix + "reddit") {
+        console.log("Comando reddit requisitado por: " + message.author);
 
         if (args[1]) {
 
@@ -362,6 +365,7 @@ client.on("message", (message) => {
     }
 
     if (command === prefix + "stop") {
+        console.log("Comando stop requisitado por: " + message.author);
 
         if (votoustop.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -398,6 +402,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "next") {
+        console.log("Comando next requisitado por: " + message.author);
 
         if (votounext.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -437,24 +442,19 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "fila") {
+        console.log("Comando fila requisitado por: " + message.author);
         if (fila[0]) {
             var tamanhofila = fila.length - 1;
             message.channel.send("Ainda há **" + tamanhofila + "** músicas na fila.");
-            if (filanome[0]) {
-                message.channel.send("Tocando agora: **" + filanome[0] + "**");
-            }
-            if (filanome[1]) {
-                message.channel.send("Próxima faixa: **" + filanome[1] + "**");
-            }
 
             var listEmbed = new Discord.RichEmbed()
-            .setTitle("Lista de Músicas atual (mostra até 25 músicas na fila):")
-            .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
-            .setColor('RANDOM');
+                .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
+                .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
+                .setColor('RANDOM');
 
-            for(var i = 0; i < 25;i++){
+            for (var i = 0; i < 25; i++) {
 
-                listEmbed.addField(filanome[i]);
+                listEmbed.addField(filanome[i], "");
 
             }
 
@@ -467,6 +467,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "radio") {
+        console.log("Comando radio requisitado por: " + message.author);
         var url = "";
         if (args[1]) {
             const channel = client.channels.get(music);
@@ -499,7 +500,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -517,7 +517,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -535,7 +534,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -553,7 +551,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -571,7 +568,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -589,7 +585,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -607,7 +602,6 @@ client.on("message", (message) => {
                             dispatcher.end();
                         }
                         PlayRadio(connection, url);
-                        console.log("Successfully connected.");
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -633,18 +627,8 @@ client.on("message", (message) => {
 
     }
 
-    if (command === prefix + "ping") {
-        message.channel.send("<:brobot:502145028106223617> Pong! " + (client.ping) + "ms");
-    }
-    if (command === prefix + "oof") {
-        let replies = ["https://ifunny.co/fun/ZNr3p1b26", "https://ifunny.co/fun/PVM6Ob746", "https://ifunny.co/fun/YjjpyMd46?gallery=channel&query=games", "https://ifunny.co/fun/PxHThWb46?gallery=channel&query=games", "https://ifunny.co/fun/lF6MxFX46?gallery=channel&query=games", "https://images-cdn.9gag.com/photo/aZ3oK0V_460s.jpg", "https://ifunny.co/fun/zhZTJJS46?gallery=channel&query=games", "https://ifunny.co/fun/kP4YIlR46?gallery=channel&query=games", "https://ifunny.co/fun/fcWNEKJ46?gallery=channel&query=games", "https://ifunny.co/fun/4t60BkI46?gallery=channel&query=games", "https://ifunny.co/fun/ZRLybdH46?gallery=channel&query=games", "https://ifunny.co/fun/4CvjwYH46?gallery=channel&query=games", "https://ifunny.co/fun/8htcEVB46?gallery=channel&query=games", "https://ifunny.co/fun/pjTjzD246?gallery=channel&query=games", "https://ifunny.co/fun/MhHAv1a46?gallery=channel&query=nuncanemvi", "https://ifunny.co/fun/XYhgf1a46?gallery=channel&query=nuncanemvi", "https://ifunny.co/fun/YgNkRwZ46?gallery=channel&query=nuncanemvi", "https://ifunny.co/fun/C2x5BwZ46?gallery=channel&query=nuncanemvi", "https://ifunny.co/fun/k2CKP8V46?gallery=channel&query=nuncanemvi", "https://ifunny.co/fun/JiB7osp36", "https://ifunny.co/fun/P636f1oz5", "https://ifunny.co/fun/6HAMp8X46", "https://ifunny.co/fun/IILQBTb46", "https://ifunny.co/fun/Bcbd2rX46", "https://ifunny.co/fun/uhCQ2Nb46", "https://ifunny.co/fun/xpSkqea46", "https://ifunny.co/fun/qpRCX5a46", "https://ifunny.co/fun/gqryIYa46", "https://ifunny.co/fun/o01jVJl46?gallery=channel&query=artememe", "https://ifunny.co/fun/E0NRNxg46?gallery=channel&query=artememe", "https://ifunny.co/fun/KEODgIn46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/yDmU4En46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/BP00ovm46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/GElZElm46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/TUQNrZm46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/NAa2Mok46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/sqdTVyf46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/qeWSPff46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/76jQRaf46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/tM2AMYf46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/U0e4vie46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/ksoS2Ab46?gallery=channel&query=elei%C3%A7%C3%B5es2018", "https://ifunny.co/fun/VDT97ee46?gallery=channel&query=nuncanemvi", "https://ifunny.co/fun/3ghnZwZ46?gallery=channel&query=nuncanemvi"]; // Respostas do Dark Code.
-        if (args[0]) { // Se o argumento for [1], ou seja um espaço a mais, ele vai fazer esta ação:
-            message.channel.send(replies[Math.floor(Math.random() * replies.length)])
-        } else // else = Caso ao contrário fazer: ou seja se não for args[1] ele vai mandar isso:
-            message.channel.send("Só oof é o suficiente men");
-    }
-
     if (command === prefix + "ask") {
+        console.log("Comando ask requisitado por: " + message.author);
         message.channel.send("https://cdn.discordapp.com/attachments/494191132318892043/510206947824369695/BRobot_think.gif").then(msg => {
             msg.delete(3000)
         })
@@ -673,6 +657,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "ship") {
+        console.log("Comando ship requisitado por: " + message.author);
         var name1 = messageArray[1].substring(0, 2);
         var name2 = messageArray[2].substring(3);
         var shipname = name1 + name2;
@@ -682,25 +667,15 @@ client.on("message", (message) => {
         } else // else = Caso ao contrário fazer: ou seja se não for args[1] ele vai mandar isso:
             message.channel.send("Faça um ship!\n**Exemplo:** \n**" + prefix + "ship** eu waifu");
     }
-    if (command === prefix + "darkness") {
-        var darkness = new Discord.RichEmbed()
-            .setTitle("**Well...**")
-
-            .setColor("RANDOM")
-            .setDescription("Hello darkness my old friend...")
-            .setImage("https://cdn.discordapp.com/attachments/488372887602987009/488499684135141396/Z.png")
-
-        message.channel.send(darkness);
-    }
-
-
     if (command === prefix + "olhaso") {
+        console.log("Comando olhaso requisitado por: " + message.author);
         let replies = ["<:chris:404439721968795648>", "<:poggers:464204342463823892>", "<:feelsbadman:488683259539226633>", "<:feelsgoodman:488687465364979712>", "<:monkas:464543183997501440>", "<:blz:404429279812780032>", "https://cdn.discordapp.com/attachments/404058102565044234/493839622758072341/WhatsApp_Image_2018-09-24_at_13.46.43.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839621394792448/WhatsApp_Image_2018-09-24_at_13.46.42.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839620526702602/WhatsApp_Image_2018-09-24_at_13.46.47.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839615535349770/WhatsApp_Image_2018-09-24_at_13.46.48.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839273431269387/WhatsApp_Image_2018-09-24_at_13.47.03.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839150546419714/WhatsApp_Image_2018-09-24_at_14.14.53_1.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839199531827216/WhatsApp_Image_2018-09-24_at_14.03.41.jpeg", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/498935802932494345/react3.PNG", "https://cdn.discordapp.com/attachments/494191132318892043/498935769109495829/react1.PNG"];
         message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
 
     }
 
     if (command === prefix + "desenha") {
+        console.log("Comando desenha requisitado por: " + message.author);
 
         message.channel.send("Beleza! Aguentae \nhttps://cdn.discordapp.com/attachments/494191132318892043/508782010609696780/anim.gif").then(msg => {
             msg.delete(4500)
@@ -791,6 +766,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "funfacts") {
+        console.log("Comando funfacts requisitado por: " + message.author);
         let replies = ["https://cdn.discordapp.com/attachments/404058102565044234/493836015576940545/WhatsApp_Image_2018-09-24_at_13.47.00.jpeg",
             "https://www.raiseyourbrain.com/wp-content/uploads/2015/01/fun-facts-about-pandas-26-300x200.jpg?x84682", "https://piximus.net/media/20475/fun-facts-1.jpg",
             "https://images.template.net/wp-content/uploads/2015/08/Gecko-Feet-Fact.jpg", "https://img.izismile.com/img/img5/20120604/640/video_gaming_fun_facts_640_04.jpg",
@@ -813,6 +789,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "gif") {
+        console.log("Comando gif requisitado por: " + message.author);
         let gifs = [];
         if (args[1]) {
             giphyclient.search('gifs', { "q": message.content.replace(command, ""), "limit": 30 })
@@ -846,6 +823,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "stick") {
 
+        console.log("Comando stick requisitado por: " + message.author);
         let gifs = [];
         if (args[1]) {
             giphyclient.search('stickers', { "q": message.content.replace(command, ""), "limit": 30 })
@@ -997,31 +975,6 @@ client.on("message", (message) => {
         }
     }
 
-
-    if (command === prefix + "nut") {
-
-        let replies = ["https://cdn.discordapp.com/attachments/404058102565044234/493839619910139904/WhatsApp_Image_2018-09-24_at_13.46.45.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839616567279667/WhatsApp_Image_2018-09-24_at_13.46.49.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839311754493986/WhatsApp_Image_2018-09-24_at_13.46.47_1.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839311754493986/WhatsApp_Image_2018-09-24_at_13.46.47_1.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839311234400276/WhatsApp_Image_2018-09-24_at_14.03.37.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839274299490343/WhatsApp_Image_2018-09-24_at_13.47.08.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839273141862431/WhatsApp_Image_2018-09-24_at_14.03.36_1.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839272126709800/WhatsApp_Image_2018-09-24_at_13.47.07_1.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839267030892567/WhatsApp_Image_2018-09-24_at_14.03.42.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839207413055510/WhatsApp_Image_2018-09-24_at_14.03.39.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839202136489984/WhatsApp_Image_2018-09-24_at_14.03.42_1.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839182213677057/WhatsApp_Image_2018-09-24_at_14.14.49.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839155638304771/WhatsApp_Image_2018-09-24_at_14.14.51.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839154044731413/WhatsApp_Image_2018-09-24_at_14.14.43.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839149779124224/WhatsApp_Image_2018-09-24_at_14.14.53.jpeg",
-            "https://cdn.discordapp.com/attachments/404058102565044234/493839622665666561/WhatsApp_Image_2018-09-24_at_13.46.50.jpeg"];
-
-
-        message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
-
-
-    }
     if (command === prefix + "parouimpar") {
 
         if (args[2]) {
@@ -1067,34 +1020,9 @@ client.on("message", (message) => {
         }
 
     }
-    if (command === prefix + "img") {
-
-        if (args[1]) {
-
-            var tamanho = messageArray[1];
-            var larguraealtura = tamanho.split("x");
-
-            if (larguraealtura[1]) {
-
-                message.channel.send("Aqui está sua imagem aleatória! \n https://picsum.photos/" + larguraealtura[0] + "/" + larguraealtura[1] + "/?random");
-
-            }
-            else {
-                message.channel.send("Por favor, lembre se de especificar a largura **E** a altura também! (ex: 200x400)");
-            }
-
-        }
-        else {
-            message.channel.send("Opa!\n" +
-                "Com o comando **" + prefix + "img** eu posso te mostrar imagens aleatórias!\n" +
-                "Tenha em mente que são imagens **COMPLETAMENTE** aleatórias e desconexas" +
-                "então use por sua conta e risco:\n" +
-                "Use **" + prefix + "img** largura**x**altura (tudojunto)  para gerar uma foto!");
-        }
-
-
-    }
     if (command === prefix + "joke") {
+
+        console.log("Comando joke requisitado por: " + message.author);
 
         Joke.getRandomDadJoke(function (joke) {
             message.channel.send(joke);
@@ -1102,6 +1030,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "steam") {
+        console.log("Comando steam requisitado por: " + message.author);
 
         if (args[1]) {
             message.channel.send("Perae! Vou Procurar!");
@@ -1109,13 +1038,12 @@ client.on("message", (message) => {
 
             provider.search(message.content.replace(command, ""), 1, "portuguese", "br").then(result => {
 
-                console.log(result);
                 if (result[0]) {
 
                     result.forEach((SteamSearchEntry) => {
 
                         provider.detail(SteamSearchEntry.id, "portuguese", "br").then(detail => {
-                            console.log(detail);
+
                             var preco;
                             if (detail.$priceData.finalPrice === "0.0") {
                                 preco = "Free ou indisponível";
@@ -1164,18 +1092,18 @@ client.on("message", (message) => {
     }
     if (command === prefix + "steamnews") {
 
+        console.log("Comando steam requisitado por: " + message.author);
+
         if (args[2]) {
             message.channel.send("Buscando news!");
             var provider = new steam.SteamProvider();
             provider.search(message.content.replace(command, "").replace(args[1], "").trim(), 1, "portuguese", "br").then(result => {
-                console.log(result);
+
                 if (result[0]) {
                     result.forEach((SteamSearchEntry) => {
-                        console.log(SteamSearchEntry.id);
 
                         steamnews.getNews(SteamSearchEntry.id, args[1], '700', (err, callback) => {
                             if (err) throw err;
-                            console.log(callback);
                             var i = 0;
                             let listanews = [];
                             var newsEmbed = new Discord.RichEmbed()
@@ -1190,7 +1118,7 @@ client.on("message", (message) => {
                                 newsEmbed.addField(title, content);
                             }
                             provider.detail(SteamSearchEntry.id, "portuguese", "br").then(detail => {
-                                console.log(detail);
+
                                 newsEmbed.setThumbnail(detail.$otherData.$imageUrl);
                             });
                             newsEmbed.setDescription("**Links:**\n" + listanews);
@@ -1225,6 +1153,8 @@ client.on("message", (message) => {
     }
     if (command === prefix + "google") {
 
+        console.log("Comando google requisitado por: " + message.author);
+
         if (args[1]) {
 
             google_customsearch.cse.list({
@@ -1235,7 +1165,6 @@ client.on("message", (message) => {
             }).then(data => {
                 let listaresultados = [];
                 var num = 0;
-                console.log(data);
                 resultEmbed = new Discord.RichEmbed()
                     .setTitle(data.searchInformation.formattedTotalResults + " resultados em " + data.searchInformation.formattedSearchTime + " segundos")
                     .setColor('RANDOM');
@@ -1257,12 +1186,14 @@ client.on("message", (message) => {
 
     if (command == prefix + "playlist") {
 
+        console.log("Comando playlist requisitado por: " + message.author);
+
         if (args[2]) {
 
             if (args[1] === "name") {
 
                 var name = args.slice(2).join(" ");
-                
+
                 var opts = {
                     maxResults: 1,
                     key: process.env.YOUTUBE,
@@ -1271,7 +1202,6 @@ client.on("message", (message) => {
 
                 ytSearch(name, opts, function (err, results) {
                     if (err) console.log(err);
-                    console.log("playlist name, pedido por " + message.author);
 
                     var url = results[0].link;
 
@@ -1280,12 +1210,16 @@ client.on("message", (message) => {
                         message.channel.send("Ok! vou adicionar as musicas dessa playlist na fila!");
                         ytlist(url, 'url').then(res => {
 
-                            fila.push.apply(fila, res.data.playlist);
+                            for (var i = 0; i < res.data.playlist.length; i++) {
+                                fila.push(res.data.playlist[i]);
+                            }
 
                         });
                         ytlist(url, 'name').then(res => {
 
-                            filanome.push.apply(filanome, res.data.playlist);
+                            for (var i = 0; i < res.data.playlist.length; i++) {
+                                filanome.push(res.data.playlist[i]);
+                            }
 
                         });
 
@@ -1298,15 +1232,21 @@ client.on("message", (message) => {
                             message.channel.send("Partiu! :musical_note:");
                             ytlist(url, 'url').then(res => {
 
-                                fila.push.apply(fila, res.data.playlist);
+                                for (var i = 0; i < res.data.playlist.length; i++) {
+                                    fila.push(res.data.playlist[i]);
+                                }
+
 
                             });
                             ytlist(url, 'name').then(res => {
 
-                                filanome.push.apply(filanome, res.data.playlist);
+                                for (var i = 0; i < res.data.playlist.length; i++) {
+                                    filanome.push(res.data.playlist[i]);
+                                    Play(connection);
+                                }
 
                             });
-                            Play(connection);
+
                         }).catch(e => {
                             // Oh no, it errored! Let's log it to console :)
                             console.error(e);
@@ -1321,17 +1261,23 @@ client.on("message", (message) => {
             else if (args[1] === "url") {
 
                 var url = args.slice(2).join(" ");
+
                 if (tocando) {
 
                     message.channel.send("Ok! vou adicionar as musicas dessa playlist na fila!");
                     ytlist(url, 'url').then(res => {
 
-                        fila.push.apply(fila, res.data.playlist);
+                        for (var i = 0; i < res.data.playlist.length; i++) {
+                            fila.push(res.data.playlist[i]);
+                        }
+
 
                     });
                     ytlist(url, 'name').then(res => {
 
-                        filanome.push.apply(filanome, res.data.playlist);
+                        for (var i = 0; i < res.data.playlist.length; i++) {
+                            filanome.push(res.data.playlist[i]);
+                        }
 
                     });
 
@@ -1344,15 +1290,26 @@ client.on("message", (message) => {
                         message.channel.send("Partiu! :musical_note:");
                         ytlist(url, 'url').then(res => {
 
-                            fila.push.apply(fila, res.data.playlist);
+
+
+                            for (var i = 0; i < res.data.playlist.length; i++) {
+                                fila.push(res.data.playlist[i]);
+                            }
+
+
 
                         });
                         ytlist(url, 'name').then(res => {
 
-                            filanome.push.apply(filanome, res.data.playlist);
+
+                            for (var i = 0; i < res.data.playlist.length; i++) {
+                                filanome.push(res.data.playlist[i]);
+                                Play(connection);
+                            }
+
 
                         });
-                        Play(connection);
+
                     }).catch(e => {
                         // Oh no, it errored! Let's log it to console :)
                         console.error(e);
@@ -1362,6 +1319,12 @@ client.on("message", (message) => {
                 message.delete();
             }
 
+        }
+        else {
+            message.channel.send("Opa!\n" +
+                "Não se esqueça de usar os prefixos certos!\n" +
+                prefix + "playlist url (link da playlist)\n"+
+                prefix + "playlist name (nome da playlist)");
         }
 
 
@@ -1392,6 +1355,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "steam** (nome do jogo):", "Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
             .addField("**" + prefix + "steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
             .addField("**" + prefix + "google** (sua pesquisa)", "Eu consigo pesquisar no google! \nPosso fazer até 100 pesquisas por dia (Pirik n quer pagar o plano de 1000 pesquisas <:doidinha:404444360537538571>)\nCada pesquisa retorna até 3 resultados, com link incluso!)")
+            .addField("**" + prefix + "playlist**", "A mesma coisa do play, mas esse busca exclusivamente playlists!")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
