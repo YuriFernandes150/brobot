@@ -454,7 +454,7 @@ client.on("message", (message) => {
 
             for (var i = 0; i < 25; i++) {
 
-                listEmbed.addField(filanome[i], "");
+                listEmbed.addField(filanome[i], "    ");
 
             }
 
@@ -1242,8 +1242,9 @@ client.on("message", (message) => {
 
                                 for (var i = 0; i < res.data.playlist.length; i++) {
                                     filanome.push(res.data.playlist[i]);
-                                    Play(connection);
+                                    
                                 }
+                                Play(connection);
 
                             });
 
@@ -1304,8 +1305,9 @@ client.on("message", (message) => {
 
                             for (var i = 0; i < res.data.playlist.length; i++) {
                                 filanome.push(res.data.playlist[i]);
-                                Play(connection);
+                                
                             }
+                            Play(connection);
 
 
                         });
