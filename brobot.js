@@ -381,8 +381,8 @@ client.on("message", (message) => {
                 if (votosstop === pessoas || votosstop > metade) {
                     message.channel.send("Temos votos o suficiente! Parando e limpando fila...");
                     chan.leave();
-                    fila = [];
                     filanome = [];
+                    fila = [];
                     tocando = false;
                     votosstop = 0;
                     votoustop.clear();
