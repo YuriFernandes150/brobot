@@ -161,7 +161,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "play") {
-        console.log("Comando play requisitado por: " + message.author);
+        console.log("Comando play requisitado por: " + message.author.username);
         var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
         message.delete();
         const channel = client.channels.get(music);
@@ -260,7 +260,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "pause" && tocando) {
-        console.log("Comando pause requisitado por: " + message.author);
+        console.log("Comando pause requisitado por: " + message.author.username);
 
         if (votoupause.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -292,7 +292,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "resume" && !tocando) {
-        console.log("Comando resume requisitado por: " + message.author);
+        console.log("Comando resume requisitado por: " + message.author.username);
 
         if (votouresume.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -325,7 +325,7 @@ client.on("message", (message) => {
     }
 
     if (command == prefix + "reddit") {
-        console.log("Comando reddit requisitado por: " + message.author);
+        console.log("Comando reddit requisitado por: " + message.author.username);
 
         if (args[1]) {
 
@@ -365,7 +365,7 @@ client.on("message", (message) => {
     }
 
     if (command === prefix + "stop") {
-        console.log("Comando stop requisitado por: " + message.author);
+        console.log("Comando stop requisitado por: " + message.author.username);
 
         if (votoustop.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -402,7 +402,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "next") {
-        console.log("Comando next requisitado por: " + message.author);
+        console.log("Comando next requisitado por: " + message.author.username);
 
         if (votounext.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -442,7 +442,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "fila") {
-        console.log("Comando fila requisitado por: " + message.author);
+        console.log("Comando fila requisitado por: " + message.author.username);
         if (fila[0]) {
             var tamanhofila = fila.length - 1;
             message.channel.send("Ainda há **" + tamanhofila + "** músicas na fila.");
@@ -467,7 +467,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "radio") {
-        console.log("Comando radio requisitado por: " + message.author);
+        console.log("Comando radio requisitado por: " + message.author.username);
         var url = "";
         if (args[1]) {
             const channel = client.channels.get(music);
@@ -628,7 +628,7 @@ client.on("message", (message) => {
     }
 
     if (command === prefix + "ask") {
-        console.log("Comando ask requisitado por: " + message.author);
+        console.log("Comando ask requisitado por: " + message.author.username);
         message.channel.send("https://cdn.discordapp.com/attachments/494191132318892043/510206947824369695/BRobot_think.gif").then(msg => {
             msg.delete(3000)
         })
@@ -657,7 +657,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "ship") {
-        console.log("Comando ship requisitado por: " + message.author);
+        console.log("Comando ship requisitado por: " + message.author.username);
         var name1 = messageArray[1].substring(0, 2);
         var name2 = messageArray[2].substring(3);
         var shipname = name1 + name2;
@@ -668,14 +668,14 @@ client.on("message", (message) => {
             message.channel.send("Faça um ship!\n**Exemplo:** \n**" + prefix + "ship** eu waifu");
     }
     if (command === prefix + "olhaso") {
-        console.log("Comando olhaso requisitado por: " + message.author);
+        console.log("Comando olhaso requisitado por: " +message.author.username);
         let replies = ["<:chris:404439721968795648>", "<:poggers:464204342463823892>", "<:feelsbadman:488683259539226633>", "<:feelsgoodman:488687465364979712>", "<:monkas:464543183997501440>", "<:blz:404429279812780032>", "https://cdn.discordapp.com/attachments/404058102565044234/493839622758072341/WhatsApp_Image_2018-09-24_at_13.46.43.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839621394792448/WhatsApp_Image_2018-09-24_at_13.46.42.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839620526702602/WhatsApp_Image_2018-09-24_at_13.46.47.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839615535349770/WhatsApp_Image_2018-09-24_at_13.46.48.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839273431269387/WhatsApp_Image_2018-09-24_at_13.47.03.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839150546419714/WhatsApp_Image_2018-09-24_at_14.14.53_1.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839199531827216/WhatsApp_Image_2018-09-24_at_14.03.41.jpeg", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/498935802932494345/react3.PNG", "https://cdn.discordapp.com/attachments/494191132318892043/498935769109495829/react1.PNG"];
         message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
 
     }
 
     if (command === prefix + "desenha") {
-        console.log("Comando desenha requisitado por: " + message.author);
+        console.log("Comando desenha requisitado por: " + message.author.username);
 
         message.channel.send("Beleza! Aguentae \nhttps://cdn.discordapp.com/attachments/494191132318892043/508782010609696780/anim.gif").then(msg => {
             msg.delete(4500)
@@ -766,7 +766,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "funfacts") {
-        console.log("Comando funfacts requisitado por: " + message.author);
+        console.log("Comando funfacts requisitado por: " + message.author.username);
         let replies = ["https://cdn.discordapp.com/attachments/404058102565044234/493836015576940545/WhatsApp_Image_2018-09-24_at_13.47.00.jpeg",
             "https://www.raiseyourbrain.com/wp-content/uploads/2015/01/fun-facts-about-pandas-26-300x200.jpg?x84682", "https://piximus.net/media/20475/fun-facts-1.jpg",
             "https://images.template.net/wp-content/uploads/2015/08/Gecko-Feet-Fact.jpg", "https://img.izismile.com/img/img5/20120604/640/video_gaming_fun_facts_640_04.jpg",
@@ -789,7 +789,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "gif") {
-        console.log("Comando gif requisitado por: " + message.author);
+        console.log("Comando gif requisitado por: " + message.author.username);
         let gifs = [];
         if (args[1]) {
             giphyclient.search('gifs', { "q": message.content.replace(command, ""), "limit": 30 })
@@ -823,7 +823,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "stick") {
 
-        console.log("Comando stick requisitado por: " + message.author);
+        console.log("Comando stick requisitado por: " + message.author.username);
         let gifs = [];
         if (args[1]) {
             giphyclient.search('stickers', { "q": message.content.replace(command, ""), "limit": 30 })
@@ -1022,7 +1022,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "joke") {
 
-        console.log("Comando joke requisitado por: " + message.author);
+        console.log("Comando joke requisitado por: " + message.author.username);
 
         Joke.getRandomDadJoke(function (joke) {
             message.channel.send(joke);
@@ -1030,7 +1030,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "steam") {
-        console.log("Comando steam requisitado por: " + message.author);
+        console.log("Comando steam requisitado por: " + message.author.username);
 
         if (args[1]) {
             message.channel.send("Perae! Vou Procurar!");
@@ -1092,7 +1092,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "steamnews") {
 
-        console.log("Comando steam requisitado por: " + message.author);
+        console.log("Comando steam requisitado por: " + message.author.username);
 
         if (args[2]) {
             message.channel.send("Buscando news!");
@@ -1153,7 +1153,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "google") {
 
-        console.log("Comando google requisitado por: " + message.author);
+        console.log("Comando google requisitado por: " + message.author.username);
 
         if (args[1]) {
 
@@ -1186,7 +1186,7 @@ client.on("message", (message) => {
 
     if (command == prefix + "playlist") {
 
-        console.log("Comando playlist requisitado por: " + message.author);
+        console.log("Comando playlist requisitado por: " + message.author.username);
 
         if (args[2]) {
 
