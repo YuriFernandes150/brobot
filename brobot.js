@@ -201,7 +201,8 @@ client.on("message", (message) => {
 
                 var opts = {
                     maxResults: 1,
-                    key: process.env.YOUTUBE
+                    key: process.env.YOUTUBE,
+                    type:"video"
                 };
 
                 ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
