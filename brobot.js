@@ -454,7 +454,7 @@ client.on("message", (message) => {
 
             for (var i = 0; i < 25; i++) {
 
-                listEmbed.addField(filanome[i], "    ");
+                listEmbed.addField(filanome[i], "---------------------------------------------------------");
 
             }
 
