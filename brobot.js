@@ -14,6 +14,7 @@ const ytlist = require('youtube-playlist');
 var ytSearch = require('youtube-search');
 var fila = [];
 var filanome = [];
+var filapics = [];
 
 //Piadas
 var Joke = require('give-me-a-joke');
@@ -202,12 +203,12 @@ client.on("message", (message) => {
                 var opts = {
                     maxResults: 1,
                     key: process.env.YOUTUBE,
-                    type:"video"
+                    type: "video"
                 };
 
                 ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
                     if (err) console.log(err);
-                    console.log(results);
+                    console.log("play name, pedido por " + message.author);
 
                     const channel = client.channels.get(music);
                     if (!channel) return console.error("Canal Inexistente!");
@@ -445,6 +446,19 @@ client.on("message", (message) => {
             if (filanome[1]) {
                 message.channel.send("Próxima faixa: **" + filanome[1] + "**");
             }
+
+            var listEmbed = new Discord.RichEmbed()
+            .setTitle("Lista de Músicas atual:")
+            .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
+            .setColor('RANDOM');
+
+            for(var i = 0; i < filanome.length;i++){
+
+                listEmbed.addField(filanome[i]);
+
+            }
+
+            message.channel.send(listEmbed);
 
         }
         else {
@@ -864,7 +878,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "bomdia") {
-        
+
         var date = new Date();
         let replies = ["Bom dia! :)", "Bom diaaaaaa :3", "Bom dia frô du dia", "SENP.... bom dia :D"];
         if (date.getHours() >= 13 && date.getHours() < 18) {
@@ -1238,6 +1252,119 @@ client.on("message", (message) => {
             });
 
         }
+
+    }
+
+    if (command == prefix + "playlist") {
+
+        if (args[2]) {
+
+            if (args[1] === "name") {
+
+                var name = args.slice(2).join(" ");
+                message.delete();
+                var opts = {
+                    maxResults: 1,
+                    key: process.env.YOUTUBE,
+                    type: "playlist"
+                };
+
+                ytSearch(name, opts, function (err, results) {
+                    if (err) console.log(err);
+                    console.log("play name, pedido por " + message.author);
+
+                    var url = results[0].link;
+
+                    if (tocando) {
+
+                        message.channel.send("Ok! vou adicionar as musicas dessa playlist na fila!");
+                        ytlist(url, 'url').then(res => {
+
+                            fila.push.apply(fila, res.data.playlist);
+
+                        });
+                        ytlist(url, 'name').then(res => {
+
+                            filanome.push.apply(filanome, res.data.playlist);
+
+                        });
+
+                    }
+                    else {
+
+                        const channel = client.channels.get(music);
+
+                        channel.join().then(connection => {
+                            message.channel.send("Partiu! :musical_note:");
+                            ytlist(url, 'url').then(res => {
+
+                                fila.push.apply(fila, res.data.playlist);
+
+                            });
+                            ytlist(url, 'name').then(res => {
+
+                                filanome.push.apply(filanome, res.data.playlist);
+
+                            });
+                            Play(connection);
+                        }).catch(e => {
+                            // Oh no, it errored! Let's log it to console :)
+                            console.error(e);
+                        });
+
+                    }
+
+                })
+
+
+            }
+            else if (args[1] === "url") {
+
+                var url = args.slice(2).join(" ");
+                message.delete();
+                if (tocando) {
+
+                    message.channel.send("Ok! vou adicionar as musicas dessa playlist na fila!");
+                    ytlist(url, 'url').then(res => {
+
+                        fila.push.apply(fila, res.data.playlist);
+
+                    });
+                    ytlist(url, 'name').then(res => {
+
+                        filanome.push.apply(filanome, res.data.playlist);
+
+                    });
+
+                }
+                else {
+
+                    const channel = client.channels.get(music);
+
+                    channel.join().then(connection => {
+                        message.channel.send("Partiu! :musical_note:");
+                        ytlist(url, 'url').then(res => {
+
+                            fila.push.apply(fila, res.data.playlist);
+
+                        });
+                        ytlist(url, 'name').then(res => {
+
+                            filanome.push.apply(filanome, res.data.playlist);
+
+                        });
+                        Play(connection);
+                    }).catch(e => {
+                        // Oh no, it errored! Let's log it to console :)
+                        console.error(e);
+                    });
+
+                }
+
+            }
+
+        }
+
 
     }
 
