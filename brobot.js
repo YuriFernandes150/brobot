@@ -449,7 +449,7 @@ client.on("message", (message) => {
             var num;
             if(fila.length > 24){
 
-                num = 25;
+                num = 24;
 
             }
             else{
@@ -461,7 +461,7 @@ client.on("message", (message) => {
                 listEmbed.addField("**▷"+filanome[0]+"**", "---------------------Próximas Faixas---------------------")
                 .setColor('RANDOM');
 
-            for (var i = 0; i < num; i++) {
+            for (var i = 1; i < num; i++) {
 
                 listEmbed.addField(filanome[i], "---------------------------------------------------------");
 
