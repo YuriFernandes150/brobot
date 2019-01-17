@@ -458,6 +458,7 @@ client.on("message", (message) => {
             var listEmbed = new Discord.RichEmbed()
                 .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
                 .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
+                listEmbed.addField("**▷"+filanome[0]+"**", "---------------------Próximas Faixas---------------------")
                 .setColor('RANDOM');
 
             for (var i = 0; i < num; i++) {
