@@ -688,8 +688,7 @@ client.on("message", (message) => {
 
         message.channel.send("Beleza! Aguentae \nhttps://cdn.discordapp.com/attachments/494191132318892043/508782010609696780/anim.gif").then(msg => {
             msg.delete(4500)
-        })
-            .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
+        }).catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
 
         let replies = ["https://cdn.discordapp.com/attachments/494191132318892043/508789474340372485/BRobot_Desenha8.jpg",
             "https://cdn.discordapp.com/attachments/494191132318892043/508789482204692500/BRobot_Desenha9.jpg",
