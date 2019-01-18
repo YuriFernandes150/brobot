@@ -702,7 +702,8 @@ client.on("message", (message) => {
             "https://cdn.discordapp.com/attachments/494191132318892043/508789491176177694/BRobot_Desenha6.jpg",
             "https://cdn.discordapp.com/attachments/494191132318892043/508789492807893017/BRobot_Desenha7.jpg",
             "https://cdn.discordapp.com/attachments/476225541280890930/508805236626948107/BRobot_Desenha_11.png",
-            "https://cdn.discordapp.com/attachments/476225541280890930/508807877809405962/BRobot_Desenha_12.png"];
+            "https://cdn.discordapp.com/attachments/476225541280890930/508807877809405962/BRobot_Desenha_12.png",
+            "https://cdn.discordapp.com/attachments/518042011064991756/535635359162302464/BRobot_Desenha_15.png"];
 
         setTimeout(
             function () {
