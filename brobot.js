@@ -26,10 +26,14 @@ const steamnews = require('steam-news');
 //Google
 let google_customsearch = require('@datafire/google_customsearch').create();
 
+//OOOH BOOY
+const Pornsearch = require('pornsearch');
+
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
 var music = config.music;
+var darkhole = config.darkhole;
 
 //Variaveis Diversas
 var medo = false;
@@ -80,7 +84,7 @@ client.on("message", (message) => {
     function Play(connection) {
         dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
         message.channel.send("Tocando: **" + filanome[0] + "**");
-
+        tocando = true;
         dispatcher.on("end", end => {
             votounext.clear();
             votoupause.clear();
@@ -447,18 +451,18 @@ client.on("message", (message) => {
             var tamanhofila = fila.length - 1;
             message.channel.send("Ainda há **" + tamanhofila + "** músicas na fila.");
             var num;
-            if(fila.length > 24){
+            if (fila.length > 24) {
 
                 num = 24;
 
             }
-            else{
+            else {
                 num = fila.length;
             }
             var listEmbed = new Discord.RichEmbed()
                 .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
                 .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
-                listEmbed.addField("**▷"+filanome[0]+"**", "---------------------Próximas Faixas---------------------")
+            listEmbed.addField("**▷" + filanome[0] + "**", "---------------------Próximas Faixas---------------------")
                 .setColor('RANDOM');
 
             for (var i = 1; i < num; i++) {
@@ -677,7 +681,7 @@ client.on("message", (message) => {
             message.channel.send("Faça um ship!\n**Exemplo:** \n**" + prefix + "ship** eu waifu");
     }
     if (command === prefix + "olhaso") {
-        console.log("Comando olhaso requisitado por: " +message.author.username);
+        console.log("Comando olhaso requisitado por: " + message.author.username);
         let replies = ["<:chris:404439721968795648>", "<:poggers:464204342463823892>", "<:feelsbadman:488683259539226633>", "<:feelsgoodman:488687465364979712>", "<:monkas:464543183997501440>", "<:blz:404429279812780032>", "https://cdn.discordapp.com/attachments/404058102565044234/493839622758072341/WhatsApp_Image_2018-09-24_at_13.46.43.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839621394792448/WhatsApp_Image_2018-09-24_at_13.46.42.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839620526702602/WhatsApp_Image_2018-09-24_at_13.46.47.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839615535349770/WhatsApp_Image_2018-09-24_at_13.46.48.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839273431269387/WhatsApp_Image_2018-09-24_at_13.47.03.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839150546419714/WhatsApp_Image_2018-09-24_at_14.14.53_1.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839199531827216/WhatsApp_Image_2018-09-24_at_14.03.41.jpeg", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/498935802932494345/react3.PNG", "https://cdn.discordapp.com/attachments/494191132318892043/498935769109495829/react1.PNG"];
         message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
 
@@ -1251,10 +1255,10 @@ client.on("message", (message) => {
 
                                 for (var i = 0; i < res.data.playlist.length; i++) {
                                     filanome.push(res.data.playlist[i]);
-                                    
-                                }
-                                Play(connection);
 
+                                }
+
+                                Play(connection);
                             });
 
                         }).catch(e => {
@@ -1314,7 +1318,7 @@ client.on("message", (message) => {
 
                             for (var i = 0; i < res.data.playlist.length; i++) {
                                 filanome.push(res.data.playlist[i]);
-                                
+
                             }
                             Play(connection);
 
@@ -1334,9 +1338,44 @@ client.on("message", (message) => {
         else {
             message.channel.send("Opa!\n" +
                 "Não se esqueça de usar os prefixos certos!\n" +
-                prefix + "playlist url (link da playlist)\n"+
+                prefix + "playlist url (link da playlist)\n" +
                 prefix + "playlist name (nome da playlist)");
         }
+
+
+    }
+    if (command === prefix + "porn") {
+
+
+        if (message.channel.id === darkhole) {
+            if (args[2]) {
+
+                if (args[1] === "g") {
+
+                    const Searcher = new Pornsearch(args.slice(2).join(" "));
+
+                    Searcher.gifs()
+                        .then(gifs => console.log(gifs));
+
+                }
+                else if (args[1] === "v") {
+
+                    const Searcher = new Pornsearch(args.slice(2).join(" "));
+
+                    Searcher.videos()
+                        .then(videos => console.log(videos));
+
+                }
+                else{
+                    message.channel.send("Faz certo!\nEx: **" + prefix + "porn** (g ou v) (sua pesquisa)");
+                }
+
+            }
+            else{
+                message.channel.send("Faz certo!\nEx: **" + prefix + "porn** (g ou v) (sua pesquisa)");
+            }
+        }
+        message.delete();
 
 
     }
