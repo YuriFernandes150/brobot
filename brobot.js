@@ -1355,7 +1355,13 @@ client.on("message", (message) => {
                     const Searcher = new Pornsearch(args.slice(2).join(" "));
 
                     Searcher.gifs()
-                        .then(gifs => console.log(gifs));
+                        .then(gifs =>{
+
+                            var num = Math.floor(Math.random() * gifs.length);
+                            message.channel.send("**"+gifs[num].title + " - " + gifs[num].duration + "**");
+                            message.channel.send(gifs[num].url);
+
+                        });
 
                 }
                 else if (args[1] === "v") {
@@ -1363,7 +1369,13 @@ client.on("message", (message) => {
                     const Searcher = new Pornsearch(args.slice(2).join(" "));
 
                     Searcher.videos()
-                        .then(videos => console.log(videos));
+                        .then(videos => {
+
+                            var num = Math.floor(Math.random() * videos.length);
+                            message.channel.send("**"+videos[num].title + " - " + videos[num].duration + "**");
+                            message.channel.send(videos[num].url);
+
+                        });
 
                 }
                 else{
