@@ -1391,7 +1391,7 @@ client.on("message", (message) => {
 
 
     }
-    if (message.content.equals("duvido")){
+    if (message.content === "duvido"){
 
         message.channel.send("Pau no teu ouvido");
         message.channel.search("<:chris:404439721968795648>");
