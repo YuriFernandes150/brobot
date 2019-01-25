@@ -1355,10 +1355,10 @@ client.on("message", (message) => {
                     const Searcher = new Pornsearch(args.slice(2).join(" "));
 
                     Searcher.gifs()
-                        .then(gifs =>{
+                        .then(gifs => {
 
                             var num = Math.floor(Math.random() * gifs.length);
-                            message.channel.send("**"+gifs[num].title + " - " + gifs[num].duration + "**");
+                            message.channel.send("**" + gifs[num].title + "**");
                             message.channel.send(gifs[num].url);
 
                         });
@@ -1372,23 +1372,29 @@ client.on("message", (message) => {
                         .then(videos => {
 
                             var num = Math.floor(Math.random() * videos.length);
-                            message.channel.send("**"+videos[num].title + " - " + videos[num].duration + "**");
+                            message.channel.send("**" + videos[num].title + " - " + videos[num].duration + "**");
                             message.channel.send(videos[num].url);
 
                         });
 
                 }
-                else{
+                else {
                     message.channel.send("Faz certo!\nEx: **" + prefix + "porn** (g ou v) (sua pesquisa)");
                 }
 
             }
-            else{
+            else {
                 message.channel.send("Faz certo!\nEx: **" + prefix + "porn** (g ou v) (sua pesquisa)");
             }
         }
         message.delete();
 
+
+    }
+    if (message.content.equals("duvido")){
+
+        message.channel.send("Pau no teu ouvido");
+        message.channel.search("<:chris:404439721968795648>");
 
     }
 
