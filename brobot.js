@@ -1412,17 +1412,12 @@ client.on("message", (message) => {
                 if (err) console.log(err);
 
                 var url = results[0].link;
-                var id = ytdl.getURLVideoID(url);
-                var name = ytdl.getInfo(id, function (err, info) {
-                        if (err) throw err;
-                        var title = info.title;
-                        return title;
-                    });
+                var name = results[0].title;
                 message.channel.send({
                     files: [
                         {
                             attachment: url,
-                            name: name
+                            name: name+".mp4" 
                         }
                     ]
                 });
