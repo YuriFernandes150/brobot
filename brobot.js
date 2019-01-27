@@ -1391,10 +1391,49 @@ client.on("message", (message) => {
 
 
     }
-    if (message.content === "duvido"){
+    if (message.content === "duvido") {
 
         message.channel.send("Pau no teu ouvido");
         message.channel.send("<:chris:404439721968795648>");
+
+    }
+
+    if (command === prefix + "vid") {
+
+        if (args[1]) {
+
+            var opts = {
+                maxResults: 1,
+                key: process.env.YOUTUBE,
+                type: "video"
+            };
+
+            ytSearch(args.slice(1).join(" "), opts, function (err, results) {
+                if (err) console.log(err);
+
+                var url = results[0].link;
+                var id = ytdl.getURLVideoID(url);
+                var name = ytdl.getInfo(id, function (err, info) {
+                        if (err) throw err;
+                        var title = info.title;
+                        return title;
+                    });
+                message.channel.send({
+                    files: [
+                        {
+                            attachment: url,
+                            name: name
+                        }
+                    ]
+                });
+
+            })
+
+        }
+        else {
+            message.channel.send("Digite o nome do vídeo");
+            message.channel.send("<:pepehands:404642565514854410>");
+        }
 
     }
 
