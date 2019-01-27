@@ -720,10 +720,11 @@ client.on("message", (message) => {
                         c.init(message.author.displayAvatarURL).then((cs) => {
                             let c = cs[0];
                             c.make();
+                            c.toFile("./test.png");
                             message.channel.send({
                                 files: [
                                     {
-                                        attachment: c.toFile("./test.png"),
+                                        attachment: "./test.png",
                                         name: "Desenho.png"
                                     }
                                 ]
@@ -741,10 +742,11 @@ client.on("message", (message) => {
                             c.init(embed.image).then((cs) => {
                                 let c = cs[0];
                                 c.make();
+                                c.toFile("./test.png");
                                 message.channel.send({
                                     files: [
                                         {
-                                            attachment: c.toFile("./test.png"),
+                                            attachment: "./test.png",
                                             name: "Desenho.png"
                                         }
                                     ]
