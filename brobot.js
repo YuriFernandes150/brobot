@@ -765,6 +765,7 @@ client.on("message", (message) => {
 
 
             }, 5000);
+        }
 
         // BRobot te ajuda com contas de +
         if (command === prefix + "qnto" && messageArray[1].includes("+")) {
