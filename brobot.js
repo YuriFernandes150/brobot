@@ -1412,15 +1412,7 @@ client.on("message", (message) => {
                 if (err) console.log(err);
 
                 var url = results[0].link;
-                var name = results[0].title;
-                message.channel.send({
-                    files: [
-                        {
-                            attachment: url,
-                            name: name+".mp4" 
-                        }
-                    ]
-                });
+                message.channel.send(url);
 
             })
 
@@ -1458,6 +1450,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "steamnews** (numero de news) (nome do jogo)", "Com esse comando eu posso mostrar a central de notícias de um jogo na Steam pra você")
             .addField("**" + prefix + "google** (sua pesquisa)", "Eu consigo pesquisar no google! \nPosso fazer até 100 pesquisas por dia (Pirik n quer pagar o plano de 1000 pesquisas <:doidinha:404444360537538571>)\nCada pesquisa retorna até 3 resultados, com link incluso!)")
             .addField("**" + prefix + "playlist**", "A mesma coisa do play, mas esse busca exclusivamente playlists!")
+            .addField("**" + prefix + "vid** (Nome)", "Busca e mostra vídeos no youtube (primeiro resultado)")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
