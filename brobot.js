@@ -92,10 +92,13 @@ client.on("message", (message) => {
       
           // And swap it with the current element.
           temporaryValue = array[currentIndex];
+          temporaryValue2 = array2[currentIndex];
+
           array[currentIndex] = array[randomIndex];
           array[randomIndex] = temporaryValue;
-          array2[currentIndex] = array[randomIndex];
-          array2[randomIndex] = temporaryValue;
+          
+          array2[currentIndex] = array2[randomIndex];
+          array2[randomIndex] = temporaryValue2;
         }
       }
 
