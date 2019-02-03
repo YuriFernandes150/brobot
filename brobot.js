@@ -79,7 +79,26 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 });
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
-    ;
+
+    function shuffle(array, array2) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+      
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+      
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+      
+          // And swap it with the current element.
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+          array2[currentIndex] = array[randomIndex];
+          array2[randomIndex] = temporaryValue;
+        }
+      }
+
 
     function Play(connection) {
         dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
@@ -257,10 +276,24 @@ client.on("message", (message) => {
                 "**" + prefix + "resume:** continua a música de onde parou\n" +
                 "**" + prefix + "next:** Abre um voto para pular a música\n" +
                 "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
-                "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila");
+                "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila"+
+                "**" + prefix + "shuffle:** Randomiza a playlist");
         }
 
 
+
+    }
+    if(command === prefix + "shuffle"){
+
+        if(fila[3] && filanome[3]){
+
+            shuffle(fila,filanome);
+            message.channel.send("Ok! Playlist devidamente afofada!");
+
+        }
+        else{
+            message.channel.send("É necessário pelo menos 4 músicas na fila para fazer shuffle!");
+        }
 
     }
     if (command === prefix + "pause" && tocando) {
