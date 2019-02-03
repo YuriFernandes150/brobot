@@ -1522,7 +1522,7 @@ client.on("message", (message) => {
             }
             else {
 
-                if (parseInt(args[1] < parseInt(agrs[2]))) {
+                if (parseInt(args[1] < parseInt(args[2]))) {
 
                     message.channel.send("<:fred:404438414201454594>");
                     message.channel.send("O número mínimo precisa ser maior que o número máximo, ou vc fugiu da escola?");
