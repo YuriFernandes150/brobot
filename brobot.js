@@ -1578,8 +1578,8 @@ client.on("message", (message) => {
         .addField("NOME:", casual.full_name)
         .addField("LEMA:", casual.catch_phrase)
         .addField("GÊNERO: " , gender)
-        .addField("PESO: ", Math.round(randomFloat(40, 100)).toFixed(1) + " Kg")
-        .addField("ALTURA: ", Math.round(randomFloat(1,2)).toFixed(2) + " m")
+        .addField("PESO: ", Math.round(randomFloat(40, 100)) + " Kg")
+        .addField("ALTURA: ", Math.round(randomFloat(1,2)) + " m")
         .addField("TRABALHA EM:", casual.company_name + " " + casual.company_suffix)
         .addField("PAÍS DE ORIGEM:" , casual.country)
         .addField("Stats (0-100)",  "Strength: " + randomInt(0,100) + "\n"+
