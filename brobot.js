@@ -1620,6 +1620,42 @@ client.on("message", (message) => {
         message.channel.send(charEmbed);
 
     }
+    if(command === prefix + "send"){
+
+        if(args[2]){
+
+            switch(args[1]){
+
+                case "og":{
+
+                    var chan = client.channels.get("434510369692712962");
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                case "zv":{
+
+                    var chan = client.channels.get("404058088329576450");
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                case "dh":{
+
+                    var chan = client.channels.get(darkhole);
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                case "hq":{
+                    
+                    var chan = client.channels.get("476225541280890930");
+                    chan.send(args.slice(2).join(" "));
+
+                }
+
+            }
+
+        }
+
+    }
 
 
     //----------------ADMIN COMMANDS------------------------
