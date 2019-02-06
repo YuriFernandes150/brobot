@@ -1560,6 +1560,23 @@ client.on("message", (message) => {
             });
 
     }
+    if (command === prefix + "rule34") {
+
+        let subreddit = ["rule34", "rule34 comics", "asseffect", "PokePorn", "animalcrossingr34", "rule34 abuse"];
+        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
+            .then(url => {
+                if (message.channel.id === darkhole) {
+                    message.channel.send(url);
+                }
+                else {
+                    message.delete();
+                }
+
+            }).catch(e => {
+                console.error(e);
+            });
+
+    }
     if (command === prefix + "randomchar") {
 
         var int = randomInt(1, 2);
