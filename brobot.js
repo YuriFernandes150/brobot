@@ -32,6 +32,11 @@ const Pornsearch = require('pornsearch');
 //Web Scrapping
 rp = require('request-promise');
 ch = require('cheerio');
+var ineed = require('ineed');
+
+//Diversos
+var randomInt = require('random-int');
+var casual = require('casual');
 
 // Configuração
 const config = require('./config.json');
@@ -1533,7 +1538,7 @@ client.on("message", (message) => {
 
                 }
                 else {
-                    var num = Math.floor(Math.random() * parseInt(args[2])) + parseInt(args[1]);
+                    var num = randomInt(parseInt(args[1]), parseInt(args[2]));
                     message.channel.send("Saiu o número: " + num);
                 }
 
@@ -1548,16 +1553,8 @@ client.on("message", (message) => {
     }
     if (command === prefix + "lançamentos") {
 
-        let games = [];
-        const opt = {
-            url: 'https://www.ign.com/upcoming/games',
-            json: true
-        }
-        rp(opt).then((info) => {
-            let promisses = [];
-            let games = [];
-
-        })
+        ineed.collect.images.hyperlinks.texts.from('https://www.ign.com/upcoming/games',
+            (err, response, result) => console.log(result));
 
     }
     if (command === prefix + "cringe") {
