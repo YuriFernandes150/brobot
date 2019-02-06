@@ -29,14 +29,10 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 //OOOH BOOY
 const Pornsearch = require('pornsearch');
 
-//Web Scrapping
-rp = require('request-promise');
-ch = require('cheerio');
-var ineed = require('ineed');
-
 //Diversos
 var randomInt = require('random-int');
 var casual = require('casual');
+var toonavatar = require('cartoon-avatar');
 
 // Configuração
 const config = require('./config.json');
@@ -1551,21 +1547,29 @@ client.on("message", (message) => {
         }
 
     }
-    if (command === prefix + "lançamentos") {
-
-        ineed.collect.images.hyperlinks.texts.from('https://www.ign.com/upcoming/games',
-            (err, response, result) => console.log(result));
-
-    }
     if (command === prefix + "cringe") {
 
-        let subreddit = ["cringeanarchy", "sadcringe", "neckbeardstories", "trashy", "delusionalartists"];
+        let subreddit = ["cringeanarchy", "sadcringe", "trashy", "delusionalartists"];
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
                 message.channel.send(url);
             }).catch(e => {
                 console.error(e);
             });
+
+    }
+    if (command === prefix + "randomchar"){
+
+        var charEmbed = new Discord.RichEmbed()
+        .setTitle("PERSONAGEM")
+        .setColor('RANDOM')
+        .setDescription("Lembre-se que isso só ajuda vc com infos simples, o resto é com vc!")
+        .setImage(toonavatar.generate_avatar())
+        .addField("NOME:", casual.full_name)
+        .addField("PAÍS DE ORIGEM:" , casual.country)
+        .setFooter("Se quiser que mais informações sejam disponibilizadas, fale com o Spirik!");
+
+        message.channel.send(charEmbed);
 
     }
 
@@ -1597,6 +1601,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "playlist**", "A mesma coisa do play, mas esse busca exclusivamente playlists!")
             .addField("**" + prefix + "vid** (Nome)", "Busca e mostra vídeos no youtube (primeiro resultado)")
             .addField("**" + prefix + "cringe**", "Mostra conteúdos de vergonha alheia")
+            .addField("**" + prefix + "randomchar**", "Cria um personagem aleatório pra vc!")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 

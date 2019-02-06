@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@datafire/google_customsearch": "^5.0.0",
+    "cartoon-avatar": "^1.0.2",
     "casual": "^1.6.0",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.4.2",
