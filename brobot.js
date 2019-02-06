@@ -1632,24 +1632,28 @@ client.on("message", (message) => {
                     chan.send(args.slice(2).join(" "));
 
                 }
+                break;
                 case "zv":{
 
                     var chan = client.channels.get("404058088329576450");
                     chan.send(args.slice(2).join(" "));
 
                 }
+                break;
                 case "dh":{
 
                     var chan = client.channels.get(darkhole);
                     chan.send(args.slice(2).join(" "));
 
                 }
+                break;
                 case "hq":{
-                    
+
                     var chan = client.channels.get("476225541280890930");
                     chan.send(args.slice(2).join(" "));
 
                 }
+                break;
 
             }
 
