@@ -29,6 +29,10 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 //OOOH BOOY
 const Pornsearch = require('pornsearch');
 
+//Web Scrapping
+rp = require('request-promise');
+ch = require('cheerio');
+
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
@@ -1542,6 +1546,31 @@ client.on("message", (message) => {
         }
 
     }
+    if (command === prefix + "lançamentos") {
+
+        let games = [];
+        const opt = {
+            url: 'https://www.ign.com/upcoming/games',
+            json: true
+        }
+        rp(opt).then((info) => {
+            let promisses = [];
+            let games = [];
+
+        })
+
+    }
+    if (command === prefix + "cringe") {
+
+        let subreddit = ["cringeanarchy", "sadcringe", "neckbeardstories", "trashy", "delusionalartists"];
+        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
+            .then(url => {
+                message.channel.send(url);
+            }).catch(e => {
+                console.error(e);
+            });
+
+    }
 
 
     //----------------ADMIN COMMANDS------------------------
@@ -1570,6 +1599,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "google** (sua pesquisa)", "Eu consigo pesquisar no google! \nPosso fazer até 100 pesquisas por dia (Pirik n quer pagar o plano de 1000 pesquisas <:doidinha:404444360537538571>)\nCada pesquisa retorna até 3 resultados, com link incluso!)")
             .addField("**" + prefix + "playlist**", "A mesma coisa do play, mas esse busca exclusivamente playlists!")
             .addField("**" + prefix + "vid** (Nome)", "Busca e mostra vídeos no youtube (primeiro resultado)")
+            .addField("**" + prefix + "cringe**", "Mostra conteúdos de vergonha alheia")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
