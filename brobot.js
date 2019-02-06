@@ -34,6 +34,7 @@ var randomInt = require('random-int');
 var randomFloat = require('random-float');
 var casual = require('casual');
 var toonavatar = require('cartoon-avatar');
+const randomFloatPro = require('random-float-pro');
 
 // Configuração
 const config = require('./config.json');
@@ -1559,41 +1560,45 @@ client.on("message", (message) => {
             });
 
     }
-    if (command === prefix + "randomchar"){
+    if (command === prefix + "randomchar") {
 
-        var int = randomInt(1,2);
+        var int = randomInt(1, 2);
         var gender;
-        if(int === 1){
+        if (int === 1) {
             gender = "male";
         }
-        else{
+        else {
             gender = "female";
         }
 
         var charEmbed = new Discord.RichEmbed()
-        .setTitle("PERSONAGEM")
-        .setColor('RANDOM')
-        .setDescription("Lembre-se que isso só ajuda vc com infos simples, o resto é com vc!")
-        .setImage(toonavatar.generate_avatar({"gender": gender}))
-        .addField("NOME:", casual.full_name)
-        .addField("LEMA:", casual.catch_phrase)
-        .addField("GÊNERO: " , gender)
-        .addField("PESO: ", Math.round(randomFloat(40, 100)) + " Kg")
-        .addField("ALTURA: ", Math.round(randomFloat(1,2)) + " m")
-        .addField("TRABALHA EM:", casual.company_name + " " + casual.company_suffix)
-        .addField("PAÍS DE ORIGEM:" , casual.country)
-        .addField("Stats (0-100)",  "Strength: " + randomInt(0,100) + "\n"+
-                            "Perception: " + randomInt(0,100) + "\n"+
-                            "Endurance: " + randomInt(0,100) + "\n"+
-                            "Charisma: " + randomInt(0,100) + "\n"+
-                            "Intelligence: " + randomInt(0,100) + "\n"+
-                            "Agility: " + randomInt(0,100) + "\n"+
-                            "Luck: " + randomInt(0,100) + "\n"+
-                            "Wisdom: " + randomInt(0,100) + "\n"+
-                            "Witicism: " + randomInt(0,100) + "\n"+
-                            "Social: " + randomInt(0,100) + "\n"+
-                            "Willpower: " + randomInt(0,100) + "\n")
-        .setFooter("Se quiser que mais informações sejam disponibilizadas, fale com o Spirik!");
+            .setTitle("PERSONAGEM")
+            .setColor('RANDOM')
+            .setDescription("Lembre-se que isso só ajuda vc com infos simples, o resto é com vc!")
+            .setImage(toonavatar.generate_avatar({ "gender": gender }))
+            .addField("NOME:", casual.full_name)
+            .addField("LEMA:", casual.catch_phrase)
+            .addField("GÊNERO: ", gender)
+            .addField("PESO: ", Math.round(randomFloat(40, 100)) + " Kg")
+            .addField("ALTURA: ", randomFloatPro({
+                min: 1,
+                max: 2,
+                fractionDigit: 2
+            }) + " m")
+            .addField("TRABALHA EM:", casual.company_name + " " + casual.company_suffix)
+            .addField("PAÍS DE ORIGEM:", casual.country)
+            .addField("Stats (0-100)", "Strength: " + randomInt(0, 100) + "\n" +
+                "Perception: " + randomInt(0, 100) + "\n" +
+                "Endurance: " + randomInt(0, 100) + "\n" +
+                "Charisma: " + randomInt(0, 100) + "\n" +
+                "Intelligence: " + randomInt(0, 100) + "\n" +
+                "Agility: " + randomInt(0, 100) + "\n" +
+                "Luck: " + randomInt(0, 100) + "\n" +
+                "Wisdom: " + randomInt(0, 100) + "\n" +
+                "Witicism: " + randomInt(0, 100) + "\n" +
+                "Social: " + randomInt(0, 100) + "\n" +
+                "Willpower: " + randomInt(0, 100) + "\n")
+            .setFooter("Se quiser que mais informações sejam disponibilizadas, fale com o Spirik!");
 
         message.channel.send(charEmbed);
 
