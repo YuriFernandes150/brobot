@@ -1653,7 +1653,7 @@ client.on("message", (message) => {
     if (command === prefix + "conv") {
 
         if (args[2]) {
-
+            console.log(args[1]);
             if (isNaN(parseInt(args[1]))) {
 
                 message.channel.send("Opa! Use o comando assim:\n**" + prefix + "conv** (valor) (moeda)\n" +
