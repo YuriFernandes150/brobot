@@ -1654,18 +1654,20 @@ client.on("message", (message) => {
 
         if (args[2]) {
 
-            if (isNaN(args[1].replace(",","."))) {
+            if (isNaN(parseFloat(args[1].replace(",", ".")))) {
 
                 message.channel.send("Opa! Use o comando assim:\n**" + prefix + "conv** (valor) (moeda)\n" +
                     "**EX:**\n **" + prefix + "conv** 300 USD\nPara uma lista de alguns códigos de moeda, use **" + prefix + "moedas**");
 
             }
             else {
-                convertCurrency(args[1].replace(",","."), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response));
+                convertCurrency(args[1].replace(",", "."), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
+                    console.error(e);
+                });
             }
 
         }
-        else{
+        else {
             message.channel.send("Opa!\nUse esse comando assim: **" + prefix + "conv** (VALOR) (MOEDA)\n**EX:**\n**" + prefix + "conv** 45 USD");
         }
 
