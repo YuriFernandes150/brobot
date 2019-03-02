@@ -1661,7 +1661,7 @@ client.on("message", (message) => {
 
             }
             else {
-                convertCurrency(parseFloat(args[1].replace(",", ".")), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
+                convertCurrency(parseInt(args[1]), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
                     console.error(e);
                 });
             }
