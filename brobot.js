@@ -1653,15 +1653,15 @@ client.on("message", (message) => {
     if (command === prefix + "conv") {
 
         if (args[2]) {
-            console.log(args[1]);
-            if (isNaN(parseInt(args[1]))) {
+            console.log(parseInt(args[1].trim()));
+            if (isNaN(parseInt(args[1].trim()))) {
 
                 message.channel.send("Opa! Use o comando assim:\n**" + prefix + "conv** (valor) (moeda)\n" +
                     "**EX:**\n **" + prefix + "conv** 300 USD\nPara uma lista de alguns códigos de moeda, use **" + prefix + "moedas**");
 
             }
             else {
-                convertCurrency(args[1], args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
+                convertCurrency(parseInt(args[1].trim()), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
                     console.error(e);
                 });
             }
