@@ -29,6 +29,9 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 //OOOH BOOY
 const Pornsearch = require('pornsearch');
 
+//Conversor de moedas
+const convertCurrency = require('nodejs-currency-converter');
+
 //Diversos
 var randomInt = require('random-int');
 var randomFloat = require('random-float');
@@ -82,7 +85,21 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
         client.user.setPresence({ game: { name: status }, status: 'online' });
 
         client.user.setPresence({ activity: { name: status }, status: 'online' })
-    }, 60000)
+    }, 60000);
+    setInterval(function () {
+
+        let subreddit = ["rule34", "rule34 comics", "asseffect", "PokePorn", "animalcrossingr34", "rule34 abuse", "NSFW_HTML5", "nsfw_sexy_gif", "nsfw_gif"];
+        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
+            .then(url => {
+
+                var chan = client.channels.get(darkhole);
+                chan.send(url);
+
+            }).catch(e => {
+                console.error(e);
+            });
+
+    }, 3600000);
 });
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
@@ -1037,50 +1054,6 @@ client.on("message", (message) => {
 
 
     }
-    if (message.content.includes("brobot") || message.content.includes("BRobot") || message.content.includes("Brobot") || message.content.includes("BROBOT") && !message.content.includes(":brobot:")) {
-
-        let replies = ["Quem ta usando meu nome em vão ae?", message.author + ", falou de mim?", "o q tem eu?", "kkk eae men", "<:hmm:472423246428504065>", "https://cdn.discordapp.com/attachments/494191132318892043/498935795919355914/react2.PNG", "Fala duma vez.\nhttps://cdn.discordapp.com/attachments/494191132318892043/503045990903840788/BRobot_GREET.png"];
-
-        if (!message.content.includes(prefix)) {
-
-            if (message.content.includes("gay") || message.content.includes("GAY") || message.content.includes("Gay") || message.content.includes("guei")) {
-                message.channel.send("vc q é gay, " + message.author + ":stuck_out_tongue_winking_eye:");
-                segundaresp = false;
-            }
-            else if (message.content.includes("o quão especial é vc")) {
-                message.channel.send("eu diria...... 22");
-                segundaresp = false;
-            }
-            else if (message.content.includes("?")) {
-
-                let resp = ["É uai XD", "Acho q não hein, " + message.author];
-                message.channel.send(resp[Math.floor(Math.random() * resp.length)]);
-                segundaresp = false;
-            }
-            else if (message.content.includes("corrupção") || message.content.includes("corrupto") || message.content.includes("corrompa")) {
-                message.channel.send(":smiling_imp:\nhttps://www.youtube.com/watch?v=lnZGE-1n55U");
-                segundaresp = false;
-            }
-
-            else if (message.content.includes("vc ta vivo") || message.content.includes("é vivo") || message.content.includes("tá vivo") || message.content.includes("ta vivo")) {
-                medo = true;
-                message.channel.send("talvez eu seja vivo.... ou não XD");
-                segundaresp = false;
-            }
-            else {
-                message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
-                segundaresp = true;
-            }
-
-            if (message.content.includes("medo") && medo) {
-                message.channel.send("calma, " + message.author + " XD eu sou só um BOT! ");
-                medo = false;
-                segundaresp = false;
-            }
-
-
-        }
-    }
 
     if (command === prefix + "parouimpar") {
 
@@ -1577,6 +1550,23 @@ client.on("message", (message) => {
             });
 
     }
+    if (command === prefix + "nsfw") {
+
+        let subreddit = ["NSFW_HTML5", "nsfw_sexy_gif", "nsfw_gif"];
+        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
+            .then(url => {
+                if (message.channel.id === darkhole) {
+                    message.channel.send(url);
+                }
+                else {
+                    message.delete();
+                }
+
+            }).catch(e => {
+                console.error(e);
+            });
+
+    }
     if (command === prefix + "randomchar") {
 
         var int = randomInt(1, 2);
@@ -1620,44 +1610,85 @@ client.on("message", (message) => {
         message.channel.send(charEmbed);
 
     }
-    if(command === prefix + "send"){
+    if (command === prefix + "send") {
 
-        if(args[2]){
+        if (args[2]) {
 
-            switch(args[1]){
+            switch (args[1]) {
 
-                case "og":{
+                case "og": {
 
                     var chan = client.channels.get("434510369692712962");
                     chan.send(args.slice(2).join(" "));
 
                 }
-                break;
-                case "zv":{
+                    break;
+                case "zv": {
 
                     var chan = client.channels.get("404058088329576450");
                     chan.send(args.slice(2).join(" "));
 
                 }
-                break;
-                case "dh":{
+                    break;
+                case "dh": {
 
                     var chan = client.channels.get(darkhole);
                     chan.send(args.slice(2).join(" "));
 
                 }
-                break;
-                case "hq":{
+                    break;
+                case "hq": {
 
                     var chan = client.channels.get("476225541280890930");
                     chan.send(args.slice(2).join(" "));
 
                 }
-                break;
+                    break;
 
             }
 
         }
+
+    }
+    if (command === prefix + "conv") {
+
+        if (args[2]) {
+
+            if (isNaN(args[1].replace(",","."))) {
+
+                message.channel.send("Opa! Use o comando assim:\n**" + prefix + "conv** (valor) (moeda)\n" +
+                    "**EX:**\n **" + prefix + "conv** 300 USD\nPara uma lista de alguns códigos de moeda, use **" + prefix + "moedas**");
+
+            }
+            else {
+                convertCurrency(args[1].replace(",","."), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response));
+            }
+
+        }
+        else{
+            message.channel.send("Opa!\nUse esse comando assim: **" + prefix + "conv** (VALOR) (MOEDA)\n**EX:**\n**" + prefix + "conv** 45 USD");
+        }
+
+    }
+    if (command === prefix + "moedas") {
+
+        message.channel.send("Aqui estão algumas moedas:\n" +
+            "USD Dólar americano" +
+            "CAD Dólar canadense" +
+            "AUD Dólar australiano	 Austrália" +
+            "EUR Euro" +
+            "JPY Iene (Japão)" +
+            "CNY Renminbi (China)" +
+            "GBP Libra Esterlina (Reino Unido)" +
+            "MXN Peso mexicano" +
+            "ARS Peso Argentino" +
+            "BOB Boliviano" +
+            "CLP Peso chileno" +
+            "COP Peso colombiano" +
+            "CUP Peso cubano" +
+            "INR Rupia indiana Índia" +
+            "KPW Won norte coreano" +
+            "KRW Won sul coreano");
 
     }
 
@@ -1690,6 +1721,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "vid** (Nome)", "Busca e mostra vídeos no youtube (primeiro resultado)")
             .addField("**" + prefix + "cringe**", "Mostra conteúdos de vergonha alheia")
             .addField("**" + prefix + "randomchar**", "Cria um personagem aleatório pra vc!")
+            .addField("**" + prefix + "conv**", "Converte qualquer moeda para REAL!")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
