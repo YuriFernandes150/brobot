@@ -30,7 +30,7 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 const Pornsearch = require('pornsearch');
 
 //Conversor de moedas
-
+var converter = require('@divvit/currency-converter')();
 
 //Diversos
 var randomInt = require('random-int');
@@ -1663,15 +1663,17 @@ client.on("message", (message) => {
             }
             else {
                 var n = new Number(parseInt(args[1].trim()));
-                let currencyConverter = new CurrencyConverter();
-                currencyConverter.convert({
-                        from: args[2].toUpperCase(),
-                        to: "SEK",
-                        quantity: n
-                    }).then(result => {
-                        message.channel.send("R$ " + result.quantity);
-                    });
-                
+                var moment = require('moment');
+                var data = new Date();
+                var eurValue = n;
+                var conversionDate = moment(data.getFullYear()+'-'+data.getMonth()+'-'+data.getDay());
+                converter.convert(eurValue, conversionDate, args[2].toUpperCase(), 'BRL', function (err, usdResult) {
+                    if (err)
+                        return callback(err);
+
+                    message.channel.send("R$ "+usdResult.value);
+                });
+
             }
 
         }
