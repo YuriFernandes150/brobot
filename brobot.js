@@ -30,7 +30,7 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 const Pornsearch = require('pornsearch');
 
 //Conversor de moedas
-const convert = require('bank-gov-ua-currency-convert');
+
 
 //Diversos
 var randomInt = require('random-int');
@@ -1663,9 +1663,15 @@ client.on("message", (message) => {
             }
             else {
                 var n = new Number(parseInt(args[1].trim()));
-
-                var amount = convert(n, args[2].toUpperCase(), 'BRL');
-                message.channel.send("R$ " + amount);
+                let currencyConverter = new CurrencyConverter();
+                currencyConverter.convert({
+                        from: args[2].toUpperCase(),
+                        to: "SEK",
+                        quantity: n
+                    }).then(result => {
+                        message.channel.send("R$ " + result.quantity);
+                    });
+                
             }
 
         }
