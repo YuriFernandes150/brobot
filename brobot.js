@@ -1664,7 +1664,7 @@ client.on("message", (message) => {
             else {
                 var n = new Number(parseInt(args[1].trim()));
 
-                var amount = await convert(n, args[2].toUpperCase(), 'BRL');
+                var amount = convert(n, args[2].toUpperCase(), 'BRL');
                 message.channel.send("R$ " + amount);
             }
 
