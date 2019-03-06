@@ -30,7 +30,7 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 const Pornsearch = require('pornsearch');
 
 //Conversor de moedas
-const convertCurrency = require('nodejs-currency-converter');
+const convert = require('bank-gov-ua-currency-convert');
 
 //Diversos
 var randomInt = require('random-int');
@@ -1663,9 +1663,9 @@ client.on("message", (message) => {
             }
             else {
                 var n = new Number(parseInt(args[1].trim()));
-                convertCurrency(n, args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
-                    console.error(e);
-                });
+
+                var amount = await convert(n, args[2].toUpperCase(), 'BRL');
+                message.channel.send("R$ " + amount);
             }
 
         }
