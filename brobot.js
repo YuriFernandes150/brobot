@@ -30,7 +30,7 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 const Pornsearch = require('pornsearch');
 
 //Conversor de moedas
-var converter = require('@divvit/currency-converter');
+var converter = require('@divvit/currency-converter')({ storageDir: process.env.TMPDIR });
 
 //Diversos
 var randomInt = require('random-int');
@@ -1666,12 +1666,12 @@ client.on("message", (message) => {
                 var moment = require('moment');
                 var data = new Date();
                 var eurValue = n;
-                var conversionDate = moment(data.getFullYear()+'-'+data.getMonth()+'-'+data.getDay());
+                var conversionDate = moment(data.getFullYear() + '-' + data.getMonth() + '-' + data.getDay());
                 converter.convert(eurValue, conversionDate, args[2].toUpperCase(), 'BRL', function (err, usdResult) {
                     if (err)
                         return callback(err);
 
-                    message.channel.send("R$ "+usdResult.value);
+                    message.channel.send("R$ " + usdResult.value);
                 });
 
             }
