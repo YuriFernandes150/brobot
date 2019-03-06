@@ -1653,7 +1653,8 @@ client.on("message", (message) => {
     if (command === prefix + "conv") {
 
         if (args[2]) {
-            console.log(parseInt(args[1].trim()));
+            console.log();
+
             if (isNaN(parseInt(args[1].trim()))) {
 
                 message.channel.send("Opa! Use o comando assim:\n**" + prefix + "conv** (valor) (moeda)\n" +
@@ -1661,7 +1662,8 @@ client.on("message", (message) => {
 
             }
             else {
-                convertCurrency(parseInt(args[1].trim()), args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
+                var n = new Number(parseInt(args[1].trim()));
+                convertCurrency(n, args[2].toUpperCase(), 'BRL').then(response => message.channel.send("R$ " + response)).catch(e => {
                     console.error(e);
                 });
             }
@@ -1675,22 +1677,22 @@ client.on("message", (message) => {
     if (command === prefix + "moedas") {
 
         message.channel.send("Aqui estão algumas moedas:\n" +
-            "USD Dólar americano" +
-            "CAD Dólar canadense" +
-            "AUD Dólar australiano	 Austrália" +
-            "EUR Euro" +
-            "JPY Iene (Japão)" +
-            "CNY Renminbi (China)" +
-            "GBP Libra Esterlina (Reino Unido)" +
-            "MXN Peso mexicano" +
-            "ARS Peso Argentino" +
-            "BOB Boliviano" +
-            "CLP Peso chileno" +
-            "COP Peso colombiano" +
-            "CUP Peso cubano" +
-            "INR Rupia indiana Índia" +
-            "KPW Won norte coreano" +
-            "KRW Won sul coreano");
+            "USD - Dólar americano" +
+            "CAD - Dólar canadense" +
+            "AUD - Dólar australiano	 Austrália" +
+            "EUR - Euro" +
+            "JPY - Iene (Japão)" +
+            "CNY - Renminbi (China)" +
+            "GBP - Libra Esterlina (Reino Unido)" +
+            "MXN - Peso mexicano" +
+            "ARS - Peso Argentino" +
+            "BOB - Boliviano" +
+            "CLP - Peso chileno" +
+            "COP - Peso colombiano" +
+            "CUP - Peso cubano" +
+            "INR - Rupia indiana Índia" +
+            "KPW - Won norte coreano" +
+            "KRW - Won sul coreano");
 
     }
 
