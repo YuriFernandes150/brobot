@@ -191,12 +191,21 @@ client.on("message", (message) => {
     if (segundaresp) {
 
         if (message.author.id === autorpergunta) {
-            var resposta = message.content;
-            firebase.database().ref('conversas/' + perg).set({
-                resp: resposta
-            });
-            segundaresp = false;
-            autorpergunta = "";
+            if (message.content.toLowerCase() === "cancelar") {
+                segundaresp = false;
+                autorpergunta = "";
+                message.channel.send("blz então");
+            }
+            else {
+                var resposta = message.content;
+                firebase.database().ref('conversas/' + perg).set({
+                    resp: resposta
+                });
+                segundaresp = false;
+                autorpergunta = "";
+                message.channel.send("Vlw por me ensinar!");
+            }
+
         }
 
 
