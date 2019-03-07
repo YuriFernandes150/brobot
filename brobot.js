@@ -205,10 +205,23 @@ client.on("message", (message) => {
     }
     if (message.content.toLowerCase().includes("brobot")) {
 
-        perg = message.content.toLowerCase();
-        autorpergunta = message.author.id;
-        segundaresp = true;
-        message.channel.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
+        return firebase.database().ref('/conversas/' + message.content.toLowerCase()).once('value').then(function (snapshot) {
+            var resp = (snapshot.val() && snapshot.val().resp) || 'nope';
+            if (resp === "nope") {
+                perg = message.content.toLowerCase();
+                autorpergunta = message.author.id;
+                segundaresp = true;
+                message.channel.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
+            }
+            else {
+
+                message.channel.send(resp);
+
+            }
+
+        });
+
+
 
     }
 
