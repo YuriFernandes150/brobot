@@ -190,7 +190,7 @@ client.on("message", (message) => {
                 message.channel.send("blz então");
             }
             else {
-                var resposta = message.content;
+                var resposta = message.content.toLowerCase();
                 firebase.database().ref('conversas/' + perg).set({
                     resp: resposta
                 });
