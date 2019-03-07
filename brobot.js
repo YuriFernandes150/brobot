@@ -180,14 +180,7 @@ client.on("message", (message) => {
     const command = messageArray[0];
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     //----------------- FUN COMMANDS -----------------
-    if (message.content.toLowerCase().includes("brobot")) {
 
-        perg = message.content.toLowerCase();
-        autorpergunta = message.author.id;
-        segundaresp = true;
-        message.channel.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
-
-    }
     if (segundaresp) {
 
         if (message.author.id === autorpergunta) {
@@ -208,6 +201,14 @@ client.on("message", (message) => {
 
         }
 
+
+    }
+    if (message.content.toLowerCase().includes("brobot")) {
+
+        perg = message.content.toLowerCase();
+        autorpergunta = message.author.id;
+        segundaresp = true;
+        message.channel.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
 
     }
 
