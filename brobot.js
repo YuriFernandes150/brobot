@@ -74,7 +74,7 @@ const votoustop = new Set();
 client.on('error', function () {
 
     var date = new Date();
-    console.log("Ocorreu um erro de conexão Às " + date.getHours()-2 + ":" + date.getMinutes());
+    console.log("Ocorreu um erro de conexão Às " + date.getHours() - 2 + ":" + date.getMinutes());
 
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
@@ -83,7 +83,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     client.on('message', message => {
         var date = new Date();
         if (message.isMentioned(client.user)) {
-            message.reply("pra q vc ta me enchendo o saco em plenas " + date.getHours()-2 + " horas? Fala o q q vc quer");
+            message.reply("pra q vc ta me enchendo o saco em plenas " + date.getHours() - 2 + " horas? Fala o q q vc quer");
         }
     });
 
@@ -994,19 +994,19 @@ client.on("message", (message) => {
 
         var date = new Date();
         let replies = ["Bom dia! :)", "Bom diaaaaaa :3", "Bom dia frô du dia", "SENP.... bom dia :D"];
-        if (date.getHours()-2 >= 13 && date.getHours()-2 < 18) {
-            message.channel.send("Meio atrasado não? Já são " + date.getHours()-2 + " horas! O correto seria boa tarde! XD");
+        if (date.getHours() - 2 >= 13 && date.getHours() - 2 < 18) {
+            message.channel.send("Meio atrasado não? Já são " + date.getHours() - 2 + " horas! O correto seria boa tarde! XD");
         }
-        else if (date.getHours()-2 > 18) {
-            message.channel.send("Olha, seria bom vc olhar pra janela ou pro relógio. Já são " + date.getHours()-2 + " horas! O correto seria boa noite! XD");
+        else if (date.getHours() - 2 > 18) {
+            message.channel.send("Olha, seria bom vc olhar pra janela ou pro relógio. Já são " + date.getHours() - 2 + " horas! O correto seria boa noite! XD");
         }
-        else if (date.getHours()-2 < 5 && date.getHours()-2 > 00) {
-            message.channel.send("Boa madrugada! Agora vai dormir pq já são " + date.getHours()-2 + " horas!");
+        else if (date.getHours() - 2 < 5 && date.getHours() - 2 > 00) {
+            message.channel.send("Boa madrugada! Agora vai dormir pq já são " + date.getHours() - 2 + " horas!");
         }
-        else if (date.getHours()-2 === 12) {
+        else if (date.getHours() - 2 === 12) {
             message.channel.send("E agora? meio-dia seria bom dia ou boa tarde? :thinking: ..... Bem, bom meio-dia pra tu XD");
         }
-        else if (date.getHours()-2 === 00) {
+        else if (date.getHours() - 2 === 00) {
             message.channel.send("meia-noite.... Seria um novo dia com bom dia? ou ainda boa noite? dianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoite \n **RangeError:** Maximum call stack size exceeded");
         }
         else {
@@ -1019,19 +1019,19 @@ client.on("message", (message) => {
         var date = new Date();
         let replies = ["Boa tarde! :)", "Tarde :D", "Uma Excelente tarde para Vossa Senhoria :tophat:", "UOOOOOOUUU, O SENPAI ME NOT.....ahem, boa tarde :D"];
 
-        if (date.getHours()-2 >= 6 && date.getHours()-2 < 12) {
+        if (date.getHours() - 2 >= 6 && date.getHours() - 2 < 12) {
             message.channel.send("Meio adiantado não? ainda são " + date.getHours() + " horas! Quer que o dia passe mais rápido? XD");
         }
-        else if (date.getHours()-2 > 18) {
-            message.channel.send("Olha, seria bom vc olhar pra janela ou pro relógio. Já são " + date.getHours()-2 + " horas! O correto seria boa noite! XD");
+        else if (date.getHours() - 2 > 18) {
+            message.channel.send("Olha, seria bom vc olhar pra janela ou pro relógio. Já são " + date.getHours() - 2 + " horas! O correto seria boa noite! XD");
         }
-        else if (date.getHours()-2 < 5 && date.getHours()-2 > 00) {
-            message.channel.send("Boa madrugada! Agora vai dormir pq já são " + date.getHours()-2 + " horas!");
+        else if (date.getHours() - 2 < 5 && date.getHours() - 2 > 00) {
+            message.channel.send("Boa madrugada! Agora vai dormir pq já são " + date.getHours() - 2 + " horas!");
         }
-        else if (date.getHours()-2 === 12) {
+        else if (date.getHours() - 2 === 12) {
             message.channel.send("E agora? meio-dia seria bom dia ou boa tarde? :thinking: ..... Bem, bom meio-dia pra tu XD");
         }
-        else if (date.getHours()-2 === 00) {
+        else if (date.getHours() - 2 === 00) {
             message.channel.send("Ah não cara.... é meia noite e vc me fala boa tarde? da onde tu tirou isso?????");
         }
         else {
@@ -1044,20 +1044,20 @@ client.on("message", (message) => {
         var date = new Date();
         let replies = ["Boa noite! :)", "Noite :D", "Noite boa pra jogar! :video_game: ", "Boa noite! Nessas horas da noite eu penso no Sen... SENHOR JOGO DE AÇÃO Q EU VOU JOGAR!"];
 
-        if (date.getHours()-2 >= 6 && date.getHours()-2 < 12) {
-            message.channel.send("Olha, já amanheceu viu XD. são " + date.getHours()-2 + " horas! Suspeito q  vc tenha virado a noite jogando? XD");
+        if (date.getHours() - 2 >= 6 && date.getHours() - 2 < 12) {
+            message.channel.send("Olha, já amanheceu viu XD. são " + date.getHours() - 2 + " horas! Suspeito q  vc tenha virado a noite jogando? XD");
         }
-        else if (date.getHours()-2 === 00) {
+        else if (date.getHours() - 2 === 00) {
             message.channel.send("meia-noite.... Seria um novo dia com bom dia? ou ainda boa noite? dianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoitedianoite \n **RangeError:** Maximum call stack size exceeded");
         }
-        else if (date.getHours()-2 < 5 && date.getHours()-2 > 00) {
-            message.channel.send("Boa madrugada! Agora vai dormir pq já são " + date.getHours()-2 + " horas!");
+        else if (date.getHours() - 2 < 5 && date.getHours() - 2 > 00) {
+            message.channel.send("Boa madrugada! Agora vai dormir pq já são " + date.getHours() - 2 + " horas!");
         }
-        else if (date.getHours()-2 === 12) {
+        else if (date.getHours() - 2 === 12) {
             message.channel.send("Não, não jovem, hoje em dia usamos o sistema 24h então meia-noite é 00h00 e n 12h00");
         }
-        else if (date.getHours()-2 > 12 && date.getHours()-2 < 18) {
-            message.channel.send("Meio cedo pra boa noite, não? ainda são " + date.getHours()-2 + " horas. Como já diz o sistema de conexão da PSN : Tente novamente mais tarde");
+        else if (date.getHours() - 2 > 12 && date.getHours() - 2 < 18) {
+            message.channel.send("Meio cedo pra boa noite, não? ainda são " + date.getHours() - 2 + " horas. Como já diz o sistema de conexão da PSN : Tente novamente mais tarde");
         }
         else {
             message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
@@ -1720,10 +1720,14 @@ client.on("message", (message) => {
 
         message.channel.send("Salvando a lista atual pra vc!");
         for (var i = 0; i < fila.length; i++) {
-            var listaMusicas = firebase.database().ref('playlists/' + message.author).push();
+            var listaMusicas = firebase.database().ref('playlists/' + message.author.username).push("song").catch(e => {
+                console.error(e);
+            });
             listaMusicas.set({
                 name: filanome[i],
                 url: fila[i]
+            }).catch(e => {
+                console.error(e);
             });
 
         }
