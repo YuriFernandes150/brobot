@@ -30,7 +30,7 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 const Pornsearch = require('pornsearch');
 
 //Conversor de moedas
-var converter = require('@divvit/currency-converter')();
+//var converter = require('@divvit/currency-converter')();
 
 //Banco de Dados
 var firebase = require("firebase");
