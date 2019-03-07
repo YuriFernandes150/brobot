@@ -30,7 +30,7 @@ let google_customsearch = require('@datafire/google_customsearch').create();
 const Pornsearch = require('pornsearch');
 
 //Conversor de moedas
-var converter = require('@divvit/currency-converter')({ storageDir: process.env.TMPDIR });
+var converter = require('@divvit/currency-converter')();
 
 //Diversos
 var randomInt = require('random-int');
@@ -1650,7 +1650,7 @@ client.on("message", (message) => {
         }
 
     }
-    if (command === prefix + "conv") {
+    /*if (command === prefix + "conv") {
 
         if (args[2]) {
             console.log();
@@ -1667,6 +1667,7 @@ client.on("message", (message) => {
                 var data = new Date();
                 var eurValue = n;
                 var conversionDate = moment(data.getFullYear() + '-' + data.getMonth() + '-' + data.getDay());
+                
                 converter.convert(eurValue, conversionDate, args[2].toUpperCase(), 'BRL', function (err, usdResult) {
                     if (err)
                         return callback(err);
@@ -1681,7 +1682,7 @@ client.on("message", (message) => {
             message.channel.send("Opa!\nUse esse comando assim: **" + prefix + "conv** (VALOR) (MOEDA)\n**EX:**\n**" + prefix + "conv** 45 USD");
         }
 
-    }
+    }*/
     if (command === prefix + "moedas") {
 
         message.channel.send("Aqui estão algumas moedas:\n" +
@@ -1733,7 +1734,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "vid** (Nome)", "Busca e mostra vídeos no youtube (primeiro resultado)")
             .addField("**" + prefix + "cringe**", "Mostra conteúdos de vergonha alheia")
             .addField("**" + prefix + "randomchar**", "Cria um personagem aleatório pra vc!")
-            .addField("**" + prefix + "conv**", "Converte qualquer moeda para REAL!")
+            //.addField("**" + prefix + "conv**", "Converte qualquer moeda para REAL!")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
