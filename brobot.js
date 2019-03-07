@@ -1720,13 +1720,11 @@ client.on("message", (message) => {
 
         message.channel.send("Salvando a lista atual pra vc!");
         for (var i = 0; i < fila.length; i++) {
-            var listaMusicas = firebase.database().ref('playlists/' + message.author.username).push().catch(e => {
-                console.error(e);
-            });
+            var listaMusicas = firebase.database().ref('playlists/' + message.author.username).push("song");
             listaMusicas.set({
                 name: filanome[i],
                 url: fila[i]
-            })
+            });
 
         }
         message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
