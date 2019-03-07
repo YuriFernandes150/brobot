@@ -1726,9 +1726,7 @@ client.on("message", (message) => {
             listaMusicas.set({
                 name: filanome[i],
                 url: fila[i]
-            }).catch(e => {
-                console.error(e);
-            });
+            })
 
         }
         message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
