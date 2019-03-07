@@ -32,6 +32,17 @@ const Pornsearch = require('pornsearch');
 //Conversor de moedas
 var converter = require('@divvit/currency-converter')();
 
+//Banco de Dados
+var firebase = require("firebase");
+var fireconfig = {
+    apiKey: process.env.FIREBASE,
+    authDomain: process.env.AUTH,
+    databaseURL: process.env.DATABASE,
+    storageBucket: process.env.STORAGE,
+};
+firebase.initializeApp(fireconfig);
+var database = firebase.database();
+
 //Diversos
 var randomInt = require('random-int');
 var randomFloat = require('random-float');
@@ -1682,7 +1693,7 @@ client.on("message", (message) => {
             message.channel.send("Opa!\nUse esse comando assim: **" + prefix + "conv** (VALOR) (MOEDA)\n**EX:**\n**" + prefix + "conv** 45 USD");
         }
 
-    }*/
+    }
     if (command === prefix + "moedas") {
 
         message.channel.send("Aqui estão algumas moedas:\n" +
@@ -1703,6 +1714,20 @@ client.on("message", (message) => {
             "KPW - Won norte coreano" +
             "KRW - Won sul coreano");
 
+    }*/
+
+    if (command === prefix + "salvarlista") {
+
+        message.channel.send("Salvando a lista atual pra vc!");
+        for (var i = 0; i < fila.length; i++) {
+            var listaMusicas = firebase.database().ref('playlists/' + message.author).push();
+            listaMusicas.set({
+                name: filanome[i],
+                url: fila[i]
+            });
+
+        }
+        message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
     }
 
 
