@@ -14,7 +14,6 @@ const ytlist = require('youtube-playlist');
 var ytSearch = require('youtube-search');
 var fila = [];
 var filanome = [];
-var filapics = [];
 
 //Piadas
 var Joke = require('give-me-a-joke');
@@ -41,7 +40,6 @@ var fireconfig = {
     storageBucket: process.env.STORAGE,
 };
 firebase.initializeApp(fireconfig);
-var database = firebase.database();
 
 //Diversos
 var randomInt = require('random-int');
@@ -56,8 +54,6 @@ var prefix = config.prefix;
 var music = config.music;
 var darkhole = config.darkhole;
 
-//Variaveis Diversas
-var medo = false;
 var segundaresp = false;
 var tocando = false;
 var dispatcher;
@@ -70,6 +66,8 @@ const votounext = new Set();
 const votoupause = new Set();
 const votouresume = new Set();
 const votoustop = new Set();
+var autorpergunta;
+var perg;
 
 client.on('error', function () {
 
@@ -142,7 +140,7 @@ client.on("message", (message) => {
         dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
         message.channel.send("Tocando: **" + filanome[0] + "**");
         tocando = true;
-        dispatcher.on("end", end => {
+        dispatcher.on("end", () => {
             votounext.clear();
             votoupause.clear();
             votouresume.clear();
@@ -170,7 +168,7 @@ client.on("message", (message) => {
     function PlayRadio(connection, url) {
 
         radiodispatcher = connection.playStream(ytdl(url, { quality: '93' }));
-        radiodispatcher.on("end", end => {
+        radiodispatcher.on("end", () => {
 
 
 
@@ -182,36 +180,25 @@ client.on("message", (message) => {
     const command = messageArray[0];
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     //----------------- FUN COMMANDS -----------------
+    if (message.content.toLowerCase().includes("brobot")) {
+
+        perg = message.content.toLowerCase();
+        autorpergunta = message.author.id;
+        segundaresp = true;
+        message.channel.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
+
+    }
     if (segundaresp) {
 
-        if (message.content.includes("nada não") || message.content.includes("nada")) {
-
-            message.channel.send("Não me chamem atoa ok? Estou ocupado aki sendo foda");
+        if (message.author.id === autorpergunta) {
+            var resposta = message.content;
+            firebase.database().ref('conversas/' + perg).set({
+                resp: resposta
+            });
             segundaresp = false;
+            autorpergunta = "";
         }
-        else if (message.content.includes("sua mãe") || message.content.includes("sua mae")) {
 
-            message.channel.send("Eu nem tenho mãe ;-;");
-            segundaresp = false;
-
-        }
-        else if (message.content.includes("sim") || message.content.includes("Sim") || message.content.includes("ss") || message.content.includes("Ss") || message.content.includes("si") || message.content.includes("yee") || message.content.includes("yuss") || message.content.includes("yup")) {
-
-            message.channel.send("Ah ok, só confirmando. Se quiser ajuda usa o **" + prefix + "help**faz favor");
-            segundaresp = false;
-
-        }
-        else if (message.content.includes("não") || message.content.includes("Não") || message.content.includes("nn") || message.content.includes("Nn") || message.content.includes("no") || message.content.includes("nah") || message.content.includes("nope") || message.content.includes("nop")) {
-
-            message.channel.send("E tem outro Brobot aki? Acho q não hein");
-            segundaresp = false;
-
-        }
-        else {
-
-            segundaresp = false;
-
-        }
 
     }
 
@@ -487,7 +474,6 @@ client.on("message", (message) => {
             if (message.member.voiceChannelID === music) {
                 votounext.add(message.author.id);
                 var chan = client.channels.get(music);
-                var votos = 0;
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
                 votosnext++;
                 var metade = pessoas / 2;
@@ -1720,7 +1706,7 @@ client.on("message", (message) => {
 
         message.channel.send("Salvando a lista atual pra vc!");
         for (var i = 0; i < fila.length; i++) {
-            var listaMusicas = firebase.database().ref('playlists/' + message.author.username).push("song");
+            var listaMusicas = firebase.database().ref('playlists/' + message.author.username).push();
             listaMusicas.set({
                 name: filanome[i],
                 url: fila[i]
