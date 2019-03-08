@@ -111,7 +111,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     }, 3600000);
     setInterval(function () {
 
-        let subreddit = ["AdviceAnimals", "circojeca", "DiretoDoZapZap", "memes", "terriblefacebookmemes", "dankmemes"];
+        let subreddit = ["circojeca", "DiretoDoZapZap", "memes", "terriblefacebookmemes", "dankmemes"];
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
 
