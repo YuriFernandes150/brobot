@@ -109,6 +109,20 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
             });
 
     }, 3600000);
+    setInterval(function () {
+
+        let subreddit = ["AdviceAnimals", "circojeca", "DiretoDoZapZap", "memes", "terriblefacebookmemes", "dankmemes"];
+        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
+            .then(url => {
+
+                var chan = client.channels.get("553644829826088980");
+                chan.send(url);
+
+            }).catch(e => {
+                console.error(e);
+            });
+
+    }, 7200000);
 });
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
