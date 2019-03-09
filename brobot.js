@@ -217,7 +217,7 @@ client.on("message", (message) => {
 
 
     }
-    if (message.content.toLowerCase().includes("brobot")) {
+    if (message.content.toLowerCase().includes("brobot") && !message.content.startsWith(prefix)) {
 
         return firebase.database().ref('/conversas/' + message.content.toLowerCase()).once('value').then(function (snapshot) {
             var resp = (snapshot.val() && snapshot.val().resp) || 'nope';
@@ -229,13 +229,54 @@ client.on("message", (message) => {
             }
             else {
 
-                message.channel.send(resp);
+                if (resp.includes("-")) {
+
+                    var listaresps = resp.split("-");
+                    message.channel.send(listaresps[randomInt(listaresps.length)].trim());
+
+                }
+                else {
+                    message.channel.send(resp);
+                }
+
 
             }
 
         });
 
 
+
+    }
+    if (command === prefix + "addresp") {
+
+        if (args[1]) {
+
+            if (message.content.includes("-")) {
+                return firebase.database().ref('/conversas/' + message.content.split("-")[0].trim().replace(command, "")).once('value').then(function (snapshot) {
+
+                    var retorno = (snapshot.val() && snapshot.val().resp) || 'nope';
+
+                    if (retorno === "nope") {
+
+                        message.channel.send("Eu ainda não conheço essa ," + message.author.username + ".\nEu preciso aprender pelo menos uma resposta pra\nessa frase antes de vc tentar adicionar outras");
+
+                    }
+                    else {
+
+                        firebase.database().ref('conversas/' + message.content.split("-")[0].trim().replace(command, "")).set({
+                            resp: retorno + "-" + message.content.split("-")[1].trim()
+                        });
+                        message.channel.send("OK! Vou me lembrar dessa resposta tbm!");
+
+                    }
+                });
+            }
+            else {
+                message.channel.send("Opa!\nUse esse comando assim:\n**" + prefix + "addresp** (frase de pergunta)-(resposta do bot)\n**NÃO SE ESQUEÇA DO TRAÇO** ;)");
+            }
+
+
+        }
 
     }
 
@@ -1782,7 +1823,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "vid** (Nome)", "Busca e mostra vídeos no youtube (primeiro resultado)")
             .addField("**" + prefix + "cringe**", "Mostra conteúdos de vergonha alheia")
             .addField("**" + prefix + "randomchar**", "Cria um personagem aleatório pra vc!")
-            //.addField("**" + prefix + "conv**", "Converte qualquer moeda para REAL!")
+            .addField("**" + prefix + "addresp**", "Adiciona uma nova resposta para uma frase já ensinada!!")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
@@ -1793,7 +1834,7 @@ client.on("message", (message) => {
     }
 
     if (command === prefix + "ded") {
-        message.channel.send("Tudo On! <:brobot:502145028106223617> :thumbsup: ");
+        message.channel.send("Tudo On! <:brobot:502145028106223617> <:blz:404429279812780032> ");
     }
     if (message.channel.type == "dm") return;
 
