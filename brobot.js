@@ -252,6 +252,8 @@ client.on("message", (message) => {
         if (args[1]) {
 
             if (message.content.includes("-")) {
+                console.log("pergunta: " + message.content.split("-")[0].trim().replace(command, ""));
+                console.log("resposta: " + message.content.split("-")[1].trim().replace(command, ""));
                 return firebase.database().ref('/conversas/' + message.content.split("-")[0].trim().replace(command, "")).once('value').then(function (snapshot) {
 
                     var retorno = (snapshot.val() && snapshot.val().resp) || 'nope';
@@ -1782,16 +1784,76 @@ client.on("message", (message) => {
 
     if (command === prefix + "salvarlista") {
 
-        message.channel.send("Salvando a lista atual pra vc!");
-        for (var i = 0; i < fila.length; i++) {
-            var listaMusicas = firebase.database().ref('playlists/' + message.author.username).push();
-            listaMusicas.set({
-                name: filanome[i],
-                url: fila[i]
-            });
+        if (fila[1]) {
+            message.channel.send("Salvando a lista atual pra vc!");
+            var links = "";
+            var nomes = "";
+            for (var i = 0; i < fila.length; i++) {
+                if (i === 0) {
+                    links += fila[i];
+                    nomes += filanome[i];
+                } else {
+                    links += "," + fila[i];
+                    nomes += "," + filanome[i];
+                }
 
+
+            }
+            firebase.database().ref('playlists/' + message.author.username).set({
+                names: nomes,
+                urls: links
+            });
+            message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
         }
-        message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
+        else {
+            message.channel.send("É preciso ter pelo menos 2 músicas na fila atual para poder salvar como uma playlist");
+        }
+
+
+    }
+    if (command === prefix + "minhalista") {
+
+        return firebase.database().ref('/playlists/' + message.author.username).once('value').then(function (snapshot) {
+            var names = (snapshot.val() && snapshot.val().names) || 'nope';
+            var links = (snapshot.val() && snapshot.val().urls) || 'nope';
+
+            if (names === "nope" || urls === "nope") {
+
+                message.channel.send("Aparentemente vc não tem uma playlist registrada aqui...\nCrie uma playlist com o **" + prefix + "play** ou **" + prefix + "playlist** e use **" + prefix + "salvarlista** para salvar sua própria playlist :)");
+
+            }
+            else {
+
+                var listanomes = names.split(",");
+                var listalinks = links.split(",");
+
+                for (var i = 0; i < listalinks.length; i++) {
+
+                    fila.push(listalinks[i]);
+                    filanome.push(listanomes[i]);
+
+                }
+                if (tocando) {
+
+                    message.channel.send("Suas músicas foram adicionadas na fila principal!");
+
+                }
+                else {
+                    var channel = client.channels.get(music);
+                    channel.join().then(connection => {
+                        message.channel.send("Partiu! :musical_note:");
+                        Play(connection);
+
+                    }).catch(e => {
+                        // Oh no, it errored! Let's log it to console :)
+                        console.error(e);
+                    });
+                }
+
+            }
+
+        });
+
     }
 
 
@@ -1824,6 +1886,8 @@ client.on("message", (message) => {
             .addField("**" + prefix + "cringe**", "Mostra conteúdos de vergonha alheia")
             .addField("**" + prefix + "randomchar**", "Cria um personagem aleatório pra vc!")
             .addField("**" + prefix + "addresp**", "Adiciona uma nova resposta para uma frase já ensinada!!")
+            .addField("**" + prefix + "salvarlista**", "Salva a playlist atual no seu nome , pra vc poder chamar ela quando quiser!")
+            .addField("**" + prefix + "minhalista**", "Adiciona as músicas da sua playlist pessoal na fila principal")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
