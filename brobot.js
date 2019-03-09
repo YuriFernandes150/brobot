@@ -252,9 +252,9 @@ client.on("message", (message) => {
         if (args[1]) {
 
             if (message.content.includes("-")) {
-                console.log("pergunta: " + message.content.split("-")[0].trim().replace(command, ""));
-                console.log("resposta: " + message.content.split("-")[1].trim().replace(command, ""));
-                return firebase.database().ref('/conversas/' + message.content.split("-")[0].trim().replace(command, "")).once('value').then(function (snapshot) {
+                console.log("pergunta: " + message.content.split("-")[0].replace(command, "").trim());
+                console.log("resposta: " + message.content.split("-")[1].replace(command, "").trim());
+                return firebase.database().ref('/conversas/' + message.content.split("-")[0].replace(command, "").trim()).once('value').then(function (snapshot) {
 
                     var retorno = (snapshot.val() && snapshot.val().resp) || 'nope';
 
@@ -265,7 +265,7 @@ client.on("message", (message) => {
                     }
                     else {
 
-                        firebase.database().ref('conversas/' + message.content.split("-")[0].trim().replace(command, "")).set({
+                        firebase.database().ref('conversas/' + message.content.split("-")[0].replace(command, "").trim()).set({
                             resp: retorno + "-" + message.content.split("-")[1].trim()
                         });
                         message.channel.send("OK! Vou me lembrar dessa resposta tbm!");
@@ -1817,7 +1817,7 @@ client.on("message", (message) => {
             var names = (snapshot.val() && snapshot.val().names) || 'nope';
             var links = (snapshot.val() && snapshot.val().urls) || 'nope';
 
-            if (names === "nope" || urls === "nope") {
+            if (names === "nope" || links === "nope") {
 
                 message.channel.send("Aparentemente vc não tem uma playlist registrada aqui...\nCrie uma playlist com o **" + prefix + "play** ou **" + prefix + "playlist** e use **" + prefix + "salvarlista** para salvar sua própria playlist :)");
 
