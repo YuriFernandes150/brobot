@@ -48,7 +48,7 @@ var casual = require('casual');
 var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
-const AcceptMessage = require('../src/main.js')
+const AcceptMessage = require('acceptmessage');
 
 // Configuração
 const config = require('./config.json');
