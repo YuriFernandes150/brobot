@@ -1867,9 +1867,10 @@ client.on("message", (message) => {
                     columns: 3,
                     mines: 3,
                     emote: 'boom',
-                    returnType: 'code',
+                    returnType: 'emoji',
                 });
-                minesweeper.start();
+                const mine = minesweeper.start();
+                message.channel.send(mine);
             }
             else if (num === "2") {
                 const minesweeper = new Minesweeper({
@@ -1877,9 +1878,10 @@ client.on("message", (message) => {
                     columns: 6,
                     mines: 15,
                     emote: 'boom',
-                    returnType: 'code',
+                    returnType: 'emoji',
                 });
-                minesweeper.start();
+                const mine = minesweeper.start();
+                message.channel.send(mine);
             }
             else if (num === "3") {
                 const minesweeper = new Minesweeper({
@@ -1887,9 +1889,10 @@ client.on("message", (message) => {
                     columns: 10,
                     mines: 40,
                     emote: 'boom',
-                    returnType: 'code',
+                    returnType: 'emoji',
                 });
-                minesweeper.start();
+                const mine = minesweeper.start();
+                message.channel.send(mine);
             }
             else {
                 message.channel.send("Escolha uma dificuldade Válida!\n1 - Fácil\n2 - Médio\n3 - Difícil");
