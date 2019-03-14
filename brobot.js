@@ -1916,7 +1916,8 @@ client.on("message", (message) => {
             votosSim = 0;
             votosNao = 0;
             var desc = args.slice(1).join(" ");
-            var pessoas = message.channel.members.filter(m => m.presence.status === 'online').size
+            var pessoas = message.channel.members.filter(m => m.presence.status === 'online').size;
+            var bot = message.channel.members.get("493851293668868117");
             var msg = new AcceptMessage(client, {
                 content: new Discord.RichEmbed()
                     .setDescription(message.author + " iniciou uma votação para: **" + desc + "**")
@@ -1925,6 +1926,7 @@ client.on("message", (message) => {
                     accept: '✅',
                     deny: '❌'
                 },
+                checkUser: bot,
                 actions: {
                     accept: (reaction, user) => {
                         votosSim = votosSim + 1;
