@@ -47,6 +47,7 @@ var randomFloat = require('random-float');
 var casual = require('casual');
 var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
+const Minesweeper = require('discord.js-minesweeper');
 
 // Configuração
 const config = require('./config.json');
@@ -88,16 +89,16 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     /*-= STATUS DO BOT =-*/
     /*-=-=-=-=-=-=-=-=-=*/
     setInterval(function () {
-        let statuses = ["jogos mais caros que os seus", "Jogos que vc quer ter", "Mineirinho Ultra Adventures", "Hentaikey.com", "Mu", "Runescape", "Red Dead Redemption 2", "Kamasutra Pro", "Um Guei leu isso"]; // Status do Dark Code que atualizam a cada 1 minuto. Para adicionar um novo apenas acrescente com vírgula... exemplo; let statuses = ["Dark Code™ | &help", "oi", "sou um bot lescal com nescau :3"];
+        let statuses = ["jogos mais caros que os seus", "Jogos que vc quer ter", "Mineirinho Ultra Adventures", "Hentaikey.com", "Mu", "Runescape", "Red Dead Redemption 2", "Kamasutra Pro", "Um Guei leu isso", "Reddit", "Twitter", "Mass Effect: Andromeda"];
         let status = statuses[Math.floor(Math.random() * statuses.length)]
 
         client.user.setPresence({ game: { name: status }, status: 'online' });
 
         client.user.setPresence({ activity: { name: status }, status: 'online' })
-    }, 60000);
+    }, 240000);
     setInterval(function () {
 
-        let subreddit = ["rule34", "rule34 comics", "asseffect", "PokePorn", "animalcrossingr34", "rule34 abuse", "NSFW_HTML5", "nsfw_sexy_gif", "nsfw_gif"];
+        let subreddit = ["rule34", "NSFW_HTML5", "nsfw_sexy_gif", "nsfw_gif"];
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
 
@@ -1855,6 +1856,52 @@ client.on("message", (message) => {
         });
 
     }
+    if (command === prefix + "campominado") {
+
+        if (args[1]) {
+            var num = args[1];
+
+            if (num === "1") {
+                const minesweeper = new Minesweeper({
+                    rows: 3,
+                    columns: 3,
+                    mines: 3,
+                    emote: 'boom',
+                    returnType: 'code',
+                });
+                minesweeper.start();
+            }
+            else if (num === "2") {
+                const minesweeper = new Minesweeper({
+                    rows: 6,
+                    columns: 6,
+                    mines: 15,
+                    emote: 'boom',
+                    returnType: 'code',
+                });
+                minesweeper.start();
+            }
+            else if (num === "3") {
+                const minesweeper = new Minesweeper({
+                    rows: 10,
+                    columns: 10,
+                    mines: 40,
+                    emote: 'boom',
+                    returnType: 'code',
+                });
+                minesweeper.start();
+            }
+            else {
+                message.channel.send("Escolha uma dificuldade Válida!\n1 - Fácil\n2 - Médio\n3 - Difícil");
+            }
+
+
+        }
+        else {
+            message.channel.send("Escolha uma dificuldade!\n1 - Fácil\n2 - Médio\n3 - Difícil");
+        }
+
+    }
 
 
     //----------------ADMIN COMMANDS------------------------
@@ -1888,6 +1935,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "addresp**", "Adiciona uma nova resposta para uma frase já ensinada!!")
             .addField("**" + prefix + "salvarlista**", "Salva a playlist atual no seu nome , pra vc poder chamar ela quando quiser!")
             .addField("**" + prefix + "minhalista**", "Adiciona as músicas da sua playlist pessoal na fila principal")
+            .addField("**" + prefix + "campominado**", "Faz um joguinho simples de campo minado, usando emojis :boom:")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 

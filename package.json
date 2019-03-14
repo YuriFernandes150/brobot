@@ -16,6 +16,7 @@
     "casual": "^1.6.0",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.4.2",
+    "discord.js-minesweeper": "^1.0.3",
     "discord.js-music-v11": "^1.3.4",
     "firebase": "^5.8.5",
     "get-json": "^1.0.1",
