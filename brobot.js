@@ -1919,7 +1919,7 @@ client.on("message", (message) => {
                     accept: '✅',
                     deny: '❌'
                 },
-                checkUser: member,
+                checkUser: message.author,
                 actions: {
                     accept: (reaction, user) => {
                         message.channel.send(user + "Votou a favor de " + args.slice(1).join(" ") + "!");
