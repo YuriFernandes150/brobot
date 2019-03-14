@@ -12,6 +12,7 @@
   "dependencies": {
     "@datafire/google_customsearch": "^5.0.0",
     "@divvit/currency-converter": "^2.0.7",
+    "acceptmessage": "^1.1.0",
     "cartoon-avatar": "^1.0.2",
     "casual": "^1.6.0",
     "cheerio": "^1.0.0-rc.2",

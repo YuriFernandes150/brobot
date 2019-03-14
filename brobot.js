@@ -48,6 +48,7 @@ var casual = require('casual');
 var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
+const AcceptMessage = require('../src/main.js')
 
 // Configuração
 const config = require('./config.json');
@@ -1902,6 +1903,38 @@ client.on("message", (message) => {
         }
         else {
             message.channel.send("Escolha uma dificuldade!\n1 - Fácil\n2 - Médio\n3 - Difícil");
+        }
+
+    }
+    if (command === prefix + "rtv") {
+
+        if (args[1]) {
+
+            // Build the AcceptMessage
+            var msg = new AcceptMessage(client, {
+                content: new Discord.RichEmbed()
+                    .setDescription(message.author + " iniciou uma votação para: **" + args.slice(1).join(" ") + "**")
+                    .setColor(0xf76707),
+                emotes: {
+                    accept: '✅',
+                    deny: '❌'
+                },
+                checkUser: member,
+                actions: {
+                    accept: (reaction, user) => {
+                        message.channel.send(user + "Votou a favor de " + args.slice(1).join(" ") + "!");
+                    },
+                    deny: (reaction, user) => {
+                        message.channel.send(user + "Votou a favor de " + args.slice(1).join(" ") + "!");
+                    }
+                }
+            });
+
+            msg.send(message.channel);
+
+        }
+        else {
+            message.channel.send("Use direito!\n**" + prefix + "rtv** (Sua votação)\n**EX:**\n**" + prefix + "rtv** Jogar Starbound");
         }
 
     }
