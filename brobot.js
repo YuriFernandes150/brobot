@@ -1918,7 +1918,7 @@ client.on("message", (message) => {
             var desc = args.slice(1).join(" ");
             var pessoas = message.channel.members.filter(m => m.presence.status === 'online').size;
             const chan = message.channel;
-            const voteEmbed = new Discord.MessageEmbed()
+            const voteEmbed = new Discord.RichEmbed()
                 .setColor('RANDOM')
                 .setTitle(messsage.author.username + " iniciou uma votação:")
                 .setDescription(desc)
@@ -1929,7 +1929,7 @@ client.on("message", (message) => {
             msg.react('👍').then(() => msg.react('👎'));
 
             const filter = (reaction, user) => {
-                return ['👍', '👎'].includes(reaction.emoji.name) && user.id === msg.author.id;
+                return ['👍', '👎'].includes(reaction.emoji.name);
             };
 
             msg.awaitReactions(filter, { max: 1, time: 120000, errors: ['time'] })
@@ -1939,7 +1939,7 @@ client.on("message", (message) => {
                     if (reaction.emoji.name === '👍') {
                         votosSim = votosSim + 1;
                         if (votosSim > pessoas / 2) {
-                            const yesEmbed = new Discord.MessageEmbed()
+                            const yesEmbed = new Discord.RichEmbed()
                                 .setColor('RANDOM')
                                 .setTitle("Fim da Votação")
                                 .setDescription("Votação Aprovada!")
@@ -1947,10 +1947,10 @@ client.on("message", (message) => {
                             chan.send(yesEmbed);
                         }
                     }
-                    else {
+                    else if (reaction.emoji.name === '👎') {
                         votosNao = votosNao + 1;
                         if (votosNao > pessoas / 2) {
-                            const noEmbed = new Discord.MessageEmbed()
+                            const noEmbed = new Discord.RichEmbed()
                                 .setColor('RANDOM')
                                 .setTitle("Fim da Votação")
                                 .setDescription("Votação Negada!")
