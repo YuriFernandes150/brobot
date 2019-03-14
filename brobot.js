@@ -1924,7 +1924,7 @@ client.on("message", (message) => {
                 .setDescription(desc)
                 .setFooter("Use reações para votar");
 
-            var msg = await message.channel.send(voteEmbed);
+            var msg = message.channel.send(voteEmbed);
 
             msg.react('👍').then(() => msg.react('👎'));
 
