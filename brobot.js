@@ -1920,7 +1920,7 @@ client.on("message", (message) => {
             const chan = message.channel;
             const voteEmbed = new Discord.RichEmbed()
                 .setColor('RANDOM')
-                .setTitle(messsage.author.username + " iniciou uma votação:")
+                .setTitle(message.author.username + " iniciou uma votação:")
                 .setDescription(desc)
                 .setFooter("Use reações para votar");
 
