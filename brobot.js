@@ -1916,7 +1916,7 @@ client.on("message", (message) => {
             votosSim = 0;
             votosNao = 0;
             var desc = args.slice(1).join(" ");
-            var pessoas = chan.members.filter(member => !member.user.bot).size;
+            var pessoas = message.channel.members.filter(member => !member.user.bot).size;
             var msg = new AcceptMessage(client, {
                 content: new Discord.RichEmbed()
                     .setDescription(message.author + " iniciou uma votação para: **" + desc + "**")
