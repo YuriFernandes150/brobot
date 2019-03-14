@@ -1917,35 +1917,53 @@ client.on("message", (message) => {
             votosNao = 0;
             var desc = args.slice(1).join(" ");
             var pessoas = message.channel.members.filter(m => m.presence.status === 'online').size;
-            var bot = message.channel.members.get("493851293668868117");
-            var msg = new AcceptMessage(client, {
-                content: new Discord.RichEmbed()
-                    .setDescription(message.author + " iniciou uma votação para: **" + desc + "**")
-                    .setColor(0xf76707),
-                emotes: {
-                    accept: '✅',
-                    deny: '❌'
-                },
-                checkUser: bot,
-                actions: {
-                    accept: (reaction, user) => {
+            const chan = message.channel;
+            const voteEmbed = new Discord.MessageEmbed()
+                .setColor('RANDOM')
+                .setTitle(messsage.author.username + " iniciou uma votação:")
+                .setDescription(desc)
+                .setFooter("Use reações para votar");
+
+            var msg = await message.channel.send(voteEmbed);
+
+            msg.react('👍').then(() => msg.react('👎'));
+
+            const filter = (reaction, user) => {
+                return ['👍', '👎'].includes(reaction.emoji.name) && user.id === msg.author.id;
+            };
+
+            msg.awaitReactions(filter, { max: 1, time: 120000, errors: ['time'] })
+                .then(collected => {
+                    const reaction = collected.first();
+
+                    if (reaction.emoji.name === '👍') {
                         votosSim = votosSim + 1;
                         if (votosSim > pessoas / 2) {
-                            message.channel.send("Votação finalizada à favor de: **" + desc + "**\nVoto final: " + user.username);
-                            votosSim = 0;
-                        }
-                    },
-                    deny: (reaction, user) => {
-                        votosNao = votosNao + 1;
-                        if (votosNao > pessoas / 2) {
-                            message.channel.send("Votação finalizada contra **" + desc + "**\nVoto final: " + user.username);
-                            votosNao = 0;
+                            const yesEmbed = new Discord.MessageEmbed()
+                                .setColor('RANDOM')
+                                .setTitle("Fim da Votação")
+                                .setDescription("Votação Aprovada!")
+                                .setFooter("Obrigado por votar!");
+                            chan.send(yesEmbed);
                         }
                     }
-                }
-            });
+                    else {
+                        votosNao = votosNao + 1;
+                        if (votosNao > pessoas / 2) {
+                            const noEmbed = new Discord.MessageEmbed()
+                                .setColor('RANDOM')
+                                .setTitle("Fim da Votação")
+                                .setDescription("Votação Negada!")
+                                .setFooter("Obrigado por votar!");
+                            chan.send(noEmbed);
+                        }
+                    }
+                })
+                .catch(collected => {
+                    console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
+                });
 
-            msg.send(message.channel);
+
 
         }
         else {
