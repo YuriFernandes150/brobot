@@ -64,6 +64,8 @@ var votospause = 0;
 var votosresume = 0;
 var votosnext = 0;
 var votosstop = 0;
+var votosSim = 0;
+var votosNao = 0;
 const votounext = new Set();
 const votoupause = new Set();
 const votouresume = new Set();
@@ -1911,9 +1913,13 @@ client.on("message", (message) => {
         if (args[1]) {
 
             // Build the AcceptMessage
+            votosSim = 0;
+            votosNao = 0;
+            var desc = args.slice(1).join(" ");
+            var pessoas = chan.members.filter(member => !member.user.bot).size;
             var msg = new AcceptMessage(client, {
                 content: new Discord.RichEmbed()
-                    .setDescription(message.author + " iniciou uma votação para: **" + args.slice(1).join(" ") + "**")
+                    .setDescription(message.author + " iniciou uma votação para: **" + desc + "**")
                     .setColor(0xf76707),
                 emotes: {
                     accept: '✅',
@@ -1922,10 +1928,18 @@ client.on("message", (message) => {
                 checkUser: message.author,
                 actions: {
                     accept: (reaction, user) => {
-                        message.channel.send(user + "Votou a favor de " + args.slice(1).join(" ") + "!");
+                        votosSim = votosSim + 1;
+                        if (votosSim > pessoas / 2) {
+                            message.channel.send("Votação finalizada à favor de: **" + desc + "**\nVoto final: " + user.username);
+                            votosSim = 0;
+                        }
                     },
                     deny: (reaction, user) => {
-                        message.channel.send(user + "Votou a favor de " + args.slice(1).join(" ") + "!");
+                        votosNao = votosNao + 1;
+                        if (votosNao > pessoas / 2) {
+                            message.channel.send("Votação finalizada contra **" + desc + "**\nVoto final: " + user.username);
+                            votosNao = 0;
+                        }
                     }
                 }
             });
