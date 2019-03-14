@@ -1924,46 +1924,46 @@ client.on("message", (message) => {
                 .setDescription(desc)
                 .setFooter("Use reações para votar");
 
-            var msg = message.channel.send(voteEmbed);
+            message.channel.send(voteEmbed).then(msg => {
 
-            msg.react('👍').then(() => msg.react('👎'));
+                msg.react('👍').then(() => msg.react('👎'));
 
-            const filter = (reaction, user) => {
-                return ['👍', '👎'].includes(reaction.emoji.name);
-            };
+                const filter = (reaction, user) => {
+                    return ['👍', '👎'].includes(reaction.emoji.name);
+                };
 
-            msg.awaitReactions(filter, { max: 1, time: 120000, errors: ['time'] })
-                .then(collected => {
-                    const reaction = collected.first();
+                msg.awaitReactions(filter, { max: 1, time: 120000, errors: ['time'] })
+                    .then(collected => {
+                        const reaction = collected.first();
 
-                    if (reaction.emoji.name === '👍') {
-                        votosSim = votosSim + 1;
-                        if (votosSim > pessoas / 2) {
-                            const yesEmbed = new Discord.RichEmbed()
-                                .setColor('RANDOM')
-                                .setTitle("Fim da Votação")
-                                .setDescription("Votação Aprovada!")
-                                .setFooter("Obrigado por votar!");
-                            chan.send(yesEmbed);
+                        if (reaction.emoji.name === '👍') {
+                            votosSim = votosSim + 1;
+                            if (votosSim > pessoas / 2) {
+                                const yesEmbed = new Discord.RichEmbed()
+                                    .setColor('RANDOM')
+                                    .setTitle("Fim da Votação")
+                                    .setDescription("Votação Aprovada!")
+                                    .setFooter("Obrigado por votar!");
+                                chan.send(yesEmbed);
+                            }
                         }
-                    }
-                    else if (reaction.emoji.name === '👎') {
-                        votosNao = votosNao + 1;
-                        if (votosNao > pessoas / 2) {
-                            const noEmbed = new Discord.RichEmbed()
-                                .setColor('RANDOM')
-                                .setTitle("Fim da Votação")
-                                .setDescription("Votação Negada!")
-                                .setFooter("Obrigado por votar!");
-                            chan.send(noEmbed);
+                        else if (reaction.emoji.name === '👎') {
+                            votosNao = votosNao + 1;
+                            if (votosNao > pessoas / 2) {
+                                const noEmbed = new Discord.RichEmbed()
+                                    .setColor('RANDOM')
+                                    .setTitle("Fim da Votação")
+                                    .setDescription("Votação Negada!")
+                                    .setFooter("Obrigado por votar!");
+                                chan.send(noEmbed);
+                            }
                         }
-                    }
-                })
-                .catch(collected => {
-                    console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
-                });
+                    })
+                    .catch(collected => {
+                        console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
+                    });
 
-
+            });
 
         }
         else {
