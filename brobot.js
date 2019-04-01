@@ -791,29 +791,6 @@ client.on("message", (message) => {
         message.channel.send("Eu posso de ajudar com umas contas rápidas! \nSe você quiser fazer as contas, use o comando **" + prefix + "qnto** \nPara adição use **" + prefix + "qnto** n1+n2 \nPara subtração, use **" + prefix + "qnto** nq-n2 \nPara multiplicação, use **" + prefix + "qnto** n1xn2 \nPara divisão, use **" + prefix + "qnto** n1/n2 \nVlw!")
 
     }
-    if (command === prefix + "funfacts") {
-        console.log("Comando funfacts requisitado por: " + message.author.username);
-        let replies = ["https://cdn.discordapp.com/attachments/404058102565044234/493836015576940545/WhatsApp_Image_2018-09-24_at_13.47.00.jpeg",
-            "https://www.raiseyourbrain.com/wp-content/uploads/2015/01/fun-facts-about-pandas-26-300x200.jpg?x84682", "https://piximus.net/media/20475/fun-facts-1.jpg",
-            "https://images.template.net/wp-content/uploads/2015/08/Gecko-Feet-Fact.jpg", "https://img.izismile.com/img/img5/20120604/640/video_gaming_fun_facts_640_04.jpg",
-            "https://i.kym-cdn.com/photos/images/original/000/466/001/369.png", "https://m.media-amazon.com/images/M/MV5BNGYyYmZhY2MtMmU2OC00NmMwLWExYTktYTU3NzRjNDBmMjM5L2ltYWdlXkEyXkFqcGdeQXVyNjM2NDIwMzQ@._V1_.jpg",
-            "https://i.pinimg.com/originals/e1/82/7e/e1827ea68cf27b8fd1d3eb0285511850.jpg", "https://qph.fs.quoracdn.net/main-qimg-06ddf88599e44dd1615b534b142e9204-c", "https://i.kym-cdn.com/photos/images/original/000/431/247/f0c.png",
-            "https://pics.me.me/w-tp-fun-fact-every-character-you-kill-in-assassins-20752602.png", "http://img.izismile.com/img/img5/20120604/640/video_gaming_fun_facts_640_01.jpg",
-            "https://i.kym-cdn.com/photos/images/original/000/397/835/f33.png", "https://78.media.tumblr.com/06300aa5fa66060758fbf1f52b71a1f4/tumblr_mk1gxyr1sz1roqv59o1_500.png",
-            "https://78.media.tumblr.com/ef0d2d83ec25886ce025b45a3d72af94/tumblr_milrpkMd301roqv59o1_500.png", "https://thechive.files.wordpress.com/2013/01/wtf-interesting-facts-22.jpg?quality=85&strip=info&w=500",
-            "https://data.whicdn.com/images/34318990/original.png", "https://i.imgur.com/k8evXfG.png", "https://78.media.tumblr.com/bde223d39ea54233360c4567f13ec426/tumblr_neufccTg9d1roqv59o1_500.png",
-            "https://78.media.tumblr.com/169291dac78516a7e494a4f92b9330af/tumblr_nl0m6mECYa1roqv59o1_500.png", "https://i.pinimg.com/originals/f6/b4/f5/f6b4f57ae9e8a7de0e689474c6ca9491.jpg",
-            "https://78.media.tumblr.com/2e216af874a0058bcd04bbfc89a0fd28/tumblr_p1ux0o1ntP1roqv59o1_500.png", "https://78.media.tumblr.com/b4cbe425fdb0b778654469d9c2407562/tumblr_nsbxjlcmu31roqv59o1_500.png",
-            "https://78.media.tumblr.com/65e4e8801e9e8ed67697fd3c61eced4f/tumblr_mfz2pbU92W1roqv59o1_500.png", "https://i.pinimg.com/originals/07/cf/a4/07cfa4dbd73b918fc4430a27565e6283.png",
-            "https://78.media.tumblr.com/6b0e1c11cd00c6cb1a1243d0304fe110/tumblr_njzh0iSsny1roqv59o1_500.png", "http://36.media.tumblr.com/218bf2671deab7331cf714fac279c4af/tumblr_nom6txJtFu1roqv59o1_500.png",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoCmyNtCWMOhn3peCxXOGmk8y3MFmkyZN-F0tFyjqe3_u5ZdRG", "http://aboutube.com/wp-content/uploads/2017/02/tumblr_okx2uby2ii1roqv59o1_500.png",
-            "https://78.media.tumblr.com/ec736d9d3271e3e97189b34f78ba55c3/tumblr_nphrtpwRDS1roqv59o1_500.png", "https://i.pinimg.com/236x/10/17/27/101727c8041164adc29dcf78fda2601a--wtf-fun-facts-awesome-facts.jpg",
-            "https://www.soumo.eu/wp-content/uploads/2018/03/26003/d59a07298ce1c6dd3d2b44b99e2c1ab1.png", "http://images6.fanpop.com/image/photos/33700000/WTF-fun-fact-random-33735084-499-499.png",
-            "https://i.pinimg.com/236x/eb/12/90/eb12906c1c9b111c22b0e1382bcdcc8e--creepy-facts-wtf-fun-facts.jpg"];
-
-        message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
-
-    }
     if (command === prefix + "gif") {
         console.log("Comando gif requisitado por: " + message.author.username);
         let gifs = [];
@@ -835,40 +812,6 @@ client.on("message", (message) => {
         else if (args[0]) {
 
             giphyclient.random('gifs', {})
-                .then((response) => {
-
-                    message.channel.send(response.data.url);
-
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-
-        }
-
-    }
-    if (command === prefix + "stick") {
-
-        console.log("Comando stick requisitado por: " + message.author.username);
-        let gifs = [];
-        if (args[1]) {
-            giphyclient.search('stickers', { "q": message.content.replace(command, ""), "limit": 30 })
-                .then((response) => {
-                    response.data.forEach((gifObject) => {
-                        gifs.push(gifObject.url);
-
-                    })
-                    message.channel.send(gifs[Math.floor(Math.random() * gifs.length)]);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-
-
-        }
-        else if (args[0]) {
-
-            giphyclient.random('stickers', {})
                 .then((response) => {
 
                     message.channel.send(response.data.url);
