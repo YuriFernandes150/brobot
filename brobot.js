@@ -1327,7 +1327,7 @@ client.on("message", (message) => {
                                 links += "," + fila[i];
                                 nomes += "," + filanome[i];
                             }
-
+                            
 
                         }
                         firebase.database().ref('playlists/' + message.author.username).set({
