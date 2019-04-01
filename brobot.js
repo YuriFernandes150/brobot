@@ -1312,7 +1312,7 @@ client.on("message", (message) => {
                 accept: '✅',
                 deny: '❌'
             },
-            checkUser: member,
+            checkUser: message.author,
             actions: {
                 accept: (reaction, user) => {
                     if (fila[1]) {
@@ -1327,7 +1327,7 @@ client.on("message", (message) => {
                                 links += "," + fila[i];
                                 nomes += "," + filanome[i];
                             }
-                            
+
 
                         }
                         firebase.database().ref('playlists/' + message.author.username).set({
