@@ -458,30 +458,30 @@ client.on("message", (message) => {
 
         if (args[1]) {
 
-            if (args[1].toLowerCase().includes("cock") 
-            || args[1].toLowerCase().includes("penis") 
-            || args[1].toLowerCase().includes("pinto") 
-            || args[1].toLowerCase().includes("jiromba") 
-            || args[1].toLowerCase().includes("caralho")
-            || args[1].toLowerCase().includes("nsfw")
-            || args[1].toLowerCase().includes("porn")
-            || args[1].toLowerCase().includes("rule34")
-            || args[1].toLowerCase().includes("gore")
-            || args[1].toLowerCase().includes("hentai")
-            || args[1].toLowerCase().includes("fuck")
-            || args[1].toLowerCase().includes("ass")
-            || args[1].toLowerCase().includes("boob")
-            || args[1].toLowerCase().includes("xxx")
-            || args[1].toLowerCase().includes("girls")
-            || args[1].toLowerCase().includes("amateur")
-            || args[1].toLowerCase().includes("sex")
-            || args[1].toLowerCase().includes("die")
-            || args[1].toLowerCase().includes("anal")
-            || args[1].toLowerCase().includes("booty")
-            || args[1].toLowerCase().includes("bun")
-            || args[1].toLowerCase().includes("bondage")
-            || args[1].toLowerCase().includes("rough")
-            || args[1].toLowerCase().includes("lesdom")
+            if (args[1].toLowerCase().includes("cock")
+                || args[1].toLowerCase().includes("penis")
+                || args[1].toLowerCase().includes("pinto")
+                || args[1].toLowerCase().includes("jiromba")
+                || args[1].toLowerCase().includes("caralho")
+                || args[1].toLowerCase().includes("nsfw")
+                || args[1].toLowerCase().includes("porn")
+                || args[1].toLowerCase().includes("rule34")
+                || args[1].toLowerCase().includes("gore")
+                || args[1].toLowerCase().includes("hentai")
+                || args[1].toLowerCase().includes("fuck")
+                || args[1].toLowerCase().includes("ass")
+                || args[1].toLowerCase().includes("boob")
+                || args[1].toLowerCase().includes("xxx")
+                || args[1].toLowerCase().includes("girls")
+                || args[1].toLowerCase().includes("amateur")
+                || args[1].toLowerCase().includes("sex")
+                || args[1].toLowerCase().includes("die")
+                || args[1].toLowerCase().includes("anal")
+                || args[1].toLowerCase().includes("booty")
+                || args[1].toLowerCase().includes("bun")
+                || args[1].toLowerCase().includes("bondage")
+                || args[1].toLowerCase().includes("rough")
+                || args[1].toLowerCase().includes("lesdom")
             ) {
 
                 message.author.send(message.author.username + ", todo o conteúdo NSFW foi permentemente removido do meu repertório, vou ser family friendly agr XD");
@@ -1302,31 +1302,51 @@ client.on("message", (message) => {
 
     if (command === prefix + "salvarlista") {
 
-        if (fila[1]) {
-            message.channel.send("Salvando a lista atual pra vc!");
-            var links = "";
-            var nomes = "";
-            for (var i = 0; i < fila.length; i++) {
-                if (i === 0) {
-                    links += fila[i];
-                    nomes += filanome[i];
-                } else {
-                    links += "," + fila[i];
-                    nomes += "," + filanome[i];
+        const chan = message.channel;
+        // Build the AcceptMessage
+        var msg = new AcceptMessage(client, {
+            content: new Discord.RichEmbed()
+                .setDescription('AVISO! Salvar a playlist atual irá sobrescrever a que já existe em seu nome (se existir), prossiga com cautela')
+                .setColor('RANDOM'),
+            emotes: {
+                accept: '✅',
+                deny: '❌'
+            },
+            checkUser: member,
+            actions: {
+                accept: (reaction, user) => {
+                    if (fila[1]) {
+                        message.channel.send("Salvando a lista atual pra vc!");
+                        var links = "";
+                        var nomes = "";
+                        for (var i = 0; i < fila.length; i++) {
+                            if (i === 0) {
+                                links += fila[i];
+                                nomes += filanome[i];
+                            } else {
+                                links += "," + fila[i];
+                                nomes += "," + filanome[i];
+                            }
+
+
+                        }
+                        firebase.database().ref('playlists/' + message.author.username).set({
+                            names: nomes,
+                            urls: links
+                        });
+                        message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
+                    }
+                    else {
+                        message.channel.send("É preciso ter pelo menos 2 músicas na fila atual para poder salvar como uma playlist");
+                    }
+                },
+                deny: (reaction, user) => {
+                    message.channel.send("Operação cancelada!");
                 }
-
-
             }
-            firebase.database().ref('playlists/' + message.author.username).set({
-                names: nomes,
-                urls: links
-            });
-            message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
-        }
-        else {
-            message.channel.send("É preciso ter pelo menos 2 músicas na fila atual para poder salvar como uma playlist");
-        }
+        })
 
+        msg.send(chan);
 
     }
     if (command === prefix + "minhalista") {
@@ -1498,15 +1518,11 @@ client.on("message", (message) => {
             .setColor('RANDOM')
             .setThumbnail("https://cdn.discordapp.com/attachments/494191132318892043/523536199995097099/BRobot_Help.png")
             .addField("**" + prefix + "ask**:", "Para fazer uma pergunta!")
-            .addField("**" + prefix + "ship**:", "Com esse comando eu posso te dizer se um ship é bom ou não.")
             .addField("**" + prefix + "matematica**:", "Esse comando pode te dar algumas instruções de como eu posso te ajudar com matemática!")
-            .addField("**" + prefix + "olhaso**", "Use esse comando se quiser me mostrar algo.")
-            .addField("**" + prefix + "bomdia**, **" + prefix + "boatarde** ou **" + prefix + "boanoite**", "Eu respondo a cada um desses comandos de forma diferente de acordo com a hora do dia!")
             .addField("**" + prefix + "gif**:", "Busca gifs no site Giphy, você pode usar esse comando sozinho para gerar uma gif aleatória, ou escrever uma tag depois do comando para ver algo mais específico")
             .addField("**" + prefix + "parouimpar**:", "Esse comando serve para brincarmos de par ou ímpar! Para mais instruções, basta digitar o comando para descobrir mais sobre ele")
             .addField("**" + prefix + "desenha**:", "Eu desenho algo aleatório para você!")
             .addField("**" + prefix + "play**:", "Toca músicas no canal de voz #música, utilize o comando para saber mais sobre ele")
-            .addField("**" + prefix + "radio**:", "Toca rádios ao vivo no canal #música")
             .addField("**" + prefix + "reddit**:", "Busca imagens, gifs e vídeos direto do Reddit")
             .addField("**" + prefix + "joke**", "Com esse comando eu conto piadas de tiozão do pavê (Spirik)")
             .addField("**" + prefix + "steam** (nome do jogo):", "Com esse comando eu busco informações básicas de um jogo na Steam e mostro pra você")
