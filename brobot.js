@@ -791,15 +791,6 @@ client.on("message", (message) => {
         message.channel.send("Eu posso de ajudar com umas contas rápidas! \nSe você quiser fazer as contas, use o comando **" + prefix + "qnto** \nPara adição use **" + prefix + "qnto** n1+n2 \nPara subtração, use **" + prefix + "qnto** nq-n2 \nPara multiplicação, use **" + prefix + "qnto** n1xn2 \nPara divisão, use **" + prefix + "qnto** n1/n2 \nVlw!")
 
     }
-
-    if (command === prefix + "vlw") {
-        message.reply(" não tem por onde! <:chris:404439721968795648>");
-    }
-    if (command === prefix + "vcentendeu") {
-
-        message.channel.send("<:wat:404459079415889933>");
-
-    }
     if (command === prefix + "funfacts") {
         console.log("Comando funfacts requisitado por: " + message.author.username);
         let replies = ["https://cdn.discordapp.com/attachments/404058102565044234/493836015576940545/WhatsApp_Image_2018-09-24_at_13.47.00.jpeg",
