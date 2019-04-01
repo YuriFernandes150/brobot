@@ -658,24 +658,6 @@ client.on("message", (message) => {
         }, 3500);
 
     }
-    if (command === prefix + "ship") {
-        console.log("Comando ship requisitado por: " + message.author.username);
-        var name1 = messageArray[1].substring(0, 2);
-        var name2 = messageArray[2].substring(3);
-        var shipname = name1 + name2;
-        let replies = ["MDS ELES SÃO MT FOFOOOOOS! EU SHIPO ELES TBM! #" + shipname, "Vei pq eles não tão juntos ainda? ELES TEM Q FICAR JUNTOOOOOS ;-; #" + shipname + "forever", "Nâo mesmo '-'", "VEI AIDS É MELHOR Q UM SHIP DESSES"]; // Respostas do Dark Code.
-        if (args[2]) { // Se o argumento for [1], ou seja um espaço a mais, ele vai fazer esta ação:
-            message.channel.send(replies[Math.floor(Math.random() * replies.length)])
-        } else // else = Caso ao contrário fazer: ou seja se não for args[1] ele vai mandar isso:
-            message.channel.send("Faça um ship!\n**Exemplo:** \n**" + prefix + "ship** eu waifu");
-    }
-    if (command === prefix + "olhaso") {
-        console.log("Comando olhaso requisitado por: " + message.author.username);
-        let replies = ["<:chris:404439721968795648>", "<:poggers:464204342463823892>", "<:feelsbadman:488683259539226633>", "<:feelsgoodman:488687465364979712>", "<:monkas:464543183997501440>", "<:blz:404429279812780032>", "https://cdn.discordapp.com/attachments/404058102565044234/493839622758072341/WhatsApp_Image_2018-09-24_at_13.46.43.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839621394792448/WhatsApp_Image_2018-09-24_at_13.46.42.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839620526702602/WhatsApp_Image_2018-09-24_at_13.46.47.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839615535349770/WhatsApp_Image_2018-09-24_at_13.46.48.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839273431269387/WhatsApp_Image_2018-09-24_at_13.47.03.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839150546419714/WhatsApp_Image_2018-09-24_at_14.14.53_1.jpeg", "https://cdn.discordapp.com/attachments/404058102565044234/493839199531827216/WhatsApp_Image_2018-09-24_at_14.03.41.jpeg", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/504706421502509057/BRobot_REACT_SURPRISE.png", "https://cdn.discordapp.com/attachments/494191132318892043/498935802932494345/react3.PNG", "https://cdn.discordapp.com/attachments/494191132318892043/498935769109495829/react1.PNG"];
-        message.channel.send(replies[Math.floor(Math.random() * replies.length)]);
-
-    }
-
     if (command === prefix + "desenha") {
         console.log("Comando desenha requisitado por: " + message.author.username);
 
