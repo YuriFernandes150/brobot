@@ -25,9 +25,6 @@ const steamnews = require('steam-news');
 //Google
 let google_customsearch = require('@datafire/google_customsearch').create();
 
-//OOOH BOOY
-const Pornsearch = require('pornsearch');
-
 //Conversor de moedas
 //var converter = require('@divvit/currency-converter')();
 
@@ -101,21 +98,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     }, 240000);
     setInterval(function () {
 
-        let subreddit = ["rule34", "NSFW_HTML5", "nsfw_sexy_gif", "nsfw_gif"];
-        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
-            .then(url => {
-
-                var chan = client.channels.get(darkhole);
-                chan.send(url);
-
-            }).catch(e => {
-                console.error(e);
-            });
-
-    }, 3600000);
-    setInterval(function () {
-
-        let subreddit = ["circojeca", "DiretoDoZapZap", "memes", "terriblefacebookmemes", "dankmemes"];
+        let subreddit = ["DiretoDoZapZap", "memes", "terriblefacebookmemes", "dankmemes"];
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
 
@@ -475,9 +458,34 @@ client.on("message", (message) => {
 
         if (args[1]) {
 
-            if (args[1].includes("cock") || args[1].includes("penis") || args[1].includes("pinto") || args[1].includes("jiromba") || args[1].includes("caralho") || args[1].includes("COCK") || args[1].includes("PENIS") || args[1].includes("PINTO") || args[1].includes("JIROMBA") || args[1].includes("CARALHO")) {
+            if (args[1].toLowerCase().includes("cock") 
+            || args[1].toLowerCase().includes("penis") 
+            || args[1].toLowerCase().includes("pinto") 
+            || args[1].toLowerCase().includes("jiromba") 
+            || args[1].toLowerCase().includes("caralho")
+            || args[1].toLowerCase().includes("nsfw")
+            || args[1].toLowerCase().includes("porn")
+            || args[1].toLowerCase().includes("rule34")
+            || args[1].toLowerCase().includes("gore")
+            || args[1].toLowerCase().includes("hentai")
+            || args[1].toLowerCase().includes("fuck")
+            || args[1].toLowerCase().includes("ass")
+            || args[1].toLowerCase().includes("boob")
+            || args[1].toLowerCase().includes("xxx")
+            || args[1].toLowerCase().includes("girls")
+            || args[1].toLowerCase().includes("amateur")
+            || args[1].toLowerCase().includes("sex")
+            || args[1].toLowerCase().includes("die")
+            || args[1].toLowerCase().includes("anal")
+            || args[1].toLowerCase().includes("booty")
+            || args[1].toLowerCase().includes("bun")
+            || args[1].toLowerCase().includes("bondage")
+            || args[1].toLowerCase().includes("rough")
+            || args[1].toLowerCase().includes("lesdom")
+            ) {
 
-                message.channel.send("**VÊ SE VIRA HOMEM, RAPAZ >:(**");
+                message.author.send(message.author.username + ", todo o conteúdo NSFW foi permentemente removido do meu repertório, vou ser family friendly agr XD");
+                message.delete();
 
             } else {
 
@@ -1492,53 +1500,6 @@ client.on("message", (message) => {
 
 
     }
-    if (command === prefix + "porn") {
-
-
-        if (message.channel.id === darkhole) {
-            if (args[2]) {
-
-                if (args[1] === "g") {
-
-                    const Searcher = new Pornsearch(args.slice(2).join(" "));
-
-                    Searcher.gifs()
-                        .then(gifs => {
-
-                            var num = Math.floor(Math.random() * gifs.length);
-                            message.channel.send("**" + gifs[num].title + "**");
-                            message.channel.send(gifs[num].url);
-
-                        });
-
-                }
-                else if (args[1] === "v") {
-
-                    const Searcher = new Pornsearch(args.slice(2).join(" "));
-
-                    Searcher.videos()
-                        .then(videos => {
-
-                            var num = Math.floor(Math.random() * videos.length);
-                            message.channel.send("**" + videos[num].title + " - " + videos[num].duration + "**");
-                            message.channel.send(videos[num].url);
-
-                        });
-
-                }
-                else {
-                    message.channel.send("Faz certo!\nEx: **" + prefix + "porn** (g ou v) (sua pesquisa)");
-                }
-
-            }
-            else {
-                message.channel.send("Faz certo!\nEx: **" + prefix + "porn** (g ou v) (sua pesquisa)");
-            }
-        }
-        message.delete();
-
-
-    }
     if (message.content === "duvido") {
 
         message.channel.send("Pau no teu ouvido");
@@ -1609,40 +1570,6 @@ client.on("message", (message) => {
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
                 message.channel.send(url);
-            }).catch(e => {
-                console.error(e);
-            });
-
-    }
-    if (command === prefix + "rule34") {
-
-        let subreddit = ["rule34", "rule34 comics", "asseffect", "PokePorn", "animalcrossingr34", "rule34 abuse"];
-        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
-            .then(url => {
-                if (message.channel.id === darkhole) {
-                    message.channel.send(url);
-                }
-                else {
-                    message.delete();
-                }
-
-            }).catch(e => {
-                console.error(e);
-            });
-
-    }
-    if (command === prefix + "nsfw") {
-
-        let subreddit = ["NSFW_HTML5", "nsfw_sexy_gif", "nsfw_gif"];
-        randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
-            .then(url => {
-                if (message.channel.id === darkhole) {
-                    message.channel.send(url);
-                }
-                else {
-                    message.delete();
-                }
-
             }).catch(e => {
                 console.error(e);
             });
@@ -1917,6 +1844,7 @@ client.on("message", (message) => {
             votosNao = 0;
             var desc = args.slice(1).join(" ");
             var pessoas = message.channel.members.filter(m => m.presence.status === 'online').size;
+            console.log("tem " + pessoas + " online");
             const chan = message.channel;
             const voteEmbed = new Discord.RichEmbed()
                 .setColor('RANDOM')
