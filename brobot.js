@@ -116,7 +116,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
                 console.error(e);
             });
 
-    }, 7200000);
+    }, 5400000);
 });
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
