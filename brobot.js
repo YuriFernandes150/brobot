@@ -103,7 +103,11 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
             .then(url => {
 
                 var chan = client.channels.get("553644829826088980");
-                chan.send(url);
+                chan.send(url).then(msg => {
+
+                    msg.react('👍').then(() => msg.react('👎'));
+
+                });
 
             }).catch(e => {
                 console.error(e);
