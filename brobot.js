@@ -98,7 +98,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     }, 240000);
     setInterval(function () {
 
-        let subreddit = ["DiretoDoZapZap", "memes", "terriblefacebookmemes", "dankmemes", 
+        let subreddit = ["funfacts","memes", "terriblefacebookmemes", "dankmemes", 
         "ProgrammerHumor", "HoldMyBeer", "Facepalm", "PerfectTiming", "WTF", "wholesomememes", 
         "PhotoshopBattles", "funnyvideos","FunnyAnimals", "FunnyCommercials", "wheredidthesodago",
         "Punny","puns", "pun"];
