@@ -46,6 +46,10 @@ var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
+const ttt = require("discord.js-tictactoe");
+const embed_color = "#ff00aa";
+const start_cmd = "velha";
+ttt.run(client, prefix, embed_color, start_cmd);
 
 // Configuração
 const config = require('./config.json');
@@ -98,10 +102,10 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     }, 240000);
     setInterval(function () {
 
-        let subreddit = ["funfacts","memes", "terriblefacebookmemes", "dankmemes", 
-        "ProgrammerHumor", "HoldMyBeer", "Facepalm", "PerfectTiming", "WTF", "wholesomememes", 
-        "PhotoshopBattles", "funnyvideos","FunnyAnimals", "FunnyCommercials", "wheredidthesodago",
-        "Punny","puns", "pun"];
+        let subreddit = ["funfacts", "memes", "terriblefacebookmemes", "dankmemes",
+            "ProgrammerHumor", "HoldMyBeer", "Facepalm", "PerfectTiming", "WTF", "wholesomememes",
+            "PhotoshopBattles", "funnyvideos", "FunnyAnimals", "FunnyCommercials", "wheredidthesodago",
+            "Punny", "puns", "pun"];
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
 
