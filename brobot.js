@@ -46,10 +46,6 @@ var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
-const ttt = require("discord.js-tictactoe");
-const embed_color = "#ff00aa";
-const start_cmd = "velha";
-ttt.run(client, prefix, embed_color, start_cmd);
 
 // Configuração
 const config = require('./config.json');
@@ -1478,7 +1474,7 @@ client.on("message", (message) => {
                     return ['👍', '👎'].includes(reaction.emoji.name);
                 };
 
-                msg.awaitReactions(filter, { max: 1, time: 120000, errors: ['time'] })
+                msg.awaitReactions(filter, { max: 1, time: 30000, errors: ['time'] })
                     .then(collected => {
                         const reaction = collected.first();
 
@@ -1506,7 +1502,7 @@ client.on("message", (message) => {
                         }
                     })
                     .catch(collected => {
-                        console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
+                        console.log(`After 30 secs, only ${collected.size} out of ` + pessoas + ` reacted.`);
                     });
 
             });
