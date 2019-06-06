@@ -96,6 +96,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 
         client.user.setPresence({ activity: { name: status }, status: 'online' })
     }, 240000);
+    /*
     setInterval(function () {
 
         let subreddit = ["funfacts", "memes", "terriblefacebookmemes", "dankmemes",
@@ -117,7 +118,9 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
             });
 
     }, 5400000);
+    */
 });
+
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
 
