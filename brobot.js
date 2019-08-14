@@ -46,7 +46,7 @@ var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
-import apicalypse from 'apicalypse';
+const apicalypse = require('apicalypse');
 
 // Configuração
 const config = require('./config.json');
