@@ -46,7 +46,7 @@ var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
-import apicalypse from 'apicalypse';
+import Apicalypse from 'apicalypse';
 
 // Configuração
 const config = require('./config.json');
@@ -1521,7 +1521,7 @@ client.on("message", (message) => {
     if (command.toLowerCase() === prefix + "embreve") {
 
         var data = new Date().getMilliseconds();
-        apicalypse("fields *; where date >" + data + "; sort date asc;")
+        Apicalypse("fields *; where date >" + data + "; sort date asc;")
             .request('https://api-v3.igdb.com/games')
             .then(response => {
                 console.log(response.data);
