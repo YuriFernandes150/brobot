@@ -1528,7 +1528,7 @@ client.on("message", (message) => {
             .sort('name')
             .where('date > ' + data)
             .request('/games');
-            console.log(response);
+            console.log(response.data);
 
     }
 
