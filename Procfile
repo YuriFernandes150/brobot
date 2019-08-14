@@ -1,1 +1,1 @@
-worker: node brobot.js
+worker: node --experimental-modules brobot.js
