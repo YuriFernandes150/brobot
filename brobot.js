@@ -1520,7 +1520,7 @@ client.on("message", (message) => {
     }
     if (command.toLowerCase() === prefix + "embreve") {
 
-        const igdb = new IGDB('30ecaac7a58a945c476364db937f9056');
+        const igdb = new IGDB(process.env.IGBD);
 
         igdb.endpoint.game({
             fields: ['*'],
