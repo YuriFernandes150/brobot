@@ -46,12 +46,12 @@ var toonavatar = require('cartoon-avatar');
 const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
+import apicalypse from 'apicalypse';
 
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
 var music = config.music;
-var darkhole = config.darkhole;
 
 var segundaresp = false;
 var tocando = false;
@@ -78,6 +78,8 @@ client.on('error', function () {
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
+    var zueraVisivel = client.channels.get("404058088329576450");
+    zueraVisivel.send("Yo! Fui reiniciado sla pq");
 
     client.on('message', message => {
         var date = new Date();
@@ -1514,6 +1516,19 @@ client.on("message", (message) => {
         else {
             message.channel.send("Use direito!\n**" + prefix + "rtv** (Sua votação)\n**EX:**\n**" + prefix + "rtv** Jogar Starbound");
         }
+
+    }
+    if (command.toLowerCase() === prefix + "embreve") {
+
+        var data = new Date().getMilliseconds();
+        apicalypse("fields *; where date >" + data + "; sort date asc;")
+            .request('https://api-v3.igdb.com/games')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
 
     }
 
