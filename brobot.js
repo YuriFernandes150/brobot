@@ -47,6 +47,7 @@ const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const IGDB = require('ts-igdb').default;
+const axios = require('axios');
 
 // Configuração
 const config = require('./config.json');
@@ -1520,35 +1521,21 @@ client.on("message", (message) => {
     }
     if (command.toLowerCase() === prefix + "embreve") {
 
-        const igdb = new IGDB(process.env.IGBD);
-
-        igdb.endpoint.game({
-            fields: ['*'],
-            limit: 10,
-            order: {
-                field: 'name',
-                direction: 'asc'
+        axios({
+            url: "https://api-v3.igdb.com/games/",
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'user-key': process.env.IGBD
             },
-            filters: [
-                {
-                    field: 'date',
-                    postfix: 'gt',
-                    value: new Date().getTime()
-                }
-            ]
+            data: "fields *; where  date > " + new Date().getTime() + "; sort date asc;"
         })
-            .then(
-                games => {
-                    // 'games' will contain all results as an array
-                    console.log(games);
-                }
-            )
-            .catch(
-                error => {
-                    // in case of an error, the error object will be returned
-                    console.log(error.message);
-                }
-            )
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
 
     }
 
