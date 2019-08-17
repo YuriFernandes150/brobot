@@ -1527,7 +1527,7 @@ client.on("message", (message) => {
                 'Accept': 'application/json',
                 'user-key': process.env.IGBD
             },
-            data: "fields name,first_release_date,hypes; where first_release_date > " + new Date().getTime() + "; sort date asc;limit 10;"
+            data: "fields name,release_dates.date;sort release_dates.date desc;where rating >= 80;limit 15;"
         })
             .then(response => {
                 console.log(response.data);
