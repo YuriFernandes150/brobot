@@ -1521,13 +1521,13 @@ client.on("message", (message) => {
     if (command.toLowerCase() === prefix + "embreve") {
 
         axios({
-            url: "https://api-v3.igdb.com/games/",
+            url: "https://api-v3.igdb.com/games",
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'user-key': process.env.IGBD
             },
-            data: "fields *; where first_release_date > " + new Date().getTime() + "; sort date asc;limit 10;"
+            data: "fields name,first_release_date,hypes; where first_release_date > " + new Date().getTime() + "; sort date asc;limit 10;"
         })
             .then(response => {
                 console.log(response.data);
