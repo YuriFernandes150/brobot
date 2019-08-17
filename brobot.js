@@ -1527,7 +1527,7 @@ client.on("message", (message) => {
                 'Accept': 'application/json',
                 'user-key': process.env.IGBD
             },
-            data: "fields name,release_dates;sort release_dates.date asc;where rating >= 60;limit 15;"
+            data: "fields name,release_dates.human;sort release_dates.date asc;where rating >= 60;limit 15;"
         })
             .then(response => {
                 console.log(response.data);
@@ -1536,9 +1536,10 @@ client.on("message", (message) => {
                     .setTitle("EM BREVE")
                     .setColor('RANDOM');
                 response.data.forEach((game) => {
-                    if (game.release_dates[0]) {
-                        upcommingEmbed.addField(game.name + " - " + game.release_dates[0]);
-                    } else {
+                    if (game.release_dates) {
+                        upcommingEmbed.addField(game.name + " - " + game.release_dates);
+                    }
+                    else {
                         upcommingEmbed.addField(game.name + " - Sem data");
                     }
                 })
