@@ -1531,6 +1531,22 @@ client.on("message", (message) => {
         })
             .then(response => {
                 console.log(response.data);
+                var upcommingEmbed = new Discord.RichEmbed()
+                    .setAuthor("Jogos a serem lançados")
+                    .setTitle("EM BREVE")
+                    .setColor('RANDOM');
+                response.data.forEach((game) => {
+
+                    if (game.first_release_date) {
+                        var dataconv = new Date(game.first_release_date * 1000);
+                        var utcString = dataconv.toDateString();
+                        upcommingEmbed.addField(game.name + " - " + utcString);
+                    } else {
+                        upcommingEmbed.addField(game.name + " - " + utcString);
+                    }
+                })
+                message.channel.send(upcommingEmbed);
+
             })
             .catch(err => {
                 console.error(err);
