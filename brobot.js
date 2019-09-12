@@ -1527,7 +1527,7 @@ client.on("message", (message) => {
                 'Accept': 'application/json',
                 'user-key': process.env.IGBD
             },
-            data: "fields name,release_dates.human;sort release_dates.date asc;where rating >= 60 & release_dates.date < " + (new Date().getTime() / 1000).toFixed(0) + ";limit 15;"
+            data: "fields name,release_dates.human;sort release_dates.human asc;where rating >= 80 & release_dates.human < " + (new Date().getTime() / 1000).toFixed(0) + ";limit 15;"
         })
             .then(response => {
                 console.log(response.data);
@@ -1537,7 +1537,7 @@ client.on("message", (message) => {
                     .setColor('RANDOM');
                 response.data.forEach((game) => {
                     if (game.release_dates) {
-                        upcommingEmbed.addField(game.name + " - " + game.release_dates);
+                        upcommingEmbed.addField(game.name + " - " + game.release_dates.human);
                     }
                     else {
                         upcommingEmbed.addField(game.name + " - Sem data");
@@ -1549,6 +1549,46 @@ client.on("message", (message) => {
             .catch(err => {
                 console.error(err);
             });
+
+    }
+    if (command === prefix + "send") {
+
+        if (args[2]) {
+
+            switch (args[1]) {
+
+                case "og": {
+
+                    var chan = client.channels.get("434510369692712962");
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                    break;
+                case "zv": {
+
+                    var chan = client.channels.get("404058088329576450");
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                    break;
+                case "dh": {
+
+                    var chan = client.channels.get(darkhole);
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                    break;
+                case "hq": {
+
+                    var chan = client.channels.get("476225541280890930");
+                    chan.send(args.slice(2).join(" "));
+
+                }
+                    break;
+
+            }
+
+        }
 
     }
 
