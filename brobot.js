@@ -1599,7 +1599,7 @@ client.on("message", (message) => {
 
         if (args[1]) {
 
-            fuckShitUp(args[1], displayResult);
+            fuckShitUp(message.content.replace(command, ""), displayResult);
             function displayResult(error, result) {
                 if (error) {
                     console.log(error);
