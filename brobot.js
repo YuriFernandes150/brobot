@@ -18,8 +18,7 @@ var filanome = [];
 //Piadas
 var Joke = require('give-me-a-joke');
 var fuckShitUp = require('fuck-shit-up').create({
-    useAlternativeModifiers: true,
-    vulgar: true
+    useAlternativeModifiers: true
 });
 
 //Steam
