@@ -17,10 +17,10 @@ var filanome = [];
 
 //Piadas
 var Joke = require('give-me-a-joke');
-var fuckShitUp = createFuckShitUp({
+var fuckShitUp = require('fuck-shit-up').create({
     useAlternativeModifiers: true,
     vulgar: true
-  });
+});
 
 //Steam
 const steam = require('steam-provider');
@@ -1596,17 +1596,17 @@ client.on("message", (message) => {
         }
 
     }
-    if(command.toLowerCase() === "fuck"){
+    if (command.toLowerCase() === "fuck") {
 
-        if(args[1]){
+        if (args[1]) {
 
             fuckShitUp(args[1], displayResult);
             function displayResult(error, result) {
                 if (error) {
-                  message.channel.send(result);
+                    message.channel.send(result);
                 }
                 console.log(result);
-              }
+            }
 
         }
 
