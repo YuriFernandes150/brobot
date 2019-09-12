@@ -17,6 +17,7 @@ var filanome = [];
 
 //Piadas
 var Joke = require('give-me-a-joke');
+var fuckShitUp = createFuckShitUp();
 
 //Steam
 const steam = require('steam-provider');
@@ -52,6 +53,7 @@ const axios = require('axios');
 const config = require('./config.json');
 var prefix = config.prefix;
 var music = config.music;
+var darkhole = config.darkhole;
 
 var segundaresp = false;
 var tocando = false;
@@ -84,7 +86,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
     client.on('message', message => {
         var date = new Date();
         if (message.isMentioned(client.user)) {
-            message.reply("pra q vc ta me enchendo o saco em plenas " + date.getHours() - 3 + " horas? Fala o q q vc quer");
+            message.reply(" fala ae");
         }
     });
 
@@ -1587,6 +1589,21 @@ client.on("message", (message) => {
                     break;
 
             }
+
+        }
+
+    }
+    if(command.toLowerCase() === "fuck"){
+
+        if(args[1]){
+
+            fuckShitUp(args[1], displayResult);
+            function displayResult(error, result) {
+                if (error) {
+                  message.channel.send(result);
+                }
+                console.log(result);
+              }
 
         }
 
