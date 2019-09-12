@@ -1596,16 +1596,16 @@ client.on("message", (message) => {
         }
 
     }
-    if (command.toLowerCase() === "fuck") {
+    if (command.toLowerCase() === prefix +  "fuck") {
 
         if (args[1]) {
 
             fuckShitUp(args[1], displayResult);
             function displayResult(error, result) {
                 if (error) {
-                    message.channel.send(result);
+                    console.log(error);
                 }
-                console.log(result);
+                message.channel.send(result);
             }
 
         }
