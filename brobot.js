@@ -1595,7 +1595,7 @@ client.on("message", (message) => {
         }
 
     }
-    if (command.toLowerCase() === prefix +  "fuck") {
+    if (command.toLowerCase() === prefix +  "phuck") {
 
         if (args[1]) {
 
@@ -1605,6 +1605,7 @@ client.on("message", (message) => {
                     console.log(error);
                 }
                 message.channel.send(result);
+                message.delete();
             }
 
         }
@@ -1640,6 +1641,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "salvarlista**", "Salva a playlist atual no seu nome , pra vc poder chamar ela quando quiser!")
             .addField("**" + prefix + "minhalista**", "Adiciona as músicas da sua playlist pessoal na fila principal")
             .addField("**" + prefix + "campominado**", "Faz um joguinho simples de campo minado, usando emojis :boom:")
+            .addField("**" + prefix + "phuck**", "Transforma uma frase normal em algo mais interessante")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
