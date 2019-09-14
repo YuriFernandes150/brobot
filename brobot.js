@@ -1662,7 +1662,6 @@ client.on("message", (message) => {
                                 .addField("**Detalhes: **", detail.$otherData.features)
                                 .addField("**Atualmente custa:** ", preco)
                                 .addBlankField()
-                                .addField("**Pessoas Interessadas em jogar:**", "na sala:");
                             message.channel.send(gameEmbed).then(m => {
 
                                 m.react('✅').then(() => m.react('❌'));
@@ -1675,8 +1674,6 @@ client.on("message", (message) => {
 
                                 collector.on('collect', (reaction, reactionCollector) => {
                                     if (reaction.emoji.name === '✅') {
-
-                                        message.channel.send(reaction.author.username + " entrou na partida");
                                         var userList = [];
                                         reaction.users.forEach((user) => {
 
@@ -1687,18 +1684,18 @@ client.on("message", (message) => {
 
                                         })
 
-                                        gameEmbed.setFooter(userList);
+                                        gameEmbed.setFooter("na sala: " + userList);
 
                                         m.edit(gameEmbed);
 
                                     }
                                     else {
-                                        message.channel.send(reaction.author.username + ' é gay e não quer jogar!');
+                                        
                                     }
                                 });
 
                                 collector.on('end', collected => {
-                                    message.channel.send
+                                    message.channel.send("Sala Encerrada! Hora de jogar!");
                                 });
 
 
