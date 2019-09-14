@@ -222,7 +222,7 @@ client.on("message", (message) => {
     }
     if (message.content.toLowerCase().includes("brobot") && !message.content.startsWith(prefix)) {
 
-        return firebase.database().ref('/conversas/' + message.content.toLowerCase()).once('value').then(function (snapshot) {
+        firebase.database().ref('/conversas/' + message.content.toLowerCase()).once('value').then(function (snapshot) {
             var resp = (snapshot.val() && snapshot.val().resp) || 'nope';
             if (resp === "nope") {
                 perg = message.content.toLowerCase();
@@ -1333,23 +1333,15 @@ client.on("message", (message) => {
                 accept: (reaction, user) => {
                     if (fila[1]) {
                         message.channel.send("Salvando a lista atual pra vc!");
-                        var links = "";
-                        var nomes = "";
                         for (var i = 0; i < fila.length; i++) {
-                            if (i === 0) {
-                                links += fila[i];
-                                nomes += filanome[i];
-                            } else {
-                                links += "," + fila[i];
-                                nomes += "," + filanome[i];
-                            }
 
+                            firebase.database().ref('playlists/' + message.author.id).push({
+                                name: filanome[i],
+                                url: fila[i]
+                            });
 
                         }
-                        firebase.database().ref('playlists/' + message.author.username).set({
-                            names: nomes,
-                            urls: links
-                        });
+
                         message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
                     }
                     else {
@@ -1367,46 +1359,77 @@ client.on("message", (message) => {
     }
     if (command === prefix + "minhalista") {
 
-        return firebase.database().ref('/playlists/' + message.author.username).once('value').then(function (snapshot) {
-            var names = (snapshot.val() && snapshot.val().names) || 'nope';
-            var links = (snapshot.val() && snapshot.val().urls) || 'nope';
+        firebase.database().ref('/playlists/' + message.author.id).on("child_added", function (data, prevChildKey) {
 
-            if (names === "nope" || links === "nope") {
+            var musica = data.val();
 
-                message.channel.send("Aparentemente vc não tem uma playlist registrada aqui...\nCrie uma playlist com o **" + prefix + "play** ou **" + prefix + "playlist** e use **" + prefix + "salvarlista** para salvar sua própria playlist :)");
+            if (musica.name && musica.url) {
+
+                fila.push(muscia.url);
+                filanome.push(musica.name);
 
             }
-            else {
 
-                var listanomes = names.split(",");
-                var listalinks = links.split(",");
+            if (!tocando) {
+                const channel = client.channels.get(music);
+                channel.join().then(connection => {
 
-                for (var i = 0; i < listalinks.length; i++) {
+                    if (fila.length > 0 && filanome.length > 0) {
 
-                    fila.push(listalinks[i]);
-                    filanome.push(listanomes[i]);
-
-                }
-                if (tocando) {
-
-                    message.channel.send("Suas músicas foram adicionadas na fila principal!");
-
-                }
-                else {
-                    var channel = client.channels.get(music);
-                    channel.join().then(connection => {
-                        message.channel.send("Partiu! :musical_note:");
                         Play(connection);
 
-                    }).catch(e => {
-                        // Oh no, it errored! Let's log it to console :)
-                        console.error(e);
-                    });
-                }
+                    }
 
+                }).catch(e => {
+                    // Oh no, it errored! Let's log it to console :)
+                    console.error(e);
+                });
+
+            } else {
+                message.channel.send("Suas músicas foram adicionadas à fila atual!");
             }
 
+
         });
+
+    }
+    if (command === prefix + "addlista") {
+
+        const chan = message.channel;
+        // Build the AcceptMessage
+        var msg = new AcceptMessage(client, {
+            content: new Discord.RichEmbed()
+                .setDescription('Deseja salvar a música atual na sua playlist?')
+                .setColor('RANDOM'),
+            emotes: {
+                accept: '✅',
+                deny: '❌'
+            },
+            checkUser: message.author,
+            actions: {
+                accept: (reaction, user) => {
+                    if (fila[0] && filanome[0]) {
+
+                        firebase.database().ref('playlists/' + message.author.id).push({
+                            name: filanome[0],
+                            url: fila[0]
+                        });
+
+
+
+                        message.channel.send("A música foi adicionada na sua playlist!, use **" + prefix + "minhalista** para ouvir sua playlist a qualquer momento!");
+                    }
+                    else {
+                        message.channel.send("É preciso ter pelo menos 1 música tocando para poder adicioná-la");
+                    }
+                },
+                deny: (reaction, user) => {
+                    message.channel.send("Operação cancelada!");
+                }
+            }
+        })
+
+        msg.send(chan);
 
     }
     if (command === prefix + "campominado") {
@@ -1595,7 +1618,7 @@ client.on("message", (message) => {
         }
 
     }
-    if (command.toLowerCase() === prefix +  "phuck") {
+    if (command.toLowerCase() === prefix + "phuck") {
 
         if (args[1]) {
 
