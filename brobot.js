@@ -1486,7 +1486,7 @@ client.on("message", (message) => {
             votosSim = 0;
             votosNao = 0;
             var desc = args.slice(1).join(" ");
-            var pessoas = message.channel.members.filter(m => m.presence.status === 'online').size;
+            var pessoas = message.channel.members.filter(m => m.presence.status === 'online' && !m.bot).size;
             console.log("tem " + pessoas + " online");
             const chan = message.channel;
             const voteEmbed = new Discord.RichEmbed()
@@ -1497,17 +1497,17 @@ client.on("message", (message) => {
 
             message.channel.send(voteEmbed).then(msg => {
 
-                msg.react('👍').then(() => msg.react('👎'));
+                msg.react(':thumbsup:').then(() => msg.react(':thumbsup:'));
 
                 const filter = (reaction, user) => {
-                    return ['👍', '👎'].includes(reaction.emoji.name);
+                    return [':thumbsup:', ':thumbsup:'].includes(reaction.emoji.name);
                 };
 
                 msg.awaitReactions(filter, { max: 1, time: 30000, errors: ['time'] })
                     .then(collected => {
                         const reaction = collected.first();
 
-                        if (reaction.emoji.name === '👍') {
+                        if (reaction.emoji.name === ':thumbsup:') {
                             votosSim = votosSim + 1;
                             if (votosSim > pessoas / 2) {
                                 const yesEmbed = new Discord.RichEmbed()
@@ -1518,7 +1518,7 @@ client.on("message", (message) => {
                                 chan.send(yesEmbed);
                             }
                         }
-                        else if (reaction.emoji.name === '👎') {
+                        else if (reaction.emoji.name === ':thumbsup:') {
                             votosNao = votosNao + 1;
                             if (votosNao > pessoas / 2) {
                                 const noEmbed = new Discord.RichEmbed()
@@ -1627,6 +1627,84 @@ client.on("message", (message) => {
                 message.channel.send(result);
                 message.delete();
             }
+
+        }
+
+    }
+    if (command.toLowerCase() === prefix + "jogar") {
+
+        if (args[1]) {
+
+            var provider = new steam.SteamProvider();
+            var gameEmbed = new Discord.RichEmbed();
+            var msg;
+            provider.search(message.content.replace(command, ""), 1, "portuguese", "br").then(result => {
+
+                if (result[0]) {
+
+                    result.forEach((SteamSearchEntry) => {
+
+                        provider.detail(SteamSearchEntry.id, "portuguese", "br").then(detail => {
+
+                            gameEmbed.setAuthor(message.author + " quer jogar " + message.content.replace(command, ""))
+                                .setColor('RANDOM')
+                                .setImage(detail.$otherData.$imageUrl)
+                                .setDescription("[ABRIR PÁGINA NA LOJA](" + SteamSearchEntry.url + ")")
+                                .addField("**Díponpivel em:**", detail.$otherData.$platforms)
+                                .addField("**Detalhes: **", detail.$otherData.features)
+                                .addField("**Atualmente custa:** ", preco)
+                                .addBlankField()
+                                .addField("**Pessoas Interessadas em jogar:**", "");
+                            message.channel.send(gameEmbed).then(m => {
+                                msg = m;
+                            });
+
+                        })
+
+                    })
+
+                }
+                else {
+                    message.channel.send("Não encontrei nada! Tente ser mais específico");
+                }
+
+
+
+            }).catch(err => {
+                console.log(err);
+                message.channel.send("Não encontrei nada! Tente ser mais específico");
+            });
+
+            msg.react(':video_game:').then(() => message.react('488683259539226633'));
+
+            const filter = (reaction, user) => {
+                return [':video_game:', '488683259539226633'].includes(reaction.emoji.name);
+            };
+            let pessoasQueEntraram  = [];
+            msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                .then(collected => {
+                    const reaction = collected.first();
+
+                    if (reaction.emoji.name === ':video_game:') {   
+
+                        message.reply(' entrou na partida!');
+                        pessoasQueEntraram.push(reaction.users);
+
+                        gameEmbed.setFooter(pessoasQueEntraram);
+
+                        msg.edit(gameEmbed);
+
+                    }
+                    else {
+                        message.reply(' é gay e não quer jogar!');
+                    }
+                })
+                .catch(collected => {
+                    
+                    message.channel.send("Sala encerrada!");
+
+                });
+
 
         }
 
