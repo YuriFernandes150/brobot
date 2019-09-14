@@ -1669,38 +1669,40 @@ client.on("message", (message) => {
                                 const filter = (reaction, user) => {
                                     return ['✅', '❌'].includes(reaction.emoji.name);
                                 };
-                                m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-                                    .then(collected => {
 
-                                        collected.forEach((reaction) => {
-                                            if (reaction.emoji.name === '✅') {
-
-                                                message.reply(' entrou na partida!');
-                                                var userList = [];
-                                                reaction.users.forEach((user) => {
-
-                                                    if (!user.bot) {
-                                                        userList.push(user.username);
-                                                    }
+                                const collector = m.createReactionCollector(filter, { time: 60000 });
 
 
-                                                })
+                                collector.on('collect', (reaction, reactionCollector) => {
+                                    if (reaction.emoji.name === '✅') {
 
-                                                gameEmbed.setFooter(userList);
+                                        console.log(reaction);
+                                        var userList = [];
+                                        reaction.users.forEach((user) => {
 
-                                                m.edit(gameEmbed);
-
+                                            if (!user.bot) {
+                                                userList.push(user.username);
                                             }
-                                            else {
-                                                message.reply(' é gay e não quer jogar!');
-                                            }
+
+
                                         })
-                                    })
-                                    .catch(collected => {
 
-                                        message.channel.send("Sala encerrada!");
+                                        gameEmbed.setFooter(userList);
 
-                                    });
+                                        m.edit(gameEmbed);
+
+                                    }
+                                    else {
+                                        message.reply(' é gay e não quer jogar!');
+                                    }
+                                });
+
+                                collector.on('end', collected => {
+                                    message.channel.send
+                                });
+
+
+
                             });
 
                         })
