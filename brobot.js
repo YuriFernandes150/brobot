@@ -1637,7 +1637,6 @@ client.on("message", (message) => {
 
             var provider = new steam.SteamProvider();
             var gameEmbed = new Discord.RichEmbed();
-            var msg;
             provider.search(message.content.replace(command, ""), 1, "portuguese", "br").then(result => {
 
                 if (result[0]) {
@@ -1656,7 +1655,36 @@ client.on("message", (message) => {
                                 .addBlankField()
                                 .addField("**Pessoas Interessadas em jogar:**", "");
                             message.channel.send(gameEmbed).then(m => {
-                                msg = m;
+
+                                m.react(':video_game:').then(() => m.react('488683259539226633'));
+                                const filter = (reaction, user) => {
+                                    return [':video_game:', '488683259539226633'].includes(reaction.emoji.name);
+                                };
+                                let pessoasQueEntraram = [];
+                                m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                                    .then(collected => {
+
+                                        const reaction = collected.first();
+
+                                        if (reaction.emoji.name === ':video_game:') {
+
+                                            message.reply(' entrou na partida!');
+                                            pessoasQueEntraram.push(reaction.users);
+
+                                            gameEmbed.setFooter(pessoasQueEntraram);
+
+                                            m.edit(gameEmbed);
+
+                                        }
+                                        else {
+                                            message.reply(' é gay e não quer jogar!');
+                                        }
+                                    })
+                                    .catch(collected => {
+
+                                        message.channel.send("Sala encerrada!");
+
+                                    });
                             });
 
                         })
@@ -1665,47 +1693,13 @@ client.on("message", (message) => {
 
                 }
                 else {
-                    message.channel.send("Não encontrei nada! Tente ser mais específico");
+                    message.channel.send("Não encontrei o jogo que vc quer jogar! Tente ser mais específico");
                 }
-
-
 
             }).catch(err => {
                 console.log(err);
-                message.channel.send("Não encontrei nada! Tente ser mais específico");
+                message.channel.send("Não encontrei o jogo que vc quer jogar! Tente ser mais específico");
             });
-
-            msg.react(':video_game:').then(() => message.react('488683259539226633'));
-
-            const filter = (reaction, user) => {
-                return [':video_game:', '488683259539226633'].includes(reaction.emoji.name);
-            };
-            let pessoasQueEntraram  = [];
-            msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-                .then(collected => {
-                    
-                    const reaction = collected.first();
-
-                    if (reaction.emoji.name === ':video_game:') {   
-
-                        message.reply(' entrou na partida!');
-                        pessoasQueEntraram.push(reaction.users);
-
-                        gameEmbed.setFooter(pessoasQueEntraram);
-
-                        msg.edit(gameEmbed);
-
-                    }
-                    else {
-                        message.reply(' é gay e não quer jogar!');
-                    }
-                })
-                .catch(collected => {
-                    
-                    message.channel.send("Sala encerrada!");
-
-                });
-
 
         }
 
