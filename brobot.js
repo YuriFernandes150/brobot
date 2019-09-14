@@ -1645,6 +1645,14 @@ client.on("message", (message) => {
 
                         provider.detail(SteamSearchEntry.id, "portuguese", "br").then(detail => {
 
+                            var preco;
+                            if (detail.$priceData.finalPrice === "0.0") {
+                                preco = "Free ou indisponível";
+                            }
+                            else {
+                                preco = "R$ " + detail.$priceData.finalPrice + " com desconto de " + detail.$priceData.discountPercent + "%";
+                            }
+
                             gameEmbed.setAuthor(message.author + " quer jogar " + message.content.replace(command, ""))
                                 .setColor('RANDOM')
                                 .setImage(detail.$otherData.$imageUrl)
