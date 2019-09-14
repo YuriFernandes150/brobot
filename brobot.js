@@ -1667,7 +1667,7 @@ client.on("message", (message) => {
 
                                 m.react('✅').then(() => m.react('❌'));
                                 const filter = (reaction, user) => {
-                                    return [emoji1.name, emoji2.name].includes(reaction.emoji.name);
+                                    return ['✅', '❌'].includes(reaction.emoji.name);
                                 };
                                 m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                                     .then(collected => {
