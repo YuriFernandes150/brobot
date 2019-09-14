@@ -1365,7 +1365,7 @@ client.on("message", (message) => {
 
             if (musica.name && musica.url) {
 
-                fila.push(muscia.url);
+                fila.push(musica.url);
                 filanome.push(musica.name);
 
             }
@@ -1671,7 +1671,6 @@ client.on("message", (message) => {
 
 
         message.author.send(helpembed);
-
 
     }
 
