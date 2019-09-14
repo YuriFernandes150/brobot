@@ -1672,29 +1672,29 @@ client.on("message", (message) => {
                                 m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                                     .then(collected => {
 
-                                        const reaction = collected.first();
+                                        collected.forEach((reaction) => {
+                                            if (reaction.emoji.name === '✅') {
 
-                                        if (reaction.emoji.name === '✅') {
+                                                message.reply(' entrou na partida!');
+                                                var userList = [];
+                                                reaction.users.forEach((user) => {
 
-                                            message.reply(' entrou na partida!');
-                                            var userList = [];
-                                            reaction.users.forEach((user) => {
-
-                                                if (!user.bot) {
-                                                    userList.push(user.username);
-                                                }
+                                                    if (!user.bot) {
+                                                        userList.push(user.username);
+                                                    }
 
 
-                                            })
+                                                })
 
-                                            gameEmbed.setFooter(userList);
+                                                gameEmbed.setFooter(userList);
 
-                                            m.edit(gameEmbed);
+                                                m.edit(gameEmbed);
 
-                                        }
-                                        else {
-                                            message.reply(' é gay e não quer jogar!');
-                                        }
+                                            }
+                                            else {
+                                                message.reply(' é gay e não quer jogar!');
+                                            }
+                                        })
                                     })
                                     .catch(collected => {
 
