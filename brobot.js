@@ -1661,7 +1661,7 @@ client.on("message", (message) => {
                                 .addField("**Detalhes: **", detail.$otherData.features)
                                 .addField("**Atualmente custa:** ", preco)
                                 .addBlankField()
-                                .addField("**Pessoas Interessadas em jogar:**", "");
+                                .addField("**Pessoas Interessadas em jogar:**", "na sala:");
                             message.channel.send(gameEmbed).then(m => {
 
                                 m.react(':video_game:').then(() => m.react('488683259539226633'));
