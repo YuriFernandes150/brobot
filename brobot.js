@@ -1683,6 +1683,7 @@ client.on("message", (message) => {
             let pessoasQueEntraram  = [];
             msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                 .then(collected => {
+                    
                     const reaction = collected.first();
 
                     if (reaction.emoji.name === ':video_game:') {   
