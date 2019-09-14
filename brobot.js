@@ -82,7 +82,8 @@ client.on('error', function () {
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
-    client.fetchUser("404054872649105410").send("Yo! Fui reiniciado sla pq");
+    var zueraVisivel = client.channels.get("404058088329576450");
+    zueraVisivel.send("Yo! Fui reiniciado sla pq");
 
     client.on('message', message => {
         var date = new Date();
@@ -1664,8 +1665,8 @@ client.on("message", (message) => {
                                 .addField("**Pessoas Interessadas em jogar:**", "na sala:");
                             message.channel.send(gameEmbed).then(m => {
 
-                                let emoji1 = message.guild.emojis.find('name', 'video_game');
-                                let emoji2 = message.guild.emojis.find('name', 'feelsbadman');
+                                let emoji1 = message.guild.emojis.find('name','video_game');
+                                let emoji2 = message.guild.emojis.find('name','feelsbadman');
 
                                 m.react(emoji1.id).then(() => m.react(emoji2.id));
                                 const filter = (reaction, user) => {
