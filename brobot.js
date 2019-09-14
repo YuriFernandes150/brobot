@@ -1665,10 +1665,7 @@ client.on("message", (message) => {
                                 .addField("**Pessoas Interessadas em jogar:**", "na sala:");
                             message.channel.send(gameEmbed).then(m => {
 
-                                let emoji1 = message.guild.emojis.find('name','video_game');
-                                let emoji2 = message.guild.emojis.find('name','feelsbadman');
-
-                                m.react(emoji1.id).then(() => m.react(emoji2.id));
+                                m.react('✅').then(() => m.react('❌'));
                                 const filter = (reaction, user) => {
                                     return [emoji1.name, emoji2.name].includes(reaction.emoji.name);
                                 };
@@ -1677,7 +1674,7 @@ client.on("message", (message) => {
 
                                         const reaction = collected.first();
 
-                                        if (reaction.emoji.name === 'video_game') {
+                                        if (reaction.emoji.name === '✅') {
 
                                             message.reply(' entrou na partida!');
                                             var userList = [];
