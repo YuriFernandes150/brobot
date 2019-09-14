@@ -1663,6 +1663,7 @@ client.on("message", (message) => {
             .addField("**" + prefix + "addresp**", "Adiciona uma nova resposta para uma frase já ensinada!!")
             .addField("**" + prefix + "salvarlista**", "Salva a playlist atual no seu nome , pra vc poder chamar ela quando quiser!")
             .addField("**" + prefix + "minhalista**", "Adiciona as músicas da sua playlist pessoal na fila principal")
+            .addField("**" + prefix + "addlista**", "Adiciona a música atual na sua playlist pessoal")
             .addField("**" + prefix + "campominado**", "Faz um joguinho simples de campo minado, usando emojis :boom:")
             .addField("**" + prefix + "phuck**", "Transforma uma frase normal em algo mais interessante")
             .addBlankField()
