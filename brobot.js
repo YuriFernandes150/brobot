@@ -1670,14 +1670,14 @@ client.on("message", (message) => {
 
                                 m.react(emoji1).then(() => m.react(emoji2));
                                 const filter = (reaction, user) => {
-                                    return [emoji1, emoji2].includes(reaction.emoji.name);
+                                    return [emoji1.name, emoji2.name].includes(reaction.emoji.name);
                                 };
                                 m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                                     .then(collected => {
 
                                         const reaction = collected.first();
 
-                                        if (reaction.emoji.name === emoji1) {
+                                        if (reaction.emoji.name === 'video_game') {
 
                                             message.reply(' entrou na partida!');
                                             var userList = [];
