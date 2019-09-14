@@ -1668,7 +1668,7 @@ client.on("message", (message) => {
                                 let emoji1 = message.guild.emojis.find('name','video_game');
                                 let emoji2 = message.guild.emojis.find('name','feelsbadman');
 
-                                m.react(emoji1).then(() => m.react(emoji2));
+                                m.react(emoji1.id).then(() => m.react(emoji2.id));
                                 const filter = (reaction, user) => {
                                     return [emoji1.name, emoji2.name].includes(reaction.emoji.name);
                                 };
