@@ -83,7 +83,9 @@ client.on('error', function () {
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
     var zueraVisivel = client.channels.get("404058088329576450");
-    zueraVisivel.send("Yo! Fui reiniciado sla pq");
+    let gifs = ["https://tenor.com/view/josee-8379391-robo-dance-robot-dance-gif-12127978", "https://tenor.com/view/robot-dancing-break-it-down-meta-dance-gif-5385083", "https://tenor.com/view/robot-dancing-funny-grooving-feeling-it-gif-5261569"];
+    zueraVisivel.send("Im back, bitches");
+    zueraVisivel.send(gifs[Math.floor(Math.random() * gifs.length)]);
 
     client.on('message', message => {
         var date = new Date();
@@ -1497,42 +1499,57 @@ client.on("message", (message) => {
 
             message.channel.send(voteEmbed).then(msg => {
 
-                msg.react(':thumbsup:').then(() => msg.react(':thumbsup:'));
+                msg.react('👍').then(() => msg.react('👎'));
 
                 const filter = (reaction, user) => {
-                    return [':thumbsup:', ':thumbsup:'].includes(reaction.emoji.name);
+                    return ['👍', '👎'].includes(reaction.emoji.name);
                 };
+                const collector = m.createReactionCollector(filter, { time: 30000 });
 
-                msg.awaitReactions(filter, { max: 1, time: 30000, errors: ['time'] })
-                    .then(collected => {
-                        const reaction = collected.first();
+                var sim = false;
+                var nao = false;
 
-                        if (reaction.emoji.name === ':thumbsup:') {
-                            votosSim = votosSim + 1;
-                            if (votosSim > pessoas / 2) {
-                                const yesEmbed = new Discord.RichEmbed()
-                                    .setColor('RANDOM')
-                                    .setTitle("Fim da Votação")
-                                    .setDescription("Votação Aprovada!")
-                                    .setFooter("Obrigado por votar!");
-                                chan.send(yesEmbed);
-                            }
+                collector.on('collect', (reaction, reactionCollector) => {
+
+                    if (reaction.emoji.name === '👍') {
+                        votosSim = votosSim + 1;
+                        if (votosSim > pessoas / 2) {
+                            const yesEmbed = new Discord.RichEmbed()
+                                .setColor('RANDOM')
+                                .setTitle("Fim da Votação")
+                                .setDescription("Votação Aprovada!")
+                                .setFooter("Obrigado por votar!");
+                            chan.send(yesEmbed);
+                            sim = true;
+                            collector.stop();
                         }
-                        else if (reaction.emoji.name === ':thumbsup:') {
-                            votosNao = votosNao + 1;
-                            if (votosNao > pessoas / 2) {
-                                const noEmbed = new Discord.RichEmbed()
-                                    .setColor('RANDOM')
-                                    .setTitle("Fim da Votação")
-                                    .setDescription("Votação Negada!")
-                                    .setFooter("Obrigado por votar!");
-                                chan.send(noEmbed);
-                            }
+                    }
+                    else if (reaction.emoji.name === '👎') {
+                        votosNao = votosNao + 1;
+                        if (votosNao > pessoas / 2) {
+                            const noEmbed = new Discord.RichEmbed()
+                                .setColor('RANDOM')
+                                .setTitle("Fim da Votação")
+                                .setDescription("Votação Negada!")
+                                .setFooter("Obrigado por votar!");
+                            chan.send(noEmbed);
+                            nao = true;
+                            collector.stop();
                         }
-                    })
-                    .catch(collected => {
-                        console.log(`After 30 secs, only ${collected.size} out of ` + pessoas + ` reacted.`);
-                    });
+                    }
+
+                });
+
+                collector.on('end', collected => {
+
+                    if (!sim && !nao) {
+                        message.channel.send("A votação terminou sem que membros o suficiente votassem\nPessoas Online: " + pessoas + "\nVotaram Sim:" + votosSim + "\nVotaram não:" + votosNao);
+                    }
+
+                    sim = false;
+                    nao = false;
+
+                });
 
             });
 
@@ -1672,10 +1689,10 @@ client.on("message", (message) => {
 
                                 const collector = m.createReactionCollector(filter, { time: 120000 });
 
-
+                                var userList = [];
                                 collector.on('collect', (reaction, reactionCollector) => {
                                     if (reaction.emoji.name === '✅') {
-                                        var userList = [];
+                                        userList = [];
                                         reaction.users.forEach((user) => {
 
                                             if (!user.bot) {
@@ -1696,7 +1713,7 @@ client.on("message", (message) => {
                                 });
 
                                 collector.on('end', collected => {
-                                    message.channel.send("Sala Encerrada! Hora de jogar!");
+                                    message.channel.send("Sala Encerrada!\n " + userList + " Hora de jogar!");
                                 });
 
 
