@@ -1369,28 +1369,25 @@ client.on("message", (message) => {
                 filanome.push(musica.name);
 
             }
-
-            if (!tocando) {
-                const channel = client.channels.get(music);
-                channel.join().then(connection => {
-
-                    if (fila.length > 0 && filanome.length > 0) {
-
-                        Play(connection);
-
-                    }
-
-                }).catch(e => {
-                    // Oh no, it errored! Let's log it to console :)
-                    console.error(e);
-                });
-
-            } else {
-                message.channel.send("Suas músicas foram adicionadas à fila atual!");
-            }
-
-
         });
+        if (!tocando) {
+            const channel = client.channels.get(music);
+            channel.join().then(connection => {
+
+                if (fila.length > 0 && filanome.length > 0) {
+
+                    Play(connection);
+
+                }
+
+            }).catch(e => {
+                // Oh no, it errored! Let's log it to console :)
+                console.error(e);
+            });
+
+        } else {
+            message.channel.send("Suas músicas foram adicionadas à fila atual!");
+        }
 
     }
     if (command === prefix + "addlista") {
@@ -1554,7 +1551,7 @@ client.on("message", (message) => {
                 'Accept': 'application/json',
                 'user-key': process.env.IGBD
             },
-            data: "fields name,release_dates.human;sort release_dates.human asc;where rating >= 80 & release_dates.human < " + (new Date().getTime() / 1000).toFixed(0) + ";limit 15;"
+            data: "fields name,release_dates.human;sort release_dates.human asc;where rating >= 80 & release_dates.date < " + (new Date().getTime() / 1000).toFixed(0) + ";limit 15;"
         })
             .then(response => {
                 console.log(response.data);
