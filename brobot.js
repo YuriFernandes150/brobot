@@ -82,8 +82,8 @@ client.on('error', function () {
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
-    var zueraVisivel = client.channels.get("404058088329576450");
-    zueraVisivel.send("Yo! Fui reiniciado sla pq");
+    var Spirik = client.fetchUser("404054872649105410");
+    Spirik.send("Yo! Fui reiniciado sla pq");
 
     client.on('message', message => {
         var date = new Date();
