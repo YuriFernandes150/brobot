@@ -1655,6 +1655,7 @@ client.on("message", (message) => {
 
                             gameEmbed.setAuthor(message.author + " quer jogar " + message.content.replace(command, ""))
                                 .setColor('RANDOM')
+                                .setThumbnail(message.author.avatarURL)
                                 .setImage(detail.$otherData.$imageUrl)
                                 .setDescription("[ABRIR PÁGINA NA LOJA](" + SteamSearchEntry.url + ")")
                                 .addField("**Díponpivel em:**", detail.$otherData.$platforms)
@@ -1668,7 +1669,6 @@ client.on("message", (message) => {
                                 const filter = (reaction, user) => {
                                     return [':video_game:', '488683259539226633'].includes(reaction.emoji.name);
                                 };
-                                let pessoasQueEntraram = [];
                                 m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                                     .then(collected => {
 
@@ -1677,9 +1677,17 @@ client.on("message", (message) => {
                                         if (reaction.emoji.name === ':video_game:') {
 
                                             message.reply(' entrou na partida!');
-                                            pessoasQueEntraram.push(reaction.users);
+                                            var userList = [];
+                                            reaction.users.forEach((user) => {
 
-                                            gameEmbed.setFooter(pessoasQueEntraram);
+                                                if (!user.bot) {
+                                                    userList.push(user.username);
+                                                }
+
+
+                                            })
+
+                                            gameEmbed.setFooter(userList);
 
                                             m.edit(gameEmbed);
 
