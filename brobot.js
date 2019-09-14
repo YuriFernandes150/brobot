@@ -1667,7 +1667,7 @@ client.on("message", (message) => {
 
                                 m.react('✅').then(() => m.react('❌'));
                                 const filter = (reaction, user) => {
-                                    return ['✅', '❌'].includes(reaction.emoji.name);
+                                    return ['✅', '❌'].includes(reaction.emoji.name) && !user.bot;
                                 };
 
                                 const collector = m.createReactionCollector(filter, { time: 60000 });
@@ -1676,7 +1676,7 @@ client.on("message", (message) => {
                                 collector.on('collect', (reaction, reactionCollector) => {
                                     if (reaction.emoji.name === '✅') {
 
-                                        console.log(reaction);
+                                        message.channel.send(reaction.author.username + " entrou na partida");
                                         var userList = [];
                                         reaction.users.forEach((user) => {
 
@@ -1693,7 +1693,7 @@ client.on("message", (message) => {
 
                                     }
                                     else {
-                                        message.reply(' é gay e não quer jogar!');
+                                        message.channel.send(reaction.author.username + ' é gay e não quer jogar!');
                                     }
                                 });
 
