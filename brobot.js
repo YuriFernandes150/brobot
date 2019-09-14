@@ -1653,7 +1653,7 @@ client.on("message", (message) => {
                                 preco = "R$ " + detail.$priceData.finalPrice + " com desconto de " + detail.$priceData.discountPercent + "%";
                             }
 
-                            gameEmbed.setAuthor(message.author + " quer jogar " + message.content.replace(command, ""))
+                            gameEmbed.setAuthor(message.author.username + " quer jogar " + message.content.replace(command, ""))
                                 .setColor('RANDOM')
                                 .setThumbnail(message.author.avatarURL)
                                 .setImage(detail.$otherData.$imageUrl)
@@ -1665,16 +1665,19 @@ client.on("message", (message) => {
                                 .addField("**Pessoas Interessadas em jogar:**", "na sala:");
                             message.channel.send(gameEmbed).then(m => {
 
-                                m.react(':video_game:').then(() => m.react('488683259539226633'));
+                                let emoji1 = message.guild.emojis.find('name','video_game');
+                                let emoji2 = message.guild.emojis.find('name','feelsbadman');
+
+                                m.react(emoji1).then(() => m.react(emoji2));
                                 const filter = (reaction, user) => {
-                                    return [':video_game:', '488683259539226633'].includes(reaction.emoji.name);
+                                    return [emoji1, emoji2].includes(reaction.emoji.name);
                                 };
                                 m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                                     .then(collected => {
 
                                         const reaction = collected.first();
 
-                                        if (reaction.emoji.name === ':video_game:') {
+                                        if (reaction.emoji.name === emoji1) {
 
                                             message.reply(' entrou na partida!');
                                             var userList = [];
