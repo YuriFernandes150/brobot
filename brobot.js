@@ -1653,7 +1653,8 @@ client.on("message", (message) => {
                                 preco = "R$ " + detail.$priceData.finalPrice + " com desconto de " + detail.$priceData.discountPercent + "%";
                             }
 
-                            gameEmbed.setAuthor(message.author.username + " quer jogar " + message.content.replace(command, ""))
+                            gameEmbed.setAuthor("Chamando @everyone!")
+                                .setTitle(message.author.username + " quer jogar " + message.content.replace(command, ""))
                                 .setColor('RANDOM')
                                 .setThumbnail(message.author.avatarURL)
                                 .setImage(detail.$otherData.$imageUrl)
@@ -1669,7 +1670,7 @@ client.on("message", (message) => {
                                     return ['✅', '❌'].includes(reaction.emoji.name) && !user.bot;
                                 };
 
-                                const collector = m.createReactionCollector(filter, { time: 60000 });
+                                const collector = m.createReactionCollector(filter, { time: 120000 });
 
 
                                 collector.on('collect', (reaction, reactionCollector) => {
@@ -1690,7 +1691,7 @@ client.on("message", (message) => {
 
                                     }
                                     else {
-                                        
+
                                     }
                                 });
 
