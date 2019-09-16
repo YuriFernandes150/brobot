@@ -190,6 +190,40 @@ client.on("message", (message) => {
 
 
     }
+    function PlayWorkHarder(connection) {
+        dispatcher = connection.playStream(ytdl("https://www.youtube.com/watch?v=wuFIq4olZ3c", { filter: "audioonly" }));
+        if (!loop) {
+            message.channel.send("Tocando: **" + filanome[0] + "**");
+        }
+        tocando = true;
+        dispatcher.on("end", () => {
+            votounext.clear();
+            votoupause.clear();
+            votouresume.clear();
+            votoustop.clear();
+            votosnext = 0;
+            votospause = 0;
+            votosresume = 0;
+            votosstop = 0;
+            if (!loop) {
+                filanome.shift();
+                fila.shift();
+            }
+
+            if (fila[0]) {
+                Play(connection);
+            }
+            else {
+                channel = client.channels.get(music);
+                channel.leave();
+                message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
+                tocando = false;
+            }
+
+        });
+
+
+    }
     function PlayRadio(connection, url) {
 
         radiodispatcher = connection.playStream(ytdl(url, { quality: '93' }));
@@ -1763,6 +1797,27 @@ client.on("message", (message) => {
                 console.log(err);
                 message.channel.send("Não encontrei o jogo que vc quer jogar! Tente ser mais específico");
             });
+
+        }
+
+    }
+    if (command.toLowerCase() === prefix + "workharder") {
+
+        if (tocando) {
+
+            message.reply("Malz ae, mas não posso interromper a música dos outros pra vc ouvir Work Harder ;0;");
+
+        }
+        else {
+
+            channel.join().then(connection => {
+                PlayWorkHarder(connection);
+            }).catch(e => {
+                // Oh no, it errored! Let's log it to console :)
+                console.error(e);
+            });
+
+
 
         }
 
