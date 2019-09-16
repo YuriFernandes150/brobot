@@ -406,11 +406,11 @@ client.on("message", (message) => {
                 "**" + prefix + "resume:** continua a música de onde parou\n" +
                 "**" + prefix + "next:** Abre um voto para pular a música\n" +
                 "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
-                "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila" +
-                "**" + prefix + "shuffle:** Randomiza a playlist" +
-                "**" + prefix + "loop:** repete a música atual" +
-                "**" + prefix + "salvarlista:** Salva (e sobrescreve) todas as musicas atuais na sua playlist pessoal" +
-                "**" + prefix + "addlista:** Adiciona a música atual na sua playlist pessoal");
+                "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila\n" +
+                "**" + prefix + "shuffle:** Randomiza a playlist\n" +
+                "**" + prefix + "loop:** repete a música atual\n" +
+                "**" + prefix + "salvarlista:** Salva (e sobrescreve) todas as musicas atuais na sua playlist pessoal\n" +
+                "**" + prefix + "addlista:** Adiciona a música atual na sua playlist pessoal\n");
         }
 
 
