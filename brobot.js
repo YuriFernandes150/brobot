@@ -158,7 +158,9 @@ client.on("message", (message) => {
 
     function Play(connection) {
         dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
-        message.channel.send("Tocando: **" + filanome[0] + "**");
+        if (!loop) {
+            message.channel.send("Tocando: **" + filanome[0] + "**");
+        }
         tocando = true;
         dispatcher.on("end", () => {
             votounext.clear();
@@ -298,9 +300,10 @@ client.on("message", (message) => {
         } else {
 
             loop = true;
-            message.channel.send("Beleza! Loopando\n" + filanome[0] + "\nCaso queira desativar o loop, basta mandar o comando novamente");
+            message.channel.send("Beleza! Loopando\n**" + filanome[0] + "**\nCaso queira desativar o loop, basta mandar o comando novamente");
 
         }
+
 
     }
 
@@ -649,10 +652,14 @@ client.on("message", (message) => {
             else {
                 num = fila.length;
             }
+            var loopString = " ";
+            if (loop) {
+                " (Loopando) "
+            }
             var listEmbed = new Discord.RichEmbed()
                 .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
                 .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
-            listEmbed.addField("**▷" + filanome[0] + "**", "---------------------Próximas Faixas---------------------")
+            listEmbed.addField("**▷" + filanome[0] + loopString + "**", "---------------------Próximas Faixas---------------------")
                 .setColor('RANDOM');
 
             for (var i = 1; i < num; i++) {
