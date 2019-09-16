@@ -59,6 +59,7 @@ var darkhole = config.darkhole;
 
 var segundaresp = false;
 var tocando = false;
+var loop = false;
 var dispatcher;
 var radiodispatcher;
 var votospause = 0;
@@ -168,8 +169,11 @@ client.on("message", (message) => {
             votospause = 0;
             votosresume = 0;
             votosstop = 0;
-            filanome.shift();
-            fila.shift();
+            if (!loop) {
+                filanome.shift();
+                fila.shift();
+            }
+
             if (fila[0]) {
                 Play(connection);
             }
@@ -286,6 +290,19 @@ client.on("message", (message) => {
         }
 
     }
+    if (command.toLowerCase() === prefix + "loop") {
+
+        if (loop) {
+            loop = false;
+            message.channel.send("Ok!Desativando loop!");
+        } else {
+
+            loop = true;
+            message.channel.send("Beleza! Loopando\n" + filanome[0] + "\nCaso queira desativar o loop, basta mandar o comando novamente");
+
+        }
+
+    }
 
     if (command === prefix + "server") {
 
@@ -387,7 +404,10 @@ client.on("message", (message) => {
                 "**" + prefix + "next:** Abre um voto para pular a música\n" +
                 "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
                 "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila" +
-                "**" + prefix + "shuffle:** Randomiza a playlist");
+                "**" + prefix + "shuffle:** Randomiza a playlist" +
+                "**" + prefix + "loop:** repete a música atual" +
+                "**" + prefix + "salvarlista:** Salva (e sobrescreve) todas as musicas atuais na sua playlist pessoal" +
+                "**" + prefix + "addlista:** Adiciona a música atual na sua playlist pessoal");
         }
 
 
@@ -398,6 +418,7 @@ client.on("message", (message) => {
         if (fila[3] && filanome[3]) {
 
             shuffle(fila, filanome);
+            loop = false;
             message.channel.send("Ok! Playlist devidamente afofada!");
 
         }
@@ -557,6 +578,7 @@ client.on("message", (message) => {
                     fila = [];
                     tocando = false;
                     votosstop = 0;
+                    loop = false;
                     votoustop.clear();
                     dispatcher.end();
                 }
@@ -595,6 +617,7 @@ client.on("message", (message) => {
                         votosnext = 0;
                         next = true;
                         votounext.clear();
+                        loop = false;
                     }
                     else {
                         message.channel.send("Não tem mais músicas na fila!");
@@ -1324,7 +1347,7 @@ client.on("message", (message) => {
         // Build the AcceptMessage
         var msg = new AcceptMessage(client, {
             content: new Discord.RichEmbed()
-                .setDescription('AVISO! Salvar a playlist atual irá sobrescrever a que já existe em seu nome (se existir), prossiga com cautela')
+                .setDescription('AVISO! Salvar a playlist atual irá adicionar TODAS as músicas da fila atual na sua playlist pessoal, verifique a fila e prossiga com cautela')
                 .setColor('RANDOM'),
             emotes: {
                 accept: '✅',
@@ -1344,10 +1367,10 @@ client.on("message", (message) => {
 
                         }
 
-                        message.channel.send("Sua playlist foi salva no seu nome! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
+                        message.channel.send("Salvei essas músicas na sua playlist pessoal! quando quiser reproduzir ela, use **" + prefix + "minhalista**");
                     }
                     else {
-                        message.channel.send("É preciso ter pelo menos 2 músicas na fila atual para poder salvar como uma playlist");
+                        message.channel.send("É preciso ter pelo menos 2 músicas na fila atual para poder adicionar na sua playlist");
                     }
                 },
                 deny: (reaction, user) => {
@@ -1543,7 +1566,7 @@ client.on("message", (message) => {
                 collector.on('end', collected => {
 
                     if (!sim && !nao) {
-                        message.channel.send("A votação terminou sem que membros o suficiente votassem\nPessoas Online: " + pessoas + "\nVotaram Sim:" + votosSim + "\nVotaram não:" + votosNao);
+                        chan.send("A votação terminou sem que membros o suficiente votassem\nPessoas Online: " + pessoas + "\nVotaram Sim:" + votosSim + "\nVotaram não:" + votosNao);
                     }
 
                     sim = false;
