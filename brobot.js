@@ -294,7 +294,7 @@ client.on("message", (message) => {
 
         if (loop) {
             loop = false;
-            message.channel.send("Ok!Desativando loop!");
+            message.channel.send("Ok!Desativando loop! ");
         } else {
 
             loop = true;
