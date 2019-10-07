@@ -84,7 +84,7 @@ var perg;
 client.on('error', function () {
 
     var date = new Date();
-    console.log("Ocorreu um erro de conexão Às " + date.getHours() - 3 + ":" + date.getMinutes());
+    console.log("Ocorreu um erro de conexão às " + date.getHours() - 3 + ":" + date.getMinutes());
 
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
