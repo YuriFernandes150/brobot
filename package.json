@@ -15,6 +15,7 @@
     "acceptmessage": "^1.1.0",
     "apicalypse": "^0.1.6",
     "axios": "^0.19.0",
+    "canvas": "^2.6.0",
     "cartoon-avatar": "^1.0.2",
     "casual": "^1.6.0",
     "cheerio": "^1.0.0-rc.2",
