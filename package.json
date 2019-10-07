@@ -29,6 +29,7 @@
     "giphy-js-sdk-core": "^1.0.6",
     "git-commits": "^1.3.0",
     "give-me-a-joke": "^0.1.2",
+    "har-validator": "^5.1.3",
     "ineed": "^1.1.0",
     "mathjs": "^5.1.2",
     "nodejs-currency-converter": "^1.0.2",
