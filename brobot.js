@@ -57,6 +57,12 @@ var prefix = config.prefix;
 var music = config.music;
 var darkhole = config.darkhole;
 
+//Tic Tac Toe
+const ttt = require("discord.js-tictactoe");
+const embed_color = "#ff00aa";
+const start_cmd = "ttt";
+ttt.run(client, prefix, embed_color, start_cmd);
+
 var segundaresp = false;
 var tocando = false;
 var loop = false;
@@ -1797,27 +1803,6 @@ client.on("message", (message) => {
                 console.log(err);
                 message.channel.send("Não encontrei o jogo que vc quer jogar! Tente ser mais específico");
             });
-
-        }
-
-    }
-    if (command.toLowerCase() === prefix + "workharder") {
-
-        if (tocando) {
-
-            message.reply("Malz ae, mas não posso interromper a música dos outros pra vc ouvir Work Harder ;0;");
-
-        }
-        else {
-
-            channel.join().then(connection => {
-                PlayWorkHarder(connection);
-            }).catch(e => {
-                // Oh no, it errored! Let's log it to console :)
-                console.error(e);
-            });
-
-
 
         }
 
