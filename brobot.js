@@ -76,10 +76,6 @@ var autorpergunta;
 var perg;
 
 //Servidor
-
-var BRothers = client.guilds.get('404058088329576448');
-console.log(client.guilds._keyArray);
-
 //Canais
 var zueraVisivel = client.channels.get("404058088329576450");
 var arte = client.channels.get("476225541280890930");
@@ -88,13 +84,6 @@ var sugestoesDoBRotot = client.channels.get("518042011064991756");
 var brobotUpdates = client.channels.get("535429355099389962");
 var musica = client.channels.get("520562189904510997");
 
-//Users
-/*var Spirik = BRothers.fetchMember('404054872649105410');
-var Kaigan = BRothers.fetchMember("404082622222958592");
-var Luiz = BRothers.fetchMember("255526747817246731");
-var Matheus = BRothers.fetchMember("255527432948416512");
-var Gaxyhs = BRothers.fetchMember("259705830847414280");*/
-
 client.on('error', function () {
 
     var date = new Date();
@@ -102,8 +91,6 @@ client.on('error', function () {
 
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
-
-    console.log(client.guilds._keyArray);
 
     client.on('message', message => {
         var date = new Date();
@@ -1821,22 +1808,10 @@ client.on("message", (message) => {
 
     if (command === prefix + "feriado") {
 
-        proximosFeriados(2)
-            .then((feriados) => {
+        proximosFeriados()
+            .then((feriado) => {
 
-                var feriadoEmbed = new Discord.RichEmbed()
-                    .setThumbnail("https://cdn.discordapp.com/attachments/494191132318892043/635838466009333760/calendario.jpg")
-                    .setTitle("Próximos Feriados")
-                    .setColor('RANDOM')
-                    .setFooter('Só consigo mostrar feriados nacionais.');
-
-                feriados.forEach((feriado) => {
-
-                    feriadoEmbed.addField(feriado.nome, feriado.data);
-
-                });
-
-                message.channel.send(feriadoEmbed);
+                message.channel.send(feriado.data + " - " + feriado.nome);
 
             });
 
