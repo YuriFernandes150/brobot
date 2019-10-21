@@ -78,6 +78,7 @@ var perg;
 //Servidor
 
 var BRothers = client.guilds.get('404058088329576448');
+console.log(client.guilds._keyArray);
 
 //Canais
 var zueraVisivel = client.channels.get("404058088329576450");
@@ -102,8 +103,7 @@ client.on('error', function () {
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
-
-    Spirik.send("Estou on");
+    console.log(client.guilds._keyArray);
 
     client.on('message', message => {
         var date = new Date();
