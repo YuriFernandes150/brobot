@@ -89,11 +89,11 @@ var brobotUpdates = client.channels.get("535429355099389962");
 var musica = client.channels.get("520562189904510997");
 
 //Users
-var Spirik = BRothers.fetchMember('404054872649105410');
+/*var Spirik = BRothers.fetchMember('404054872649105410');
 var Kaigan = BRothers.fetchMember("404082622222958592");
 var Luiz = BRothers.fetchMember("255526747817246731");
 var Matheus = BRothers.fetchMember("255527432948416512");
-var Gaxyhs = BRothers.fetchMember("259705830847414280");
+var Gaxyhs = BRothers.fetchMember("259705830847414280");*/
 
 client.on('error', function () {
 
