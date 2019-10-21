@@ -77,7 +77,7 @@ var perg;
 
 //Servidor
 
-var BRothers = client.guilds.get("404058088329576448");
+var BRothers = client.guilds.get('404058088329576448');
 
 //Canais
 var zueraVisivel = client.channels.get("404058088329576450");
@@ -88,7 +88,7 @@ var brobotUpdates = client.channels.get("535429355099389962");
 var musica = client.channels.get("520562189904510997");
 
 //Users
-var Spirik = BRothers.fetchMember("404054872649105410");
+var Spirik = BRothers.fetchMember('404054872649105410');
 var Kaigan = BRothers.fetchMember("404082622222958592");
 var Luiz = BRothers.fetchMember("255526747817246731");
 var Matheus = BRothers.fetchMember("255527432948416512");
