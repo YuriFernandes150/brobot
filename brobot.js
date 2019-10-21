@@ -50,19 +50,13 @@ const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const axios = require('axios');
+const { proximosFeriados } = require('proximos-feriados-br');
 
 // Configuração
 const config = require('./config.json');
 var prefix = config.prefix;
 var music = config.music;
 var darkhole = config.darkhole;
-
-//Tic Tac Toe
-const ttt = require("discord.js-tictactoe");
-const embed_color = "#ff00aa";
-const start_cmd = "ttt";
-ttt.run(client, prefix, embed_color, start_cmd);
-
 var segundaresp = false;
 var tocando = false;
 var loop = false;
@@ -81,6 +75,22 @@ const votoustop = new Set();
 var autorpergunta;
 var perg;
 
+//Servidor
+//Canais
+var zueraVisivel = client.channels.get("404058088329576450");
+var arte = client.channels.get("476225541280890930");
+var brothersOG = client.channels.get("434510369692712962");
+var sugestoesDoBRotot = client.channels.get("518042011064991756");
+var brobotUpdates = client.channels.get("535429355099389962");
+var musica = client.channels.get("520562189904510997");
+
+//Users
+var Spirik = client.users.get("404054872649105410");
+var Kaigan = client.users.get("404082622222958592");
+var Luiz = client.users.get("255526747817246731");
+var Matheus = client.users.get("255527432948416512");
+var Gaxyhs = client.users.get("259705830847414280");
+
 client.on('error', function () {
 
     var date = new Date();
@@ -89,10 +99,8 @@ client.on('error', function () {
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
-    var zueraVisivel = client.channels.get("404058088329576450");
-    let gifs = ["https://tenor.com/view/josee-8379391-robo-dance-robot-dance-gif-12127978", "https://tenor.com/view/robot-dancing-break-it-down-meta-dance-gif-5385083", "https://tenor.com/view/robot-dancing-funny-grooving-feeling-it-gif-5261569"];
-    zueraVisivel.send("Im back, bitches");
-    zueraVisivel.send(gifs[Math.floor(Math.random() * gifs.length)]);
+
+    Spirik.send("Estou on");
 
     client.on('message', message => {
         var date = new Date();
@@ -1805,6 +1813,29 @@ client.on("message", (message) => {
             });
 
         }
+
+    }
+
+    if (command === prefix + "feriado") {
+
+        proximosFeriados(2)
+            .then((feriados) =>{
+
+                var feriadoEmbed = new Discord.RichEmbed()
+                .setThumbnail("https://cdn.discordapp.com/attachments/494191132318892043/635838466009333760/calendario.jpg")
+                .setTitle("Próximos Feriados")
+                .setColor('RANDOM')
+                .setFooter('Só consigo mostrar feriados nacionais.');
+
+                feriados.forEach((feriado) => {
+
+                    feriadoEmbed.addField(feriado.nome, feriado.data);
+
+                });
+
+                message.channel.send(feriadoEmbed);
+
+            });
 
     }
 
