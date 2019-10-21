@@ -1813,7 +1813,9 @@ client.on("message", (message) => {
 
                 message.channel.send(feriado.data + " - " + feriado.nome);
 
-            });
+            }).catch((err) =>{
+                console.log(err);
+            })
 
     }
 
