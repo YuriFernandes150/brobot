@@ -1811,7 +1811,7 @@ client.on("message", (message) => {
         proximosFeriados()
             .then((feriado) => {
 
-                message.channel.send(feriado.data + " - " + feriado.nome);
+                message.channel.send(feriado);
 
             }).catch((err) =>{
                 console.log(err);
