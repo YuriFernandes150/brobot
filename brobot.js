@@ -90,8 +90,6 @@ client.on('error', function () {
 
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
-
-    timeReminder.begin();
     client.on('message', message => {
         var date = new Date();
         if (message.isMentioned(client.user)) {
@@ -366,6 +364,7 @@ client.on("message", (message) => {
                     var id = ytdl.getURLVideoID(url);
                     ytdl.getInfo(id, function (err, info) {
                         if (err) throw err;
+                        console.log(info);
                         var title = info.title;
                         filanome.push(title);
                     });
@@ -375,6 +374,7 @@ client.on("message", (message) => {
                         fila.push(url);
                         var id = ytdl.getURLVideoID(url);
                         ytdl.getInfo(id, function (err, info) {
+                            console.log(info);
                             if (err) throw err;
                             var title = info.title;
                             filanome.push(title);
