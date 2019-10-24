@@ -50,7 +50,6 @@ const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const axios = require('axios');
-const { proximosFeriados } = require('proximos-feriados-br');
 
 // Configuração
 const config = require('./config.json');
@@ -92,6 +91,7 @@ client.on('error', function () {
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
 
+    timeReminder.begin();
     client.on('message', message => {
         var date = new Date();
         if (message.isMentioned(client.user)) {
@@ -369,7 +369,7 @@ client.on("message", (message) => {
                         var title = info.title;
                         filanome.push(title);
                     });
-                } else if (args[1 === "name"]) {
+                } else {
                     message.channel.send("Bora lá! :musical_note:");
                     channel.join().then(connection => {
                         fila.push(url);
@@ -400,6 +400,8 @@ client.on("message", (message) => {
 
                 ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
                     if (err) console.log(err);
+
+                    console.log(results[0]);
 
                     const channel = client.channels.get(music);
                     if (!channel) return console.error("Canal Inexistente!");
@@ -1803,19 +1805,6 @@ client.on("message", (message) => {
             });
 
         }
-
-    }
-
-    if (command === prefix + "feriado") {
-
-        proximosFeriados()
-            .then((feriado) => {
-
-                message.channel.send(feriado);
-
-            }).catch((err) =>{
-                console.log(err);
-            })
 
     }
 
