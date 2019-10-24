@@ -402,6 +402,9 @@ client.on("message", (message) => {
                     if (err) console.log(err);
 
                     console.log(results[0]);
+                    console.log(results[0].link);
+                    console.log(results[0].title);
+
 
                     const channel = client.channels.get(music);
                     if (!channel) return console.error("Canal Inexistente!");
