@@ -18,7 +18,7 @@ var filanome = [];
 //Piadas
 var Joke = require('give-me-a-joke');
 var fuckShitUp = require('fuck-shit-up').create({
-    useAlternativeModifiers: true
+    useAlternativeModifiers: false
 });
 
 //Steam
@@ -159,7 +159,7 @@ client.on("message", (message) => {
 
 
     function Play(connection) {
-        dispatcher = connection.playStream(ytdl(fila[0], { filter: "audioonly" }));
+        dispatcher = connection.playStream(ytdl(fila[0]));
         if (!loop) {
             message.channel.send("Tocando: **" + filanome[0] + "**");
         }
