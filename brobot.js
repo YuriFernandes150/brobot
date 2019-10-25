@@ -1508,38 +1508,44 @@ client.on("message", (message) => {
 
         if (args[1]) {
             var num = args[1];
-
+            var minas;
             if (num === "1") {
+                minas = 3;
                 const minesweeper = new Minesweeper({
                     rows: 3,
                     columns: 3,
-                    mines: 3,
+                    mines: minas,
                     emote: 'boom',
                     returnType: 'emoji',
                 });
                 const mine = minesweeper.start();
+                message.channel.send("Campo minado fácil.\nTotal de minas: " + minas);
                 message.channel.send(mine);
             }
             else if (num === "2") {
+                minas = 12;
                 const minesweeper = new Minesweeper({
                     rows: 6,
                     columns: 6,
-                    mines: 15,
+                    mines: minas,
                     emote: 'boom',
                     returnType: 'emoji',
                 });
                 const mine = minesweeper.start();
+                message.channel.send("Campo minado médio.\nTotal de minas: " + minas);
                 message.channel.send(mine);
             }
             else if (num === "3") {
+                minas = 35
                 const minesweeper = new Minesweeper({
                     rows: 10,
                     columns: 10,
-                    mines: 40,
+                    mines: minas,
                     emote: 'boom',
                     returnType: 'emoji',
                 });
                 const mine = minesweeper.start();
+                message.channel.send("Campo minado médio.\nTotal de minas: " + minas);
                 message.channel.send(mine);
             }
             else {
