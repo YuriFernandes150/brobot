@@ -50,7 +50,6 @@ const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const axios = require('axios');
-var scSearcher = require('soundcloud-searcher');
 
 // Configuração
 const config = require('./config.json');
@@ -1820,22 +1819,7 @@ client.on("message", (message) => {
 
     if (command === prefix + "soundcloud") {
 
-        if (args[1]) {
-
-        }
-        scSearcher.init('128519080');
-        var options = {
-            name: message.content.replace(command, ""),
-            limit: 1
-        }
-
-        scSearcher.search(options)
-            .then((result) => {
-                console.log(result)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+        
 
     }
 
