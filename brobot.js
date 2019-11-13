@@ -50,6 +50,7 @@ const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const axios = require('axios');
+var scSearcher = require('soundcloud-searcher');
 
 // Configuração
 const config = require('./config.json');
@@ -1508,44 +1509,38 @@ client.on("message", (message) => {
 
         if (args[1]) {
             var num = args[1];
-            var minas;
+
             if (num === "1") {
-                minas = 3;
                 const minesweeper = new Minesweeper({
                     rows: 3,
                     columns: 3,
-                    mines: minas,
+                    mines: 3,
                     emote: 'boom',
                     returnType: 'emoji',
                 });
                 const mine = minesweeper.start();
-                message.channel.send("Campo minado fácil.\nTotal de minas: " + minas);
                 message.channel.send(mine);
             }
             else if (num === "2") {
-                minas = 12;
                 const minesweeper = new Minesweeper({
                     rows: 6,
                     columns: 6,
-                    mines: minas,
+                    mines: 15,
                     emote: 'boom',
                     returnType: 'emoji',
                 });
                 const mine = minesweeper.start();
-                message.channel.send("Campo minado médio.\nTotal de minas: " + minas);
                 message.channel.send(mine);
             }
             else if (num === "3") {
-                minas = 35
                 const minesweeper = new Minesweeper({
                     rows: 10,
                     columns: 10,
-                    mines: minas,
+                    mines: 40,
                     emote: 'boom',
                     returnType: 'emoji',
                 });
                 const mine = minesweeper.start();
-                message.channel.send("Campo minado médio.\nTotal de minas: " + minas);
                 message.channel.send(mine);
             }
             else {
@@ -1817,9 +1812,24 @@ client.on("message", (message) => {
 
     }
 
-    if (command === prefix + "soundcloud") {
+    if(command === prefix + "soudcloud"){
 
-        
+        if(args[1]){
+
+            var options = {
+                name: message.content.replace(command, "").trim(),
+                limit: 1
+              }
+               
+              scSearcher.search(options)
+                .then((result) => {
+                  console.log(result)
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+            
+        }
 
     }
 
