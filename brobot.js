@@ -51,6 +51,7 @@ const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const axios = require('axios');
 var scSearcher = require('soundcloud-searcher');
+scSearcher.init(process.env.SOUNDCLOUD);
 
 // Configuração
 const config = require('./config.json');
@@ -1815,6 +1816,8 @@ client.on("message", (message) => {
     if(command === prefix + "soudcloud"){
 
         if(args[1]){
+            
+            
 
             var options = {
                 name: message.content.replace(command, "").trim(),
