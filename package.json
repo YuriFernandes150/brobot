@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node brobot.js"
   },
+  "engines": {
+    "node": "10.16.2"
+  },
   "author": "",
   "license": "ISC",
   "keywords": [],
