@@ -1842,6 +1842,18 @@ client.on("message", (message) => {
 
     }
 
+    if(command === prefix + "darvo"){
+
+        const WF = new Warframe(options);
+
+        WF.dailyDeals.then(darvo =>{
+
+            message.channel.send("Darvo esta vendendo " + darvo[0].item + " por " + darvo[0].salePrice + "pl   (Tempo restante: "+darvo[0].countdown+")");
+            
+        })
+
+    }
+
 
     //----------------ADMIN COMMANDS------------------------
 
