@@ -50,6 +50,8 @@ const randomFloatPro = require('random-float-pro');
 const Minesweeper = require('discord.js-minesweeper');
 const AcceptMessage = require('acceptmessage');
 const axios = require('axios');
+const Warframe = require("warframe.js");
+let options = { platform: "pc" };
 
 // Configuração
 const config = require('./config.json');
@@ -1810,6 +1812,35 @@ client.on("message", (message) => {
         }
 
     }
+    if (command === prefix + "baro") {
+
+        const WF = new Warframe(options);
+        WF.voidTrader.then(baro => {
+
+            var nao = "";
+
+            if (!baro.active) nao = "não";
+
+            var baroEmbed = new Discord.RichEmbed()
+                .setTitle("Baro " + nao + " está ativo")
+                .setColor('RANDOM');
+
+            if (baro.goodies[1]) baroEmbed.setDescription(baro.goodies);
+            else baroEmbed.setDescription("Nenhum item disponivel")
+
+            baroEmbed.addField("Baro vai aparecer em:", baro.relay);
+            baroEmbed.addField("Baro chega em:", baro.fromString.replace("Baro Ki\'Teer arrives in ", ""));
+            baroEmbed.addField("Baro vai embora em:", baro.untilString.replace("Baro Ki\'Teer leaves in ", ""));
+            if(!baro.active)baroEmbed.setThumbnail('https://scontent.fpoo4-1.fna.fbcdn.net/v/t1.0-9/21768367_1923986577854008_6762904672917938465_n.png?_nc_cat=101&_nc_oc=AQkVyXBLJB9s_pr49ROYl5H1mo0b_Fe4sKzxQL7kzbE62RZC_XlsdaZd5_BQRfBsZX4&_nc_ht=scontent.fpoo4-1.fna&oh=91ebd5154c58c6c56ed2adc6815c2270&oe=5E9AA2B9');
+            else baroEmbed.setThumbnail('https://78.media.tumblr.com/105e12339dc6feb05ae224bceea7c4ac/tumblr_nomuhaKQTw1uni8ipo2_500.png');
+            message.channel.send(baroEmbed);
+
+        }).catch(err => {
+            console.log(err);
+            message.channel.send("Ocorreu um erro!!!/n" + err);
+        });
+
+    }
 
 
     //----------------ADMIN COMMANDS------------------------
@@ -1898,4 +1929,4 @@ client.on("message", (message) => {
 
 
 });
-client.login(process.env.TOKEN);
+client.login("NDkzODUxMjkzNjY4ODY4MTE3.DvqHKw.qXx7Os-QUCExfcZ38pnBf3L75ec");
