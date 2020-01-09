@@ -1929,4 +1929,4 @@ client.on("message", (message) => {
 
 
 });
-client.login("NDkzODUxMjkzNjY4ODY4MTE3.DvqHKw.qXx7Os-QUCExfcZ38pnBf3L75ec");
+client.login(process.env.TOKEN);
