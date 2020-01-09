@@ -1,2 +1,0 @@
-# brobot
-My Discord Bot
