@@ -1991,6 +1991,9 @@ client.on("message", (message) => {
             .addField("**" + prefix + "addlista**", "Adiciona a música atual na sua playlist pessoal")
             .addField("**" + prefix + "campominado**", "Faz um joguinho simples de campo minado, usando emojis :boom:")
             .addField("**" + prefix + "phuck**", "Transforma uma frase normal em algo mais interessante")
+            .addField("**" + prefix + "baro**", "Mostra itens que o baro vende ou quanto tempo ate q ele fique ativo")
+            .addField("**" + prefix + "darvo**", "mostra o item em oferta do darvo")
+            .addField("**" + prefix + "fendas**", "Mostra as Fendas do void atuais")
             .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
