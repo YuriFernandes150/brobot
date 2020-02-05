@@ -137,7 +137,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
                         user.send(fendaEmbed);
 
                     });
-                    break;
+                    
 
                 }
 
