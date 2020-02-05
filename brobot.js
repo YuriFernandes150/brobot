@@ -109,6 +109,43 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 
         client.user.setPresence({ activity: { name: status }, status: 'online' })
     }, 240000);
+
+    setInterval(function () {
+
+        const WF = new Warframe(options);
+        var BRothersServer = client.guilds.get("404058088329576448");
+        var tennoScoom = BRothersServer.roles.get("434513357605961748");
+        var listaTennos = tennoScoom.members;
+        WF.fissures.then(fendas => {
+
+            fendas.forEach((fenda) => {
+
+                if (fenda.type === "Excavation") {
+
+                    var fendaEmbed = new Discord.RichEmbed()
+                        .setTitle("Hora de Abrir Reliquias!")
+                        .setColor('RANDOM')
+                        .setThumbnail("http://content.warframe.com/MobileExport/Lotus/Interface/Icons/Store/Luminous.png");
+
+                    listaTennos.forEach((tenno) => {
+
+                        var user = BRothersServer.members.get(tenno.user.id);
+                        console.log(user.id);
+
+                        fendaEmbed.setDescription(user.username + ",\nTem uma fenda " + fenda.tierClass + " de Escavação em " + fenda.node + "\nMas corre! Ela acaba em " + fenda.countdown);
+
+                        user.send(fendaEmbed);
+
+                    });
+                    break;
+
+                }
+
+            });
+
+        });
+
+    }, 3600000);
     /*
     setInterval(function () {
 
@@ -1865,6 +1902,64 @@ client.on("message", (message) => {
 
     }
 
+    if (command === prefix + "fendas") {
+        const WF = new Warframe(options);
+
+        WF.fissures.then(fendas => {
+
+            var tipoMissao = "";
+
+            var fendaEmbed = new Discord.RichEmbed()
+                .setTitle("Fendas do Void")
+                .setColor('RANDOM')
+                .setThumbnail("http://content.warframe.com/MobileExport/Lotus/Interface/Icons/Store/Luminous.png");
+            fendas.forEach((fenda) => {
+
+                switch (fenda.type) {
+                    case "Excavation": {
+                        tipoMissao = "Escavação (Melhor fenda)";
+                    } break;
+                    case "Survival": {
+                        tipoMissao = "Sobrevivência";
+                    } break;
+                    case "Defense": {
+                        tipoMissao = "Defesa";
+                    } break;
+                    case "Spy": {
+                        tipoMissao = "Espionagem";
+                    } break;
+                    case "Mobile Defense": {
+                        tipoMissao = "Defesa Móvel";
+                    } break;
+                    case "Extermination": {
+                        tipoMissao = "Extermínio";
+                    } break;
+                    case "Disruption": {
+                        tipoMissao = "Interferência (Missão dos conduítes)";
+                    } break;
+                    case "Interception": {
+                        tipoMissao = "Interceptação (Missão das torres de rádio)";
+                    } break;
+                    case "Sabotage": {
+                        tipoMissao = "Sabotagem";
+                    } break;
+                    case "Rescue": {
+                        tipoMissao = "Resgate";
+                    } break;
+                    default: {
+                        tipoMissao = fenda.type;
+                    }
+                }
+
+                fendaEmbed.addField(fenda.node + "(" + tipoMissao + ")", fenda.tierClass + "\n" + fenda.countdown);
+
+            });
+
+            message.channel.send(fendaEmbed);
+
+        })
+    }
+
 
     //----------------ADMIN COMMANDS------------------------
 
@@ -1952,4 +2047,5 @@ client.on("message", (message) => {
 
 
 });
-client.login(process.env.TOKEN);
+//client.login(process.env.TOKEN);
+client.login("NDkzODUxMjkzNjY4ODY4MTE3.XheBuw.kZvoIdNoIz0TyZBCbEJRyJR3gZQ");
