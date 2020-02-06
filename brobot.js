@@ -132,12 +132,12 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
                         var user = BRothersServer.members.get(tenno.user.id);
                         console.log(user.id);
 
-                        fendaEmbed.setDescription(user.username + ",\nTem uma fenda " + fenda.tierClass + " de Escavação em " + fenda.node + "\nMas corre! Ela acaba em " + fenda.countdown);
+                        fendaEmbed.setDescription(tenno.user.username + ",\nTem uma fenda " + fenda.tierClass + " de Escavação em " + fenda.node + "\nMas corre! Ela acaba em " + fenda.countdown);
 
                         user.send(fendaEmbed);
 
                     });
-                    
+
 
                 }
 
