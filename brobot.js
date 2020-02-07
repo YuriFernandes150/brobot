@@ -12,9 +12,11 @@ var giphyclient = GphApiClient("1Z69tcE44eF9YM6OKIMpUiy8vCvyvyPv");
 const ytdl = require("ytdl-core");
 const ytlist = require('youtube-playlist');
 var ytSearch = require('youtube-search');
+const fs = require("fs");
 var fila = [];
 var filanome = [];
 var currStream;
+
 
 //Piadas
 var Joke = require('give-me-a-joke');
