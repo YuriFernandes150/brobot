@@ -14,6 +14,7 @@ const ytlist = require('youtube-playlist');
 var ytSearch = require('youtube-search');
 var fila = [];
 var filanome = [];
+var currStream;
 
 //Piadas
 var Joke = require('give-me-a-joke');
@@ -198,7 +199,10 @@ client.on("message", (message) => {
 
 
     function Play(connection) {
-        dispatcher = connection.playStream(ytdl(fila[0]));
+
+        currStream = ytdl(fila[0], {filter: 'audioonly'});
+
+        dispatcher = connection.playStream(currStream);
         if (!loop) {
             message.channel.send("Tocando: **" + filanome[0] + "**");
         }
@@ -229,50 +233,6 @@ client.on("message", (message) => {
 
         });
 
-
-    }
-    function PlayWorkHarder(connection) {
-        dispatcher = connection.playStream(ytdl("https://www.youtube.com/watch?v=wuFIq4olZ3c", { filter: "audioonly" }));
-        if (!loop) {
-            message.channel.send("Tocando: **" + filanome[0] + "**");
-        }
-        tocando = true;
-        dispatcher.on("end", () => {
-            votounext.clear();
-            votoupause.clear();
-            votouresume.clear();
-            votoustop.clear();
-            votosnext = 0;
-            votospause = 0;
-            votosresume = 0;
-            votosstop = 0;
-            if (!loop) {
-                filanome.shift();
-                fila.shift();
-            }
-
-            if (fila[0]) {
-                Play(connection);
-            }
-            else {
-                channel = client.channels.get(music);
-                channel.leave();
-                message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
-                tocando = false;
-            }
-
-        });
-
-
-    }
-    function PlayRadio(connection, url) {
-
-        radiodispatcher = connection.playStream(ytdl(url, { quality: '93' }));
-        radiodispatcher.on("end", () => {
-
-
-
-        });
 
     }
 
@@ -1959,7 +1919,20 @@ client.on("message", (message) => {
 
         })
     }
+    if(command === prefix + "downloadmusica"){
 
+        if(tocando && fila[0]){
+
+            var name = filanome[0] + '.mp3';
+            ytdl(fila[0],{filter:"audioonly", format:"mp3"})
+            .pipe(fs.createWriteStream(name))
+            .on('end', () => {
+                message.channel.sendFile(name);
+            });
+
+        }
+
+    }
 
     //----------------ADMIN COMMANDS------------------------
 
