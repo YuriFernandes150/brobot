@@ -202,7 +202,7 @@ client.on("message", (message) => {
 
     function Play(connection) {
 
-        currStream = ytdl(fila[0], {filter: 'audioonly'});
+        currStream = ytdl(fila[0], { filter: 'audioonly' });
 
         dispatcher = connection.playStream(currStream);
         if (!loop) {
@@ -1921,16 +1921,32 @@ client.on("message", (message) => {
 
         })
     }
-    if(command === prefix + "downloadmusica"){
+    if (command === prefix + "downloadmusica") {
 
-        if(tocando && fila[0]){
+        if (tocando && fila[0]) {
 
-            var name = filanome[0] + '.mp3';
-            ytdl(fila[0],{filter:"audioonly", format:"mp3"})
-            .pipe(fs.createWriteStream(name))
-            .on('end', () => {
-                message.channel.sendFile(name);
-            });
+            var name = "./" + filanome[0] + '.mp3';
+            message.channel.send("OK! Vou tentar baixar " + name);
+            ytdl(fila[0], { filter: "audioonly", format: "mp3" })
+                .pipe(fs.createWriteStream(name))
+                .on('end', () => {
+                    message.channel.sendFile(name);
+                });
+
+        }
+
+    }
+
+    if (command === prefix + "mp3") {
+
+        if (args[1]) {
+
+            message.channel.send("OK! Vou tentar baixar!");
+            ytdl(args[1], { filter: "audioonly", format: "mp3" })
+                .pipe(fs.createWriteStream('./tempaudio.mp3'))
+                .on('end', () => {
+                    message.channel.sendFile('tempaudio.mp3');
+                });
 
         }
 
