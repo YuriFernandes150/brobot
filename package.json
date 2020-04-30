@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "curl": "^0.1.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsdom": "^13.2.0"
   }
 }
