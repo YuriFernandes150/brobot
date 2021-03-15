@@ -1287,7 +1287,7 @@ client.on("message", (message) => {
             ytSearch(args.slice(1).join(" "), opts, function (err, results) {
                 if (err) console.log(err);
 
-                var url = results[0].link;
+                var url = results.link;
                 message.channel.send(url);
 
             })
