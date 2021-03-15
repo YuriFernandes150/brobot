@@ -351,7 +351,7 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "play") {
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando play requisitado por: " + message.author.username);
             var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
             message.delete();
@@ -462,7 +462,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "shuffle") {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             if (fila[3] && filanome[3]) {
 
                 shuffle(fila, filanome);
@@ -483,7 +483,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "pause" && tocando) {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando pause requisitado por: " + message.author.username);
 
             if (votoupause.has(message.author.id)) {
@@ -523,7 +523,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "resume" && !tocando) {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando resume requisitado por: " + message.author.username);
 
             if (votouresume.has(message.author.id)) {
@@ -629,7 +629,7 @@ client.on("message", (message) => {
 
     if (command === prefix + "stop") {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando stop requisitado por: " + message.author.username);
 
             if (votoustop.has(message.author.id)) {
@@ -675,7 +675,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "next") {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando next requisitado por: " + message.author.username);
 
         if (votounext.has(message.author.id)) {
@@ -723,7 +723,7 @@ client.on("message", (message) => {
     }
     if (command === prefix + "fila") {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando fila requisitado por: " + message.author.username);
             if (fila[0]) {
                 var tamanhofila = fila.length - 1;
@@ -1173,7 +1173,7 @@ client.on("message", (message) => {
 
     if (command == prefix + "playlist") {
 
-        if(message.guild === BRothersServer){
+        if(message.guild.id === BRothersServer.id){
             console.log("Comando playlist requisitado por: " + message.author.username);
 
         if (args[2]) {
