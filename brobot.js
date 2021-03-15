@@ -203,7 +203,7 @@ client.on("message", (message) => {
             message.channel.send("Tocando: **" + filanome[0] + "**");
         }
         tocando = true;
-        dispatcher.on("end", () => {
+        dispatcher.on("finish", () => {
             votounext.clear();
             votoupause.clear();
             votouresume.clear();
