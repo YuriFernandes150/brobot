@@ -81,12 +81,12 @@ var perg;
 
 //Servidor
 //Canais
-var zueraVisivel = client.channels.get("404058088329576450");
-var arte = client.channels.get("476225541280890930");
-var brothersOG = client.channels.get("434510369692712962");
-var sugestoesDoBRotot = client.channels.get("518042011064991756");
-var brobotUpdates = client.channels.get("535429355099389962");
-var musica = client.channels.get("520562189904510997");
+var zueraVisivel = client.channels.fetch("404058088329576450");
+var arte = client.channels.fetch("476225541280890930");
+var brothersOG = client.channels.fetch("434510369692712962");
+var sugestoesDoBRotot = client.channels.fetch("518042011064991756");
+var brobotUpdates = client.channels.fetch("535429355099389962");
+var musica = client.channels.fetch("520562189904510997");
 
 client.on('error', function () {
 
@@ -159,7 +159,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
         randomimg(subreddit[Math.floor(Math.random() * subreddit.length)])
             .then(url => {
 
-                var chan = client.channels.get("553644829826088980");
+                var chan = client.channels.fetch("553644829826088980");
                 chan.send(url).then(msg => {
 
                     msg.react('👍').then(() => msg.react('👎'));
@@ -227,7 +227,7 @@ client.on("message", (message) => {
                 Play(connection);
             }
             else {
-                channel = client.channels.get(music);
+                channel = client.channels.fetch(music);
                 channel.leave();
                 message.channel.send("Terminei por aqui. Me chame qnd quiser ouvir algo de novo ;)");
                 tocando = false;
@@ -354,7 +354,7 @@ client.on("message", (message) => {
         console.log("Comando play requisitado por: " + message.author.username);
         var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
         message.delete();
-        const channel = client.channels.get(music);
+        const channel = client.channels.fetch(music);
         if (args[2]) {
 
             if (args[1] === "url") {
@@ -407,7 +407,7 @@ client.on("message", (message) => {
                     console.log(results[0].title);
 
 
-                    const channel = client.channels.get(music);
+                    const channel = client.channels.fetch(music);
                     if (!channel) return console.error("Canal Inexistente!");
                     if (tocando) {
                         fila.push(results[0].link);
@@ -484,7 +484,7 @@ client.on("message", (message) => {
         else {
             if (message.member.voiceChannelID === music) {
                 votoupause.add(message.author.id);
-                var chan = client.channels.get(music);
+                var chan = client.channels.fetch(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
                 votospause++;
                 var metade = pessoas / 2;
@@ -516,7 +516,7 @@ client.on("message", (message) => {
         else {
             if (message.member.voiceChannelID === music) {
                 votouresume.add(message.author.id);
-                var chan = client.channels.get(music);
+                var chan = client.channels.fetch(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
                 votosresume++;
                 var metade = pessoas / 2;
@@ -614,7 +614,7 @@ client.on("message", (message) => {
         else {
             if (message.member.voiceChannelID === music) {
                 votoustop.add(message.author.id);
-                var chan = client.channels.get(music);
+                var chan = client.channels.fetch(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
                 votosstop++;
                 var metade = pessoas / 2;
@@ -652,7 +652,7 @@ client.on("message", (message) => {
         else {
             if (message.member.voiceChannelID === music) {
                 votounext.add(message.author.id);
-                var chan = client.channels.get(music);
+                var chan = client.channels.fetch(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
                 votosnext++;
                 var metade = pessoas / 2;
@@ -1168,7 +1168,7 @@ client.on("message", (message) => {
                     }
                     else {
 
-                        const channel = client.channels.get(music);
+                        const channel = client.channels.fetch(music);
 
                         channel.join().then(connection => {
                             message.channel.send("Partiu! :musical_note:");
@@ -1227,7 +1227,7 @@ client.on("message", (message) => {
                 }
                 else {
 
-                    const channel = client.channels.get(music);
+                    const channel = client.channels.fetch(music);
 
                     channel.join().then(connection => {
                         message.channel.send("Partiu! :musical_note:");
@@ -1447,7 +1447,7 @@ client.on("message", (message) => {
             }
         });
         if (!tocando) {
-            const channel = client.channels.get(music);
+            const channel = client.channels.fetch(music);
             channel.join().then(connection => {
 
                 if (fila.length > 0 && filanome.length > 0) {
@@ -1674,28 +1674,28 @@ client.on("message", (message) => {
 
                 case "og": {
 
-                    var chan = client.channels.get("434510369692712962");
+                    var chan = client.channels.fetch("434510369692712962");
                     chan.send(args.slice(2).join(" "));
 
                 }
                     break;
                 case "zv": {
 
-                    var chan = client.channels.get("404058088329576450");
+                    var chan = client.channels.fetch("404058088329576450");
                     chan.send(args.slice(2).join(" "));
 
                 }
                     break;
                 case "dh": {
 
-                    var chan = client.channels.get(darkhole);
+                    var chan = client.channels.fetch(darkhole);
                     chan.send(args.slice(2).join(" "));
 
                 }
                     break;
                 case "hq": {
 
-                    var chan = client.channels.get("476225541280890930");
+                    var chan = client.channels.fetch("476225541280890930");
                     chan.send(args.slice(2).join(" "));
 
                 }
