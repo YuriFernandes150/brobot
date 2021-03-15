@@ -119,7 +119,7 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 
                 if (fenda.type === "Excavation") {
 
-                    var fendaEmbed = new Discord.RichEmbed()
+                    var fendaEmbed = new Discord.MessageEmbed()
                         .setTitle("Hora de Abrir Reliquias!")
                         .setColor('RANDOM')
                         .setThumbnail("http://content.warframe.com/MobileExport/Lotus/Interface/Icons/Store/Luminous.png");
@@ -689,7 +689,7 @@ client.on("message", (message) => {
             if (loop) {
                 " (Loopando) "
             }
-            var listEmbed = new Discord.RichEmbed()
+            var listEmbed = new Discord.MessageEmbed()
                 .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
                 .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
             listEmbed.addField("**▷" + filanome[0] + loopString + "**", "---------------------Próximas Faixas---------------------")
@@ -982,7 +982,7 @@ client.on("message", (message) => {
                             else {
                                 preco = "R$ " + detail.$priceData.finalPrice + " com desconto de " + detail.$priceData.discountPercent + "%";
                             }
-                            var gameEmbed = new Discord.RichEmbed()
+                            var gameEmbed = new Discord.MessageEmbed()
                                 .setAuthor(detail.$name + ", desenvolvido por " + detail.$otherData.developer)
                                 .setColor('RANDOM')
                                 .setTitle(detail.$genres)
@@ -1037,7 +1037,7 @@ client.on("message", (message) => {
                             if (err) throw err;
                             var i = 0;
                             let listanews = [];
-                            var newsEmbed = new Discord.RichEmbed()
+                            var newsEmbed = new Discord.MessageEmbed()
                                 .setAuthor(SteamSearchEntry.$name)
                                 .setTitle("**Notícias**")
                                 .setColor('RANDOM');
@@ -1096,7 +1096,7 @@ client.on("message", (message) => {
             }).then(data => {
                 let listaresultados = [];
                 var num = 0;
-                resultEmbed = new Discord.RichEmbed()
+                resultEmbed = new Discord.MessageEmbed()
                     .setTitle(data.searchInformation.formattedTotalResults + " resultados em " + data.searchInformation.formattedSearchTime + " segundos")
                     .setColor('RANDOM');
                 for (var i = 0; i < data.items.length; i++) {
@@ -1348,7 +1348,7 @@ client.on("message", (message) => {
             gender = "female";
         }
 
-        var charEmbed = new Discord.RichEmbed()
+        var charEmbed = new Discord.MessageEmbed()
             .setTitle("PERSONAGEM")
             .setColor('RANDOM')
             .setDescription("Lembre-se que isso só ajuda vc com infos simples, o resto é com vc!")
@@ -1386,7 +1386,7 @@ client.on("message", (message) => {
         const chan = message.channel;
         // Build the AcceptMessage
         var msg = new AcceptMessage(client, {
-            content: new Discord.RichEmbed()
+            content: new Discord.MessageEmbed()
                 .setDescription('AVISO! Salvar a playlist atual irá adicionar TODAS as músicas da fila atual na sua playlist pessoal, verifique a fila e prossiga com cautela')
                 .setColor('RANDOM'),
             emotes: {
@@ -1460,7 +1460,7 @@ client.on("message", (message) => {
         const chan = message.channel;
         // Build the AcceptMessage
         var msg = new AcceptMessage(client, {
-            content: new Discord.RichEmbed()
+            content: new Discord.MessageEmbed()
                 .setDescription('Deseja salvar a música atual na sua playlist?')
                 .setColor('RANDOM'),
             emotes: {
@@ -1554,7 +1554,7 @@ client.on("message", (message) => {
             var pessoas = message.channel.members.filter(m => m.presence.status === 'online' && !m.bot).size;
             console.log("tem " + pessoas + " online");
             const chan = message.channel;
-            const voteEmbed = new Discord.RichEmbed()
+            const voteEmbed = new Discord.MessageEmbed()
                 .setColor('RANDOM')
                 .setTitle(message.author.username + " iniciou uma votação:")
                 .setDescription(desc)
@@ -1577,7 +1577,7 @@ client.on("message", (message) => {
                     if (reaction.emoji.name === '👍') {
                         votosSim = votosSim + 1;
                         if (votosSim > pessoas / 2) {
-                            const yesEmbed = new Discord.RichEmbed()
+                            const yesEmbed = new Discord.MessageEmbed()
                                 .setColor('RANDOM')
                                 .setTitle("Fim da Votação")
                                 .setDescription("Votação Aprovada!")
@@ -1590,7 +1590,7 @@ client.on("message", (message) => {
                     else if (reaction.emoji.name === '👎') {
                         votosNao = votosNao + 1;
                         if (votosNao > pessoas / 2) {
-                            const noEmbed = new Discord.RichEmbed()
+                            const noEmbed = new Discord.MessageEmbed()
                                 .setColor('RANDOM')
                                 .setTitle("Fim da Votação")
                                 .setDescription("Votação Negada!")
@@ -1635,7 +1635,7 @@ client.on("message", (message) => {
         })
             .then(response => {
                 console.log(response.data);
-                var upcommingEmbed = new Discord.RichEmbed()
+                var upcommingEmbed = new Discord.MessageEmbed()
                     .setAuthor("Jogos a serem lançados")
                     .setTitle("EM BREVE")
                     .setColor('RANDOM');
@@ -1716,7 +1716,7 @@ client.on("message", (message) => {
         if (args[1]) {
 
             var provider = new steam.SteamProvider();
-            var gameEmbed = new Discord.RichEmbed();
+            var gameEmbed = new Discord.MessageEmbed();
             provider.search(message.content.replace(command, ""), 1, "portuguese", "br").then(result => {
 
                 if (result[0]) {
@@ -1809,7 +1809,7 @@ client.on("message", (message) => {
 
             if (!baro.active) nao = "não";
 
-            var baroEmbed = new Discord.RichEmbed()
+            var baroEmbed = new Discord.MessageEmbed()
                 .setTitle("Baro " + nao + " está ativo")
                 .setColor('RANDOM');
 
@@ -1860,7 +1860,7 @@ client.on("message", (message) => {
 
             var tipoMissao = "";
 
-            var fendaEmbed = new Discord.RichEmbed()
+            var fendaEmbed = new Discord.MessageEmbed()
                 .setTitle("Fendas do Void")
                 .setColor('RANDOM')
                 .setThumbnail("http://content.warframe.com/MobileExport/Lotus/Interface/Icons/Store/Luminous.png");
@@ -1945,7 +1945,7 @@ client.on("message", (message) => {
 
     if (command === prefix + "help") {
 
-        var helpembed = new Discord.RichEmbed()
+        var helpembed = new Discord.MessageEmbed()
             .setAuthor("AJUDA")
             .setTitle("**COMANDOS:**")
             .setColor('RANDOM')
@@ -1995,13 +1995,13 @@ client.on("message", (message) => {
 
         if (!args[1]) return message.channel.send("Mas eu vou kickar quem? Você? Marque o usuário que vc quer kickar! (vc marca as pessoas com @)");
 
-        var kickEmbed = new Discord.RichEmbed()
+        var kickEmbed = new Discord.MessageEmbed()
             .setAuthor(expulso.displayName + " foi expulso do servidor!")
             .setTitle("Reason: " + motivo)
             .setThumbnail(message.author.avatarURL)
             .setColor("RANDOM");
 
-        var NOTreasonEmbed = new Discord.RichEmbed()
+        var NOTreasonEmbed = new Discord.MessageEmbed()
             .setAuthor(expulso.displayName + " foi expulso do servidor!")
             .setThumbnail(message.author.avatarURL)
             .setColor("RANDOM");
