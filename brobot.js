@@ -198,7 +198,7 @@ client.on("message", (message) => {
 
         currStream = ytdl(fila[0], { filter: 'audioonly' });
 
-        dispatcher = connection.playStream(currStream);
+        dispatcher = connection.play(currStream);
         if (!loop) {
             message.channel.send("Tocando: **" + filanome[0] + "**");
         }
