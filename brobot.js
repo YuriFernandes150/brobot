@@ -404,7 +404,7 @@ client.on("message", (message) => {
                         message.channel.send("Anotado! Vou deixar na fila!");
                     } else {
                         message.channel.send("Bora lá! :musical_note:");
-                        channel..then(connection => {
+                        channel.join().then(connection => {
                             fila.push(results[0].link);
                             filanome.push(results[0].title);
                             Play(connection);
