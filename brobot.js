@@ -471,7 +471,7 @@ client.on("message", (message) => {
             message.reply("vc já votou");
         }
         else {
-            if (message.member.voiceChannelID === music) {
+            if (message.member.voice.channel.id === music) {
                 votoupause.add(message.author.id);
                 var chan = client.channels.cache.get(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
@@ -489,7 +489,7 @@ client.on("message", (message) => {
                 }
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                message.channel.send("Vc nem tá participando, " + message.author.username + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
             }
 
         }
@@ -503,7 +503,7 @@ client.on("message", (message) => {
             message.reply("vc já votou");
         }
         else {
-            if (message.member.voiceChannelID === music) {
+            if (message.member.voice.channel.id === music) {
                 votouresume.add(message.author.id);
                 var chan = client.channels.cache.get(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
@@ -522,7 +522,7 @@ client.on("message", (message) => {
 
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                message.channel.send("Vc nem tá participando, " + message.author.username + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
             }
 
         }
@@ -601,7 +601,7 @@ client.on("message", (message) => {
             message.reply("vc já votou");
         }
         else {
-            if (message.member.voiceChannelID === music) {
+            if (message.member.voice.channel.id === music) {
                 votoustop.add(message.author.id);
                 var chan = client.channels.cache.get(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
@@ -624,7 +624,7 @@ client.on("message", (message) => {
 
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author + ". Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                message.channel.send("Vc nem tá participando, " + message.author.username + ". Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
             }
 
 
@@ -639,7 +639,7 @@ client.on("message", (message) => {
             message.reply("vc já votou");
         }
         else {
-            if (message.member.voiceChannelID === music) {
+            if (message.member.voice.channel.id === music) {
                 votounext.add(message.author.id);
                 var chan = client.channels.cache.get(music);
                 var pessoas = chan.members.filter(member => !member.user.bot).size;
@@ -665,7 +665,7 @@ client.on("message", (message) => {
 
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author + ". Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                message.channel.send("Vc nem tá participando, " + message.author.username + ". Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
             }
 
         }
