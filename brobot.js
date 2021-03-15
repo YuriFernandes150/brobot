@@ -80,6 +80,7 @@ var autorpergunta;
 var perg;
 
 //Servidor
+var BRothersServer = client.guilds.cache.get("404058088329576448");
 //Canais
 var zueraVisivel = client.channels.cache.get("404058088329576450");
 var arte = client.channels.cache.get("476225541280890930");
@@ -87,6 +88,7 @@ var brothersOG = client.channels.cache.get("434510369692712962");
 var sugestoesDoBRotot = client.channels.cache.get("518042011064991756");
 var brobotUpdates = client.channels.cache.get("535429355099389962");
 var musica = client.channels.cache.get("520562189904510997");
+
 
 client.on('error', function () {
 
@@ -171,11 +173,6 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
 
-    if(message.member.voice.channel.id){
-        music = message.member.voice.channel.id;
-    }else{
-        music = message.guild.voice.channel.id;
-    }
 
     function shuffle(array, array2) {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -351,187 +348,215 @@ client.on("message", (message) => {
 
     }
     if (command === prefix + "play") {
-        console.log("Comando play requisitado por: " + message.author.username);
-        var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
-        message.delete();
-        const channel = client.channels.cache.get(music);
-        if (args[2]) {
-
-            if (args[1] === "url") {
-                if (!channel) return console.error("Canal Inexistente!");
-                if (tocando) {
-                    fila.push(url);
-                    message.channel.send("Anotado! Vou deixar na fila!");
-                    var id = ytdl.getURLVideoID(url);
-                    ytdl.getInfo(id, function (err, info) {
-                        if (err) throw err;
-                        console.log(info);
-                        var title = info.title;
-                        filanome.push(title);
-                    });
-                } else {
-                    message.channel.send("Bora lá! :musical_note:");
-                    channel.join().then(connection => {
+        if(message.guild === BRothersServer){
+            console.log("Comando play requisitado por: " + message.author.username);
+            var url = message.content.replace(command, "").replace(args[1], "").trim() + "";
+            message.delete();
+            const channel = client.channels.cache.get(music);
+            if (args[2]) {
+    
+                if (args[1] === "url") {
+                    if (!channel) return console.error("Canal Inexistente!");
+                    if (tocando) {
                         fila.push(url);
+                        message.channel.send("Anotado! Vou deixar na fila!");
                         var id = ytdl.getURLVideoID(url);
                         ytdl.getInfo(id, function (err, info) {
-                            console.log(info);
                             if (err) throw err;
+                            console.log(info);
                             var title = info.title;
                             filanome.push(title);
                         });
-                        Play(connection);
-                    }).catch(e => {
-                        // Oh no, it errored! Let's log it to console :)
-                        console.error(e);
-                    });
-
-                    tocando = true;
-                }
-
-
-            }
-            else if (args[1] === "name") {
-
-                var opts = {
-                    maxResults: 1,
-                    key: process.env.YOUTUBE,
-                    type: "video"
-                };
-
-                ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
-                    if (err) console.log(err);
-
-                    const channel = client.channels.cache.get(music);
-                    if (!channel) return console.error("Canal Inexistente!");
-                    if (tocando) {
-                        fila.push(results[0].link);
-                        filanome.push(results[0].title);
-                        message.channel.send("Anotado! Vou deixar na fila!");
                     } else {
                         message.channel.send("Bora lá! :musical_note:");
                         channel.join().then(connection => {
-                            fila.push(results[0].link);
-                            filanome.push(results[0].title);
+                            fila.push(url);
+                            var id = ytdl.getURLVideoID(url);
+                            ytdl.getInfo(id, function (err, info) {
+                                console.log(info);
+                                if (err) throw err;
+                                var title = info.title;
+                                filanome.push(title);
+                            });
                             Play(connection);
                         }).catch(e => {
                             // Oh no, it errored! Let's log it to console :)
                             console.error(e);
                         });
-
+    
                         tocando = true;
                     }
-
-                })
-
+    
+    
+                }
+                else if (args[1] === "name") {
+    
+                    var opts = {
+                        maxResults: 1,
+                        key: process.env.YOUTUBE,
+                        type: "video"
+                    };
+    
+                    ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
+                        if (err) console.log(err);
+    
+                        const channel = client.channels.cache.get(music);
+                        if (!channel) return console.error("Canal Inexistente!");
+                        if (tocando) {
+                            fila.push(results[0].link);
+                            filanome.push(results[0].title);
+                            message.channel.send("Anotado! Vou deixar na fila!");
+                        } else {
+                            message.channel.send("Bora lá! :musical_note:");
+                            channel.join().then(connection => {
+                                fila.push(results[0].link);
+                                filanome.push(results[0].title);
+                                Play(connection);
+                            }).catch(e => {
+                                // Oh no, it errored! Let's log it to console :)
+                                console.error(e);
+                            });
+    
+                            tocando = true;
+                        }
+    
+                    })
+    
+                }
+                else {
+    
+                    message.channel.send("Opa! Não se esqueça de usar os prefixos certos!\n" +
+                        prefix + "play name (nome da música)\n" +
+                        prefix + "play url (link do youtube)\n" +
+                        "Somente play não vai mais funcionar!");
+    
+                }
+    
+    
             }
             else {
-
-                message.channel.send("Opa! Não se esqueça de usar os prefixos certos!\n" +
-                    prefix + "play name (nome da música)\n" +
-                    prefix + "play url (link do youtube)\n" +
-                    "Somente play não vai mais funcionar!");
-
+                message.channel.send("Opa! \n Para tocar algo, digite **" +
+                    prefix + "play name (nome da música)**\nOu **" +
+                    prefix + "play url (link do youtube)** e vai ser tocado  ou posto na fila!\n" +
+                    "Comandinhos úteis de música: \n" +
+                    "**" + prefix + "pause:** Pausa a música (derp)\n" +
+                    "**" + prefix + "resume:** continua a música de onde parou\n" +
+                    "**" + prefix + "next:** Abre um voto para pular a música\n" +
+                    "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
+                    "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila\n" +
+                    "**" + prefix + "shuffle:** Randomiza a playlist\n" +
+                    "**" + prefix + "loop:** repete a música atual\n" +
+                    "**" + prefix + "salvarlista:** Salva (e sobrescreve) todas as musicas atuais na sua playlist pessoal\n" +
+                    "**" + prefix + "addlista:** Adiciona a música atual na sua playlist pessoal\n");
             }
-
-
+    
+    
         }
-        else {
-            message.channel.send("Opa! \n Para tocar algo, digite **" +
-                prefix + "play name (nome da música)**\nOu **" +
-                prefix + "play url (link do youtube)** e vai ser tocado  ou posto na fila!\n" +
-                "Comandinhos úteis de música: \n" +
-                "**" + prefix + "pause:** Pausa a música (derp)\n" +
-                "**" + prefix + "resume:** continua a música de onde parou\n" +
-                "**" + prefix + "next:** Abre um voto para pular a música\n" +
-                "**" + prefix + "fila:** Mostra quantas músicas tem na fila\n" +
-                "**" + prefix + "stop:** Abre um voto para parar a música e resetar a fila\n" +
-                "**" + prefix + "shuffle:** Randomiza a playlist\n" +
-                "**" + prefix + "loop:** repete a música atual\n" +
-                "**" + prefix + "salvarlista:** Salva (e sobrescreve) todas as musicas atuais na sua playlist pessoal\n" +
-                "**" + prefix + "addlista:** Adiciona a música atual na sua playlist pessoal\n");
+        else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
         }
-
-
 
     }
     if (command === prefix + "shuffle") {
 
-        if (fila[3] && filanome[3]) {
+        if(message.guild === BRothersServer){
+            if (fila[3] && filanome[3]) {
 
-            shuffle(fila, filanome);
-            loop = false;
-            message.channel.send("Ok! Playlist devidamente afofada!");
+                shuffle(fila, filanome);
+                loop = false;
+                message.channel.send("Ok! Playlist devidamente afofada!");
+    
+            }
+            else {
+                message.channel.send("É necessário pelo menos 4 músicas na fila para fazer shuffle!");
+            }
+        }
+        else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
+        }
 
-        }
-        else {
-            message.channel.send("É necessário pelo menos 4 músicas na fila para fazer shuffle!");
-        }
+        
 
     }
     if (command === prefix + "pause" && tocando) {
-        console.log("Comando pause requisitado por: " + message.author.username);
 
-        if (votoupause.has(message.author.id)) {
-            message.channel.send("<:fred:404438414201454594>");
-            message.reply("vc já votou");
-        }
-        else {
-            if (message.member.voice.channel.id === music) {
-                votoupause.add(message.author.id);
-                var chan = client.channels.cache.get(music);
-                var pessoas = chan.members.filter(member => !member.user.bot).size;
-                votospause++;
-                var metade = pessoas / 2;
-                if (votospause === pessoas || votospause > metade) {
-                    message.channel.send("Temos votos o suficiente! Pausando");
-                    dispatcher.pause();
-                    tocando = false;
-                    votospause = 0;
-                    votoupause.clear();
-                }
-                else {
-                    message.channel.send(message.author + " votou para pausar, temos " + votospause + "/" + pessoas + " a favor de pausar");
-                }
+        if(message.guild === BRothersServer){
+            console.log("Comando pause requisitado por: " + message.author.username);
+
+            if (votoupause.has(message.author.id)) {
+                message.channel.send("<:fred:404438414201454594>");
+                message.reply("vc já votou");
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author.username + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                if (message.member.voice.channel.id === music) {
+                    votoupause.add(message.author.id);
+                    var chan = client.channels.cache.get(music);
+                    var pessoas = chan.members.filter(member => !member.user.bot).size;
+                    votospause++;
+                    var metade = pessoas / 2;
+                    if (votospause === pessoas || votospause > metade) {
+                        message.channel.send("Temos votos o suficiente! Pausando");
+                        dispatcher.pause();
+                        tocando = false;
+                        votospause = 0;
+                        votoupause.clear();
+                    }
+                    else {
+                        message.channel.send(message.author + " votou para pausar, temos " + votospause + "/" + pessoas + " a favor de pausar");
+                    }
+                }
+                else {
+                    message.channel.send("Vc nem tá participando, " + message.author.username + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                }
+    
             }
-
         }
+        else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
+        }
+        
+        
 
     }
     if (command === prefix + "resume" && !tocando) {
-        console.log("Comando resume requisitado por: " + message.author.username);
 
-        if (votouresume.has(message.author.id)) {
-            message.channel.send("<:fred:404438414201454594>");
-            message.reply("vc já votou");
-        }
-        else {
-            if (message.member.voice.channel.id === music) {
-                votouresume.add(message.author.id);
-                var chan = client.channels.cache.get(music);
-                var pessoas = chan.members.filter(member => !member.user.bot).size;
-                votosresume++;
-                var metade = pessoas / 2;
-                if (votosresume === pessoas || votosresume > metade) {
-                    message.channel.send("Temos votos o suficiente! Resumindo");
-                    dispatcher.resume();
-                    tocando = true;
-                    votosresume = 0;
-                    votouresume.clear();
-                }
-                else {
-                    message.channel.send(message + author + " votou para resumir, temos " + votosresume + "/" + pessoas + " a favor de resumir");
-                }
+        if(message.guild === BRothersServer){
+            console.log("Comando resume requisitado por: " + message.author.username);
 
+            if (votouresume.has(message.author.id)) {
+                message.channel.send("<:fred:404438414201454594>");
+                message.reply("vc já votou");
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author.username + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                if (message.member.voice.channel.id === music) {
+                    votouresume.add(message.author.id);
+                    var chan = client.channels.cache.get(music);
+                    var pessoas = chan.members.filter(member => !member.user.bot).size;
+                    votosresume++;
+                    var metade = pessoas / 2;
+                    if (votosresume === pessoas || votosresume > metade) {
+                        message.channel.send("Temos votos o suficiente! Resumindo");
+                        dispatcher.resume();
+                        tocando = true;
+                        votosresume = 0;
+                        votouresume.clear();
+                    }
+                    else {
+                        message.channel.send(message + author + " votou para resumir, temos " + votosresume + "/" + pessoas + " a favor de resumir");
+                    }
+    
+                }
+                else {
+                    message.channel.send("Vc nem tá participando, " + message.author.username + "Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                }
+    
             }
-
         }
+        else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
+        }
+
+        
     }
 
     if (command == prefix + "reddit") {
@@ -600,45 +625,55 @@ client.on("message", (message) => {
     }
 
     if (command === prefix + "stop") {
-        console.log("Comando stop requisitado por: " + message.author.username);
 
-        if (votoustop.has(message.author.id)) {
-            message.channel.send("<:fred:404438414201454594>");
-            message.reply("vc já votou");
-        }
-        else {
-            if (message.member.voice.channel.id === music) {
-                votoustop.add(message.author.id);
-                var chan = client.channels.cache.get(music);
-                var pessoas = chan.members.filter(member => !member.user.bot).size;
-                votosstop++;
-                var metade = pessoas / 2;
-                if (votosstop === pessoas || votosstop > metade) {
-                    message.channel.send("Temos votos o suficiente! Parando e limpando fila...");
-                    chan.leave();
-                    filanome = [];
-                    fila = [];
-                    tocando = false;
-                    votosstop = 0;
-                    loop = false;
-                    votoustop.clear();
-                    dispatcher.end();
-                }
-                else {
-                    message.channel.send(message.author + " votou para parar e resetar, temos " + votosstop + "/" + pessoas + " a favor de parar");
-                }
+        if(message.guild === BRothersServer){
+            console.log("Comando stop requisitado por: " + message.author.username);
 
+            if (votoustop.has(message.author.id)) {
+                message.channel.send("<:fred:404438414201454594>");
+                message.reply("vc já votou");
             }
             else {
-                message.channel.send("Vc nem tá participando, " + message.author.username + ". Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                if (message.member.voice.channel.id === music) {
+                    votoustop.add(message.author.id);
+                    var chan = client.channels.cache.get(music);
+                    var pessoas = chan.members.filter(member => !member.user.bot).size;
+                    votosstop++;
+                    var metade = pessoas / 2;
+                    if (votosstop === pessoas || votosstop > metade) {
+                        message.channel.send("Temos votos o suficiente! Parando e limpando fila...");
+                        chan.leave();
+                        filanome = [];
+                        fila = [];
+                        tocando = false;
+                        votosstop = 0;
+                        loop = false;
+                        votoustop.clear();
+                        dispatcher.end();
+                    }
+                    else {
+                        message.channel.send(message.author + " votou para parar e resetar, temos " + votosstop + "/" + pessoas + " a favor de parar");
+                    }
+    
+                }
+                else {
+                    message.channel.send("Vc nem tá participando, " + message.author.username + ". Pq vc n vem com a gente? :smile: :musical_note:  \n https://discord.gg/XEnrPmX");
+                }
+    
+    
             }
-
-
         }
+        else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
+        }
+
+        
 
     }
     if (command === prefix + "next") {
-        console.log("Comando next requisitado por: " + message.author.username);
+
+        if(message.guild === BRothersServer){
+            console.log("Comando next requisitado por: " + message.author.username);
 
         if (votounext.has(message.author.id)) {
             message.channel.send("<:fred:404438414201454594>");
@@ -676,43 +711,56 @@ client.on("message", (message) => {
 
         }
 
+        }else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
+        }
+
+        
+
     }
     if (command === prefix + "fila") {
-        console.log("Comando fila requisitado por: " + message.author.username);
-        if (fila[0]) {
-            var tamanhofila = fila.length - 1;
-            message.channel.send("Ainda há **" + tamanhofila + "** músicas na fila.");
-            var num;
-            if (fila.length > 24) {
 
-                num = 24;
-
+        if(message.guild === BRothersServer){
+            console.log("Comando fila requisitado por: " + message.author.username);
+            if (fila[0]) {
+                var tamanhofila = fila.length - 1;
+                message.channel.send("Ainda há **" + tamanhofila + "** músicas na fila.");
+                var num;
+                if (fila.length > 24) {
+    
+                    num = 24;
+    
+                }
+                else {
+                    num = fila.length;
+                }
+                var loopString = " ";
+                if (loop) {
+                    " (Loopando) "
+                }
+                var listEmbed = new Discord.MessageEmbed()
+                    .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
+                    .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
+                listEmbed.addField("**▷" + filanome[0] + loopString + "**", "---------------------Próximas Faixas---------------------")
+                    .setColor('RANDOM');
+    
+                for (var i = 1; i < num; i++) {
+    
+                    listEmbed.addField(filanome[i], "---------------------------------------------------------");
+    
+                }
+    
+                message.channel.send(listEmbed);
+    
             }
             else {
-                num = fila.length;
+                message.channel.send("Não Há mais músicas na fila!");
             }
-            var loopString = " ";
-            if (loop) {
-                " (Loopando) "
-            }
-            var listEmbed = new Discord.MessageEmbed()
-                .setTitle("**Lista de Músicas atual (mostra até 25 músicas na fila)**:")
-                .setThumbnail("https://media.tenor.com/images/aafec9380ab6cb4b711000761c16726e/tenor.gif")
-            listEmbed.addField("**▷" + filanome[0] + loopString + "**", "---------------------Próximas Faixas---------------------")
-                .setColor('RANDOM');
-
-            for (var i = 1; i < num; i++) {
-
-                listEmbed.addField(filanome[i], "---------------------------------------------------------");
-
-            }
-
-            message.channel.send(listEmbed);
-
+        }else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
         }
-        else {
-            message.channel.send("Não Há mais músicas na fila!");
-        }
+
+        
 
     }
 
@@ -1122,7 +1170,8 @@ client.on("message", (message) => {
 
     if (command == prefix + "playlist") {
 
-        console.log("Comando playlist requisitado por: " + message.author.username);
+        if(message.guild === BRothersServer){
+            console.log("Comando playlist requisitado por: " + message.author.username);
 
         if (args[2]) {
 
@@ -1264,6 +1313,10 @@ client.on("message", (message) => {
                 prefix + "playlist url (link da playlist)\n" +
                 prefix + "playlist name (nome da playlist)");
         }
+        }else{
+            message.channel.send("Meus comandos de música são exclusivos para o servidor dos BRothers :p");
+        }
+        
 
 
     }
