@@ -95,12 +95,6 @@ client.on('error', function () {
 
 });
 client.on("ready", function () { // Evento "quando a client estiver pronta/ligada" função:
-    client.on('message', message => {
-        var date = new Date();
-        if (message.isMentioned(client.user)) {
-            message.reply(" fala ae");
-        }
-    });
 
     /*-= STATUS DO BOT =-*/
     /*-=-=-=-=-=-=-=-=-=*/
