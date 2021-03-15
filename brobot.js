@@ -171,6 +171,12 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
 client.on("message", (message) => {
     if (message.author.equals(client.user)) return;
 
+    if(message.member.voice.channel.id){
+        music = message.member.voice.channel.id;
+    }else{
+        music = message.guild.voice.channel.id;
+    }
+
     function shuffle(array, array2) {
         var currentIndex = array.length, temporaryValue, randomIndex;
 
