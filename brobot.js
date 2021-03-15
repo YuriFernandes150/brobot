@@ -983,7 +983,7 @@ client.on("message", (message) => {
 
                 if (escolha === "par") {
 
-                    message.channel.send("Ganhei! Mais sorte na próxima, " + message.author);
+                    message.channel.send("Ganhei! Mais sorte na próxima, " + message.author.username);
 
                 }
                 else {
@@ -997,7 +997,7 @@ client.on("message", (message) => {
 
                 }
                 else {
-                    message.channel.send("Ganhei! Mais sorte na próxima, " + message.author);
+                    message.channel.send("Ganhei! Mais sorte na próxima, " + message.author.username);
                 }
             }
 
