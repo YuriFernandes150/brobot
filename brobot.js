@@ -1741,7 +1741,6 @@ client.on("message", (message) => {
                                 .addField("**Díponpivel em:**", detail.$otherData.$platforms)
                                 .addField("**Detalhes: **", detail.$otherData.features)
                                 .addField("**Atualmente custa:** ", preco)
-                                .addBlankField()
                             message.channel.send(gameEmbed).then(m => {
 
                                 m.react('✅').then(() => m.react('❌'));
@@ -1973,7 +1972,6 @@ client.on("message", (message) => {
             .addField("**" + prefix + "baro**", "Mostra itens que o baro vende ou quanto tempo ate q ele fique ativo")
             .addField("**" + prefix + "darvo**", "mostra o item em oferta do darvo")
             .addField("**" + prefix + "fendas**", "Mostra as Fendas do void atuais")
-            .addBlankField()
             .setFooter("Novos comandos serão adicionados em breve");
 
 
