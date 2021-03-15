@@ -62,6 +62,7 @@ var prefix = config.prefix;
 var music = config.music;
 var darkhole = config.darkhole;
 var segundaresp = false;
+var canalpergunta;
 var tocando = false;
 var loop = false;
 var dispatcher;
@@ -256,6 +257,7 @@ client.on("message", (message) => {
                 segundaresp = false;
                 autorpergunta = "";
                 message.channel.send("Vlw por me ensinar!");
+                canalpergunta.send(resposta);
             }
 
         }
@@ -270,7 +272,8 @@ client.on("message", (message) => {
                 perg = message.content.toLowerCase();
                 autorpergunta = message.author.id;
                 segundaresp = true;
-                message.channel.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
+                canalpergunta = message.channel;
+                message.author.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
             }
             else {
 
