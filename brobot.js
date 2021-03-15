@@ -396,22 +396,17 @@ client.on("message", (message) => {
                 ytSearch(message.content.replace(command, "").replace(args[1], ""), opts, function (err, results) {
                     if (err) console.log(err);
 
-                    console.log(results);
-                    console.log(results.link);
-                    console.log(results.title);
-
-
                     const channel = client.channels.fetch(music);
                     if (!channel) return console.error("Canal Inexistente!");
                     if (tocando) {
-                        fila.push(results.link);
-                        filanome.push(results.title);
+                        fila.push(results[0].link);
+                        filanome.push(results[0].title);
                         message.channel.send("Anotado! Vou deixar na fila!");
                     } else {
                         message.channel.send("Bora lá! :musical_note:");
                         channel.join().then(connection => {
-                            fila.push(results.link);
-                            filanome.push(results.title);
+                            fila.push(results[0].link);
+                            filanome.push(results[0].title);
                             Play(connection);
                         }).catch(e => {
                             // Oh no, it errored! Let's log it to console :)
@@ -1287,7 +1282,7 @@ client.on("message", (message) => {
             ytSearch(args.slice(1).join(" "), opts, function (err, results) {
                 if (err) console.log(err);
 
-                var url = results.link;
+                var url = results[0].link;
                 message.channel.send(url);
 
             })
