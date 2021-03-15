@@ -713,9 +713,8 @@ client.on("message", (message) => {
     if (command === prefix + "ask") {
         console.log("Comando ask requisitado por: " + message.author.username);
         message.channel.send("https://cdn.discordapp.com/attachments/494191132318892043/510206947824369695/BRobot_think.gif").then(msg => {
-            msg.delete(3000)
-        })
-            .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
+            msg.delete({ timeout: 3000 });
+        }).catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
 
         let replies = ["Sim!", "É Claro ue :3", "Claro q sim!", "MAN É TÃO OBVIO Q SS", "Yee", "YUSS", "Yup", "Sim XD", "Obviamente", "N faço idéia", "talvez sim, talvez não", "Não sei, será?!", "Nope men", "MDS NÃO!", "Claro!...que não .-.", "Sla po :7", "Nem", "Nah", "Creio q não, jovem", "Hmmmmmmmmm... n sei te dizer...", ":regional_indicator_n: :regional_indicator_o:", ":regional_indicator_y: :regional_indicator_e: :regional_indicator_s:"];
         setTimeout(function () {
@@ -743,7 +742,7 @@ client.on("message", (message) => {
         console.log("Comando desenha requisitado por: " + message.author.username);
 
         message.channel.send("Beleza! Aguentae \nhttps://cdn.discordapp.com/attachments/494191132318892043/508782010609696780/anim.gif").then(msg => {
-            msg.delete(4500)
+            msg.delete({ timeout: 4500 })
         }).catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
 
         let replies = ["https://cdn.discordapp.com/attachments/494191132318892043/508789474340372485/BRobot_Desenha8.jpg",
