@@ -1829,16 +1829,11 @@ client.on("message", (message) => {
                                         
                                         userList.push(user.username);
 
-                                        let unique = [new Set(userList)];
+                                        let unique = (userList) => userList.filter((v,i) => userList.indexOf(v) === i);
 
                                         userList = unique;
 
-                                        userList.forEach(user => {
-
-                                            users = users + ", " + user;
-                        
-                                        });
-                                        gameEmbed.setFooter("na sala: " + users);
+                                        gameEmbed.setFooter("na sala: " + userList);
 
                                         m.edit(gameEmbed);
 
@@ -1850,19 +1845,13 @@ client.on("message", (message) => {
 
                                         removeUser.push(user.username)
 
-                                        let unique = [new Set(removeUser)];
+                                        let unique = (removeUser) => removeUser.filter((v,i) => removeUser.indexOf(v) === i);;
 
                                         removeUser = unique;
 
                                         userList = userList.filter( ( remove ) => !removeUser.includes( remove ) );
 
-                                        userList.forEach(user => {
-
-                                            users = users + ", " + user;
-                        
-                                        });
-
-                                        gameEmbed.setFooter("na sala: " + users);
+                                        gameEmbed.setFooter("na sala: " + userList);
 
                                         m.edit(gameEmbed);
 
@@ -1870,12 +1859,8 @@ client.on("message", (message) => {
                                 });
 
                                 collector.on('end', collected => {
-                                    userList.forEach(user => {
 
-                                        users = users + ", " + user;
-                    
-                                    });
-                                    message.channel.send("Sala Encerrada!\n " + users + " Hora de jogar!");
+                                    message.channel.send("Sala Encerrada!\n " + userList + " Hora de jogar!");
                                     userList = [];
                                     removeUser = [];
                                 });
