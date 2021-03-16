@@ -280,7 +280,7 @@ client.on("message", (message) => {
                 if (resp.includes("-")) {
 
                     var listaresps = resp.split("-");
-                    message.channel.send(listaresps[randomInt(listaresps.length)].trim());
+                    message.channel.send(listaresps[randomInt(listaresps.length)]);
 
                 }
                 else {
@@ -1516,7 +1516,7 @@ client.on("message", (message) => {
         }
 
     }
-    if (command === prefix + "addlista") {
+    if (command === prefix + "addlista") {  
 
         const chan = message.channel;
         // Build the AcceptMessage
