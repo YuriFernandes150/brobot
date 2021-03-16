@@ -146,6 +146,8 @@ client.on("ready", function () { // Evento "quando a client estiver pronta/ligad
         });
 
     }, 3600000);
+
+    
     /*
     setInterval(function () {
 
@@ -235,6 +237,16 @@ client.on("message", (message) => {
 
 
     }
+
+    function removeDups(names) {
+        let unique = {};
+        names.forEach(function(i) {
+          if(!unique[i]) {
+            unique[i] = true;
+          }
+        });
+        return Object.keys(unique);
+      }
 
     const messageArray = message.content.split(" ");
     const command = messageArray[0];
@@ -1829,7 +1841,7 @@ client.on("message", (message) => {
                                         
                                         userList.push(user.username);
 
-                                        let unique = (userList) => userList.filter((v,i) => userList.indexOf(v) === i);
+                                        let unique = removeDups(userList);
 
                                         userList = unique;
 
@@ -1845,7 +1857,7 @@ client.on("message", (message) => {
 
                                         removeUser.push(user.username)
 
-                                        let unique = (removeUser) => removeUser.filter((v,i) => removeUser.indexOf(v) === i);;
+                                        let unique = removeDups(removeUser);
 
                                         removeUser = unique;
 
