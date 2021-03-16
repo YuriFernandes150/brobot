@@ -1823,6 +1823,7 @@ client.on("message", (message) => {
 
                                 let userList = [];
                                 let removeUser = [];
+                                var users = "";
                                 collector.on('collect', (reaction, user) => {
                                     if (reaction.emoji.name === '✅') {
                                         
@@ -1832,7 +1833,12 @@ client.on("message", (message) => {
 
                                         userList = unique;
 
-                                        gameEmbed.setFooter("na sala: " + userList.toString());
+                                        userList.forEach(user => {
+
+                                            users = users + ", " + user;
+                        
+                                        });
+                                        gameEmbed.setFooter("na sala: " + users);
 
                                         m.edit(gameEmbed);
 
@@ -1850,7 +1856,13 @@ client.on("message", (message) => {
 
                                         userList = userList.filter( ( remove ) => !removeUser.includes( remove ) );
 
-                                        gameEmbed.setFooter("na sala: " + userList.toString());
+                                        userList.forEach(user => {
+
+                                            users = users + ", " + user;
+                        
+                                        });
+
+                                        gameEmbed.setFooter("na sala: " + users);
 
                                         m.edit(gameEmbed);
 
@@ -1858,7 +1870,12 @@ client.on("message", (message) => {
                                 });
 
                                 collector.on('end', collected => {
-                                    message.channel.send("Sala Encerrada!\n " + userList.toString() + " Hora de jogar!");
+                                    userList.forEach(user => {
+
+                                        users = users + ", " + user;
+                    
+                                    });
+                                    message.channel.send("Sala Encerrada!\n " + users + " Hora de jogar!");
                                     userList = [];
                                     removeUser = [];
                                 });
