@@ -1832,7 +1832,7 @@ client.on("message", (message) => {
 
                                         userList = unique;
 
-                                        gameEmbed.setFooter("na sala: " + userList);
+                                        gameEmbed.setFooter("na sala: " + userList.toString());
 
                                         m.edit(gameEmbed);
 
@@ -1850,7 +1850,7 @@ client.on("message", (message) => {
 
                                         userList = userList.filter( ( remove ) => !removeUser.includes( remove ) );
 
-                                        gameEmbed.setFooter("na sala: " + userList);
+                                        gameEmbed.setFooter("na sala: " + userList.toString());
 
                                         m.edit(gameEmbed);
 
@@ -1858,7 +1858,7 @@ client.on("message", (message) => {
                                 });
 
                                 collector.on('end', collected => {
-                                    message.channel.send("Sala Encerrada!\n " + userList + " Hora de jogar!");
+                                    message.channel.send("Sala Encerrada!\n " + userList.toString() + " Hora de jogar!");
                                     userList = [];
                                     removeUser = [];
                                 });
