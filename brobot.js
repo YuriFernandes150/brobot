@@ -1823,17 +1823,10 @@ client.on("message", (message) => {
                                 const collector = m.createReactionCollector(filter, { time: 120000 });
 
                                 var userList = [];
-                                collector.on('collect', (reaction, reactionCollector) => {
+                                collector.on('collect', (reaction, user) => {
                                     if (reaction.emoji.name === '✅') {
-                                        userList = [];
-                                        reaction.users.forEach((user) => {
-
-                                            if (!user.bot) {
-                                                userList.push(user.username);
-                                            }
-
-
-                                        })
+                                        
+                                        userList.push(user.username)
 
                                         gameEmbed.setFooter("na sala: " + userList);
 
@@ -1841,12 +1834,16 @@ client.on("message", (message) => {
 
                                     }
                                     else {
+                                        userList.splice(userList.indexOf(user.username));
+                                        gameEmbed.setFooter("na sala: " + userList);
 
+                                        m.edit(gameEmbed);
                                     }
                                 });
 
                                 collector.on('end', collected => {
                                     message.channel.send("Sala Encerrada!\n " + userList + " Hora de jogar!");
+                                    userList = [];
                                 });
 
 
