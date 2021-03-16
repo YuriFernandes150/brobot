@@ -2072,8 +2072,12 @@ client.on("message", (message) => {
     if(command === prefix + "testereddit"){
 
         if(args[1]){
-            reddit.search( message.content.replace(command, ""), 1).then(results => {
-                console.log(results);
+            reddit.top_posts(message.content.replace(command, ""), 1).then(results => {
+                const post = results[Math.floor(Math.random() * results.length)].data.permalink;
+                console.log(post);
+                r.get_post(post).then(post_info => {
+                    console.log(post_info);
+                });
             });
         }
 
