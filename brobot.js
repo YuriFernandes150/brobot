@@ -1807,17 +1807,16 @@ client.on("message", (message) => {
                             gameEmbed.setAuthor("Chamando @everyone!")
                                 .setTitle(message.author.username + " quer jogar " + message.content.replace(command, ""))
                                 .setColor('RANDOM')
-                                .setThumbnail(message.author.avatarURL)
+                                .setThumbnail(message.author.avatarURL())
                                 .setImage(detail.$otherData.$imageUrl)
                                 .setDescription("[ABRIR PÁGINA NA LOJA](" + SteamSearchEntry.url + ")")
-                                .addField("**Díponpivel em:**", detail.$otherData.$platforms)
-                                .addField("**Detalhes: **", detail.$otherData.features)
+                                .addField("**Díponivel em:**", detail.$otherData.$platforms)
                                 .addField("**Atualmente custa:** ", preco)
                             message.channel.send(gameEmbed).then(m => {
 
-                                m.react('✅').then(() => m.react('❌'));
+                                m.react('✅');
                                 const filter = (reaction, user) => {
-                                    return ['✅', '❌'].includes(reaction.emoji.name) && !user.bot;
+                                    return ['✅'].includes(reaction.emoji.name) && !user.bot;
                                 };
 
                                 const collector = m.createReactionCollector(filter, { time: 120000 });
@@ -1832,12 +1831,6 @@ client.on("message", (message) => {
 
                                         m.edit(gameEmbed);
 
-                                    }
-                                    else {
-                                        userList.splice(userList.indexOf(user.username));
-                                        gameEmbed.setFooter("na sala: " + userList);
-
-                                        m.edit(gameEmbed);
                                     }
                                 });
 
