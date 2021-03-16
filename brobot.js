@@ -1819,13 +1819,36 @@ client.on("message", (message) => {
                                     return ['✅'].includes(reaction.emoji.name) && !user.bot;
                                 };
 
-                                const collector = m.createReactionCollector(filter, { time: 120000 });
+                                const collector = m.createReactionCollector(filter, { time: 120000, dispose:true });
 
-                                var userList = [];
+                                let userList = [];
+                                let removeUser = [];
                                 collector.on('collect', (reaction, user) => {
                                     if (reaction.emoji.name === '✅') {
                                         
-                                        userList.push(user.username)
+                                        userList.push(user.username);
+
+                                        let unique = [new Set(userList)];
+
+                                        userList = unique;
+
+                                        gameEmbed.setFooter("na sala: " + userList);
+
+                                        m.edit(gameEmbed);
+
+                                    }
+                                });
+
+                                collector.on('remove', (reaction, user) => {
+                                    if (reaction.emoji.name === '✅') {
+
+                                        removeUser.push(user.username)
+
+                                        let unique = [new Set(removeUser)];
+
+                                        removeUser = unique;
+
+                                        userList = userList.filter( ( remove ) => !removeUser.includes( remove ) );
 
                                         gameEmbed.setFooter("na sala: " + userList);
 
@@ -1837,6 +1860,7 @@ client.on("message", (message) => {
                                 collector.on('end', collected => {
                                     message.channel.send("Sala Encerrada!\n " + userList + " Hora de jogar!");
                                     userList = [];
+                                    removeUser = [];
                                 });
 
 
