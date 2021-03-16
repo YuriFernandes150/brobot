@@ -268,26 +268,36 @@ client.on("message", (message) => {
 
         firebase.database().ref('/conversas/' + message.content.toLowerCase()).once('value').then(function (snapshot) {
             var resp = (snapshot.val() && snapshot.val().resp) || 'nope';
-            if (resp === "nope") {
-                perg = message.content.toLowerCase();
-                autorpergunta = message.author.id;
-                segundaresp = true;
-                canalpergunta = message.channel;
-                message.author.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
-            }
-            else {
 
-                if (resp.includes("-")) {
-
-                    var listaresps = resp.split("-");
-                    message.channel.send(listaresps[randomInt(listaresps.length)]);
-
+            if(resp){
+                if (resp === "nope") {
+                    perg = message.content.toLowerCase();
+                    autorpergunta = message.author.id;
+                    segundaresp = true;
+                    canalpergunta = message.channel;
+                    message.author.send("Ainda não tenho uma resposta pra isso... o que eu deveria falar nessa situação?");
                 }
                 else {
-                    message.channel.send(resp);
+    
+                    if (resp.includes("-")) {
+    
+                        var listaresps = resp.split("-");
+                        if(listaresps[0]){
+                            message.channel.send(listaresps[randomInt(listaresps.length)]);
+                        }else{
+                            message.channel.send("Algo deu errado e eu n consegui buscar a resposta.... WTF");
+                        }
+                        
+    
+                    }
+                    else {
+                        message.channel.send(resp);
+                    }
+    
+    
                 }
-
-
+            }else{
+                message.channel.send("Algo deu errado e eu n consegui buscar a resposta.... WTF");
             }
 
         });
