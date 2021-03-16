@@ -615,8 +615,28 @@ client.on("message", (message) => {
                 || args[1].toLowerCase().includes("lesdom")
             ) {
 
-                message.author.send(message.author.username + ", todo o conteúdo NSFW foi permentemente removido do meu repertório, vou ser family friendly agr XD");
-                message.delete();
+                if(message.channel.type === "dm" || message.channel.id === "723689897994747955"){
+
+                    var subreddit = args[1]; // Your Subreddit without /r/
+                randomimg(subreddit)
+                    .then(url => {
+                        if (url) {
+                            message.channel.send(url);
+                        }
+                        else {
+                            message.reply(" Malz! Não encontrei nada aqui com a tag: **" + args[1] + "**. Lembre-se de ser mais específico em suas tags e não usar espaços.");
+                        }
+
+                    }).catch(e => {
+                        // Oh no, it errored! Let's log it to console :)
+                        console.error(e);
+                    });
+
+                }else{
+                    message.author.send(message.author.username + ", todo o conteúdo NSFW foi permentemente removido do meu repertório. Vc ainda pode requisitar seu conteudo doente nas DMs ou no legendary #the-dark-hole.");
+                    message.delete();
+                }
+                
 
             } else {
 
@@ -1541,7 +1561,7 @@ client.on("message", (message) => {
     if (command === prefix + "addlista") {  
 
         const autor = message.author;
-        
+
         var confirmEmbed = new Discord.MessageEmbed();
         confirmEmbed.setAuthor("Chamando @everyone!")
                     .setTitle("Adicionar?")
@@ -1824,7 +1844,7 @@ client.on("message", (message) => {
                             }
 
                             gameEmbed.setAuthor("Chamando @everyone!")
-                                .setTitle(message.author.username + " quer jogar " + message.content.replace(command, ""))
+                                .setTitle(message.author.username + " quer jogar " + detail.$name + "!")
                                 .setColor('RANDOM')
                                 .setThumbnail(message.author.avatarURL())
                                 .setImage(detail.$otherData.$imageUrl)
