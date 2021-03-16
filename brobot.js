@@ -2072,7 +2072,7 @@ client.on("message", (message) => {
     if(command === prefix + "testereddit"){
 
         if(args[1]){
-            r.search( message.content.replace(command, ""), 1).then(results => {
+            reddit.search( message.content.replace(command, ""), 1).then(results => {
                 console.log(results);
             });
         }
