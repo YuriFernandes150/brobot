@@ -17,6 +17,7 @@ var fila = [];
 var filanome = [];
 var currStream;
 
+const reddit = require('better-redddit');
 
 //Piadas
 var Joke = require('give-me-a-joke');
@@ -2064,6 +2065,16 @@ client.on("message", (message) => {
                     message.channel.sendFile('tempaudio.mp3');
                 });
 
+        }
+
+    }
+
+    if(command === prefix + "testereddit"){
+
+        if(args[1]){
+            r.search( message.content.replace(command, ""), 1).then(results => {
+                console.log(results);
+            });
         }
 
     }

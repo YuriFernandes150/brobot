@@ -19,6 +19,7 @@
     "acceptmessage": "^1.1.0",
     "apicalypse": "^0.1.7",
     "axios": "^0.21.1",
+    "better-redddit": "^1.2.6",
     "bufferutil": "^4.0.3",
     "canvas": "^2.7.0",
     "cartoon-avatar": "^1.0.2",
