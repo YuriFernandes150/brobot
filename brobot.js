@@ -1540,41 +1540,48 @@ client.on("message", (message) => {
     }
     if (command === prefix + "addlista") {  
 
-        const chan = message.channel;
-        // Build the AcceptMessage
-        var msg = new AcceptMessage(client, {
-            content: new Discord.MessageEmbed()
-                .setDescription('Deseja salvar a música atual na sua playlist?')
-                .setColor('RANDOM'),
-            emotes: {
-                accept: '✅',
-                deny: '❌'
-            },
-            checkUser: message.author,
-            actions: {
-                accept: (reaction, user) => {
-                    if (fila[0] && filanome[0]) {
+        const autor = message.author;
+        
+        var confirmEmbed = new Discord.MessageEmbed();
+        confirmEmbed.setAuthor("Chamando @everyone!")
+                    .setTitle("Adicionar?")
+                    .setDescription("Quer adicionar " + filanome[0] + " na sua playllist pessoal?")
+                    .setColor('RANDOM');
 
-                        firebase.database().ref('playlists/' + message.author.id).push({
-                            name: filanome[0],
-                            url: fila[0]
-                        });
+        message.channel.send(gameEmbed).then(m => {
 
+                m.react('✅');
+                const filter = (reaction, user) => {
+                    return ['✅'].includes(reaction.emoji.name) && !user.bot;
+                };
 
+                const collector = m.createReactionCollector(filter, { time: 60000, dispose:true });
 
-                        message.channel.send("A música foi adicionada na sua playlist!, use **" + prefix + "minhalista** para ouvir sua playlist a qualquer momento!");
+                collector.on('collect', (reaction, user) => {
+                    if (reaction.emoji.name === '✅') {
+
+                        if(autor.id === user.id){
+                            if (fila[0] && filanome[0]) {
+
+                                firebase.database().ref('playlists/' + user.id).push({
+                                    name: filanome[0],
+                                    url: fila[0]
+                                });
+                        
+                                message.channel.send("A música foi adicionada na sua playlist!, use **" + prefix + "minhalista** para ouvir sua playlist a qualquer momento!");
+                            }
+                            else {
+                                message.channel.send("É preciso ter pelo menos 1 música tocando para poder adicioná-la");
+                            }
+                        }
                     }
-                    else {
-                        message.channel.send("É preciso ter pelo menos 1 música tocando para poder adicioná-la");
-                    }
-                },
-                deny: (reaction, user) => {
-                    message.channel.send("Operação cancelada!");
-                }
-            }
-        })
+                });
 
-        msg.send(chan);
+                collector.on('end', (reaction, user) => {
+                    m.delete();
+                });
+
+        });
 
     }
     if (command === prefix + "campominado") {
@@ -1844,6 +1851,8 @@ client.on("message", (message) => {
                                         let unique = removeDups(userList);
 
                                         userList = unique;
+
+                                        removeUser = removeUser.filter( ( remove ) => !userList.includes( remove ) );
 
                                         gameEmbed.setFooter("na sala: " + userList);
 
