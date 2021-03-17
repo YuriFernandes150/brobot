@@ -294,9 +294,9 @@ client.on("message", (message) => {
     
                     if (resp.includes("-")) {
     
-                        var listaresps = resp.split("-");
+                        let listaresps = resp.split("-");
                         if(listaresps[0]){
-                            message.channel.send(listaresps[randomInt(listaresps.length)]);
+                            message.channel.send(listaresps[randomInt(listaresps.length -1)]);
                         }else{
                             message.channel.send("Algo deu errado e eu n consegui buscar a resposta.... WTF");
                         }
@@ -2073,11 +2073,7 @@ client.on("message", (message) => {
 
         if(args[1]){
             reddit.top_posts(message.content.replace(command, ""), 1).then(results => {
-                const post = results[Math.floor(Math.random() * results.length)].data.permalink;
-                console.log(post);
-                r.get_post(post).then(post_info => {
-                    console.log(post_info);
-                });
+                console.log(results);
             });
         }
 
