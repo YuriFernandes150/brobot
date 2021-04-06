@@ -1800,6 +1800,13 @@ client.on("message", (message) => {
 
                 }
                     break;
+                case "geral": {
+
+                        var chan = client.channels.cache.get("820268096727941153");
+                        chan.send(args.slice(2).join(" "));
+    
+                    }
+                    break;
 
             }
 
